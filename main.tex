@@ -1,0 +1,171 @@
+%\documentclass[12pt]{article}
+\documentclass[12pt,twoside]{article}
+\usepackage[utf8]{inputenc}
+
+\raggedbottom
+
+% HEADER and FOOTER
+% http://www.sharelatex.com/learn/Headers_and_footers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+% header
+\fancyhead[LE,RO]{\leftmark} %
+\fancyhead[RE,LO]{\thepage}
+% footer (ikke i bruk atm)
+%\fancyfoot[CE,CO]{\leftmark}
+%\fancyfoot[LE,RO]{\thepage}
+
+\setlength{\headsep}{0.6in} % Mellomrom mellom header og body
+
+
+%%%%%%%%%%RIKARD
+\usepackage{courier}
+\usepackage[T1]{fontenc}
+\usepackage{ae,aecompl}
+\usepackage{times}
+\usepackage[font=small]{caption}
+%%%%%%%%%%RIKARD
+
+\usepackage{rotating}
+\usepackage{tikz}
+
+
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage[nottoc]{tocbibind}
+\usepackage{supertabular}
+
+\floatstyle{plaintop}
+\restylefloat{table}
+\usepackage{longtable}
+\usepackage{morefloats}
+\usepackage[titletoc]{appendix}
+\usepackage{pdfpages}
+
+\usepackage{adjustbox} % test
+\usepackage{tabularx} % test
+\usepackage{chngpage} % test
+\usepackage{booktabs} % unødvendig
+
+\usepackage[strict]{changepage}
+
+\usepackage[acronym, toc, nonumberlist]{glossaries}
+\makenoidxglossaries 
+\include{glossary}
+
+\usepackage[british]{babel}
+\usepackage[urldate=long]{biblatex}
+\bibliography{bibliography.bib}
+
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+% fjerner markering av lenker ved export av pdf
+\hypersetup{%
+    pdfborder = {0 0 0}
+}
+
+%Codeformat
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{frame=single, framesep=8pt,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\footnotesize,
+  stepnumber=1,
+  numbersep=11pt, 
+  captionpos=b,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+%XML code
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{blue}
+}
+
+% Setter dybden på table of contents
+\setcounter{tocdepth}{3} 
+
+% For table cell padding
+\usepackage{array}
+
+%\addtolength{\topmargin}{-.4in} %top margin
+%\addtolength{\textheight}{-.5in} %bot margin
+
+
+\begin{document}
+
+\include{frontpage}
+\include{abstract}
+
+\tableofcontents
+
+\include{project_description}   
+\include{project_planning}
+\include{prestudies}
+\include{libraries_and_devtools}
+\include{requirements_description}
+\include{architecture}
+\include{implementation}
+\include{test_plan}
+\include{evaluation}
+
+\glsaddall
+\printnoidxglossary[sort=word]
+
+\newpage
+\printbibliography[heading=bibintoc]
+
+\newpage
+\listoffigures
+
+\newpage
+\listoftables
+
+%appendices
+\begin{appendices}
+\include{appendix/usability_test}
+\include{appendix/test_case}
+\include{appendix/risk}
+\include{appendix/examplereport}
+\include{appendix/weekly}
+\include{appendix/usermanual}
+\include{appendix/technicalmanual}
+\include{appendix/developmentmanual}
+\include{appendix/contacts}
+\include{appendix/biztalk}
+\include{appendix/mobile_security}
+\include{appendix/classdiagram}
+\end{appendices}
+
+\end{document}
