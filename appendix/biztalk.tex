@@ -1,0 +1,13 @@
+\section{BizTalk}
+\label{biztalk}
+
+When the group first started planning the implementation, the idea was to have a package system to handle the different EMR systems and to have a centralized server with all the packages stored. The package URL would be stated in the settings and the package would be downloaded to the device, and then work as a parser to decode information received from the EMR server. As the group got more information about how the different systems work today, this idea was scrapped because differences between the different EMRs were too big. The group started leaning towards using Android services instead.
+
+\subsection{DIPS HL7Connector}
+This new information resulted in a redesign of the functionality used to communicate with the EMRs. Because of our early decision to create a modular architecture, it was possible for us to keep the code we had already written, we only needed to change the approach for how to implement the server communication.
+
+This required us to set up a development environment on a server, as they were only able to whitelist one IP address for us to access the server through. BizTalk natively only allows for implementation through C\#, which required the group to invest a lot of time in research in learning to program in C\#, as well as understanding concept of BizTalk.
+
+The group worked in parallel to both develop the C\# application as well as figuring out how to run a C\# application in Android. It was concluded that the service could be created using Xamarin \cite{xamarin}, but implementational issues with the BizTalk server hindered the group in completing the service. After first debugging the issue together with a Konik consultant as well as developers at Helse Vest IT, we later found out, with help from DIPS developers in Bodø, that the issue resided server side. The empty DIPS mockup server we were given access to had some issues, and was not properly configured to allow for the communication needed.
+
+In addition to this issue, the server did not support any form of uploading of multimedia, which concurrent research at the time revealed to be a problem. These two reasons made us scrap the DIPS service, and go for the simple backup solution.
