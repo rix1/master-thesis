@@ -1,0 +1,55 @@
+\section{Technical User Guide}
+\label{techmanual}
+
+This guide will handle the initial setup of the application as well as the creation of the settings file. As the settings file is needed for the initial setup, this will be covered first.
+
+\subsection{The settings file}
+This is the general layout of the settings file:
+
+\lstset{language=XML}
+\begin{lstlisting}[caption={settings.xml}, label={lst:settingsxml}]
+<settings>
+<systemPackage>
+    <aidlLocation>
+    <servicePath>
+</systemPackage>
+<authentication>
+    <authenticationProtocol>
+    <authenticationServerAddress>
+    <authenticationServerPort>
+    <LDAPuserID>
+    <LDAPOU>
+    <LDAPDC>
+</authentication>
+</settings>
+\end{lstlisting}
+
+The \textit{systemPackage} category handles service communication. \textit{aidlLocation} should point to the package where the \textit{.aidl} file is located, \textit{org.royrvik.emrservice} by default. The \textit{servicePath} field should give the full path to the service. If the service is called EMRService and is located in the \textit{org.royrvik.emrservice} package, this field would be \textit{org.royrvik.emrservice.EMRService}.
+
+The second category handles communication with authentication servers. The first field, \textit{authenticationProtocol}, tells the system which authentication system to use, currently being either LDAP or LDAPS. The next two fields are server address and server port, followed by your servers OU and DC. 
+
+As an example, here is a settings file pointing at a service called EMRService in the org.royrvik.emrservice package. The \textit{.aidl} file is in the same package, and the authentication is set to use the NTNU's LDAPS servers.
+
+\begin{lstlisting}[caption={An example settings file}, label={lst:examplesettings}]
+
+<settings>
+    <systemPackage>
+        <aidlLocation>org.royrvik.emrservice</aidlLocation>
+        <servicePath>org.royrvik.emrservice.EMRService
+        </servicePath>
+    </systemPackage>
+    <authentication>
+        <authenticationProtocol>ldaps</authenticationProtocol>
+        <authenticationServerAddress>
+            at.ntnu.no
+        </authenticationServerAddress>
+        <authenticationServerPort>636
+        </authenticationServerPort>
+        <LDAPuserID>uid</LDAPuserID>
+        <LDAPOU>people</LDAPOU>
+        <LDAPDC>ntnu.no</LDAPDC>
+    </authentication>
+</settings>
+\end{lstlisting}
+\subsection{Initial setup}
+When the application is first launched, it will detect that it is not set up properly, and redirect the user to the technical setup. The first step of this setup is choosing a tech user password. This password is used later to reconfigure the application or display the current settings. The next step will prompt the user for a path to the settings file. This can be both a local file and a file on a web-server. Clicking \textit{Get settings} will then make the application read and validate the settings. If the setup was successful the finish button will exit the application, and it is now ready for use.
