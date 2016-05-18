@@ -1,0 +1,24 @@
+\section{Discussion} % (fold)
+\label{sec:discussion}
+
+Intro.
+
+\subsection{Architecture} % (fold)
+\label{sub:architecture}
+
+The purpose of this section is to highlight that there are contradictory solutions/solutions with tradeoffs with different architectures based on your perspective and concerns. 
+
+An example of this is the tradeoff between energy consumption and mobile gateway bottleneck problem: Some suggest that the mobile gateway should only be used as a device to administer roaming: That the WBAN sensors should send physiological data directly to a boarder router. This proposition solves the problem of the mobile gateway becoming a bottleneck in the WBAN in the case where all traffic have to be routed through the MG. However, this has a tradeoff with energy efficiency: With this organization the node antennas would have to consume more energy in order to send data directly to an access point/boarder router which would typically be located further away than the mobile gateway. This also conflicts with the less discussed topic of interoperability. Should the backend monitoring system not be developed by the same manufacturer as the WBAN nodes, data need to be packaged into interoperable/compliant formats for the information exchange. They might use a reduced format/document structure in order to save bandwidth and processing power. If routing all data through a mobile gateway, this could ensure interoperable data by packaging the data in compliant formats before sending it to the external endpoint. In addition the data would need to be associated with a patient. Such authentication would most likely have to happen through a device with a graphical user interface, such as a touch device acting as a mobile gateway. This also happens to be a less flexible solution: By having a mobile gateway, the owner of the gateway, i.e. the patient could decide weather to send the data to endpoint A, B or maybe only store it locally.
+
+On the same side, the consumer market has recently showed an increased interest in ``smart boarder routers'' or ``hubs'', with Bluetooth Smart and 802.15.4 support in addition to the standard 802.11.X interface. Most notably are the OnHub WiFi router from Google [CITE][https://on.google.com/hub/] and Cassia Hub Bluetooth Router [CITE][http://en.cassianetworks.com/].
+
+% subsection architecture (end)
+
+\subsection{Design alternatives} % (fold)
+\label{sub:design_alternatives}
+
+One possible configuration could be wiring up a patient with 10 electrodes, but only having 3 of them activated at a time. Further, one would need to calculate the trade off between doing the ECG analysis onboard the chip versus streaming the data continuously to a WBAN gateway. Either way, the central monitoring station would get notified when abnormalities happened. If the signals were fuzzy, or the doctor demanded higher resolution{1} the remaining 7 electrodes could be activated resulting in a 12-lead ECG. This would match the existing practice of doing low resolution monitoring, and getting details on demand.
+
+% subsection design_alternatives (end)
+
+% section discussion (end)

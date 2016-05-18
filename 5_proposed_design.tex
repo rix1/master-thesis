@@ -1,0 +1,183 @@
+\section{Proposed Design} 
+
+% (fold)
+\label{sec:proposed_design}
+
+We wanted to come up with a proposed design that enabled us to test different aspects of using low energy sensors for wireless ECG monitoring, as well as how suitable the Bluetooth Smart protocol was as a medium for streaming raw ECG data. Based on what we knew from previous literature we decided the following three aspects constituted the baseline functional tests that would validate our research questions:
+\begin{itemize}
+	
+	\item - End to end latency
+	
+	\item - Battery life
+	
+	\item - Maximum throughput
+\end{itemize}
+
+In order to validate our proposed design we decided to build a working prototype. Our prototype takes the form of a test bed that can be used to address the stated capability requirements of patient monitoring experimentally. In this section starts with a discussion on different technical and architectural alternatives we had and the decisions made. Later we describe the implementation of the prototype, before we evaluate the baseline functional tests.
+
+
+\subsection{System architecture} % (fold)
+\label{sub:system_architecture}
+
+According to the four types of prototypes in design science [CITE][ds_bok1], our prototype was intended to be of the model type. A model can be used for supporting the construction of other prototypes, and hopefully our model can be reused by later projects.
+
+As noted in Sect. 3, different architectures has been proposed and discussed in large by previous research. A final solution to how WBANs will be organized in relation to existing infrastructure is not yet decided, and an important research topic. Our decision on architecture was largely influenced by previous research, most notably [CITE][PAPER WITH THE BEST ARCHITECTURE]. But we would also like to add our own observations. We believe the usage of smart devices in health care will increase with time. A future where both medical staff and patients use their existing or hospital provided smart/touch devices as a tools in treatment and everyday medical related tasks, seems probable in a not too distant future. Some forms of this have already been deployed, like AFGA Healthcare's ORBISme! tablet sized EMR-device, being used in Germany today[CITE][http://www.agfahealthcare.com/germany/de/main/products_services/Krankenhaus-Informationssystem/ORBIS_ME/index.jsp]. This device might just as well be used as a WBAN hub, a mobile gateway connecting WBAN sensors to local area, as well as external services. The notion of a mobile gateway has been widely adopted and discussed [CITE][ALL THE PAPERS TALKING ABOUT MOBILE GATEWAY] in earlier research. 
+
+Something that have not been widely discussed in research, but that is currently being worked on in the industry is data interoperability between different wireless sensors nodes. There are a few things we would like to clarify before moving on: There is a difference between consumer technology and medical devices. But with the growing interest for personal health monitoring within the consumer market, this distinction easily becomes blurry. Although not having any diagnostic value, it is not improbable that consumer devices soon will see it's way into a medical setting one way or the other: Just recently happened the first reported case of medical professionals using historic data form a personal fitness tracker to make an informed, life saving medical decision [CITE][http://www.eurekalert.org/pub_releases/2016-04/acoe-cyf040516.php].
+
+Based on what we know about the existing telemetry systems deployed today and the research on WBAN sensor devices, it is improbable that all sensory devices will be (A) developed by the same manufacturer, and (B) that they all communicate over the same physical medium. The question of data interoperability is an interesting topic, because of the technical constraints imposed by the small sensors. At what point in the pipeline do we enforce the standardized data formats for exchanging medical information? In general, we believe this should be done as early as possible in the process, preferably at the node level. However, we want to highlight two arguments to why this might not be optimal: Although there has been invested a lot of effort by standardization organizations like HL7 and OpenEHR the last 30 years, data standardization in health care remains a challenge - not only across institutions, but also between information systems located at the same hospital. Based on this, requiring standardized formats with reduced footprint, optimized for constrained devices, might not be realistic. As mentioned in Sect. 3, organizations like Continua is currently trying to bridge this gap, but with a focus  on consumer technology. This is a topic that need more research.
+
+Another argument to why it might not be feasible to enforce todays standardized data formats for physiological measurements at node level, is related to the technical constraints of these devices. In order to keep the energy consumption down, overhead is reduced and as little data as possible is sent. This is especially true for continuous, streaming data sources like ECG. The approach Continua and ISO/IEEE has to this problem is to make smaller standardized measurement data formats tailored for constrained devices. Then they specify how these data formats should be transformed or mapped onto richer, data formats with a larger space footprint at a gateway level.
+
+Relating this to the architectures discussed in previous research, we identify certain practical advantages of routing all traffic trough the personal gateway: Making a personal gateway compatible with a given sensor and its manufacturer specific or protocol specific[SIDENOTE] data format is a trivial task through software applications installed on the personal gateway device. The same triviality does not hold for a smart access point/boarder router wanting to transform the data into a richer, standardized data format. Should this be the case, where a standardized data format is not employed/enforced on every node, making a boarder router/access point as a WBAN sink seems highly impractical: All boarder router/access points in a roaming environment would have to be compatible with custom data formats from several WBAN sensors carried by a multitude of patients. In this scenario, we only see smart gateways/access points being able to fulfill this data processing and transformation responsibility if standardized data formats for every physiological measurement is implemented at WBAN node level.
+
+[SIDENOTE]: If standardized data formats are used.
+
+Based on considerations, our proposed architecture consist of the following parts: a single sensor node simulating a patient ECG device, a personal mobile gateway to be carried by the patient, a monitoring server available on a local or remote network, together with a client interface for remote monitoring. In order to reduce the scope and complexity we have decided to only include one node in our prototype. This is a clear limitation with our prototype and study, as we only consider a single-hop network topology in instead of a multi node/multi-hop topology, which is recommended in earlier research. The gateway has the responsibility of not only routing the sampled data from the WBAN to an external endpoint, but also enforcing interoperability by transforming the data into a standardized medical format. See table [TABLE][system_components] for a formal description of each component of our prototype.
+
+An overview of the different prototype components:
+\begin{itemize}
+
+  \item - Node: A node is the sensory device that does one or more physiological measurements and communicates it wirelessly to either another node or to a sink in the WBAN. In order to achieve wearability the nodes has to be as small as possible. Batteries are often the largest part of today’s sensory nodes and the biggest energy consumer is typically the antenna [CITE][article_comprehensiveStudy].
+
+  \item - WBAN: Multiple nodes connected together constitute the wireless body area network (WBAN). The network topology of these vary depending on the communication protocol between the nodes, but they are typically organized as single hop stars, or multi-hop mesh networks [CITE][2010 Support Mobility in HWSN 6LoWPAN]. Desirable qualities in a WBAN is a low energy PHY layer, and a flexible MAC protocol capable of doing smart routing and the ability to be self organizing [CITE][article_2013selforganizingMAC] [CITE][2009MACprotocolcomparison].
+
+  \item - Personal mobile gateway: In earlier research this tier in the patient monitoring stack is also called a personal server (PS). This can be anything from a smart phone, with a graphical user interface to just a sink in the WBAN with a larger battery. Because of the low energy consumption of the nodes, you typically need  to facilitate communication between the WBAN and the gateway with some device that has more battery capacity, a stronger antenna and that is easier to replace on a frequent basis.
+
+  \item - Boarder router: The border router can be categorized as a end node in a local area network providing access network access for proprietary devices through one or more wired or wireless networking interfaces. Based on the network configuration and overall architecture of the monitoring system this router may have different responsibilities. A smart-gateway can for example provide additional services specialized for sensory data. These services can include but are not limited to local caching, pre-processing and on-demand-processing, WBAN discovery, localization and more [CITE][2015 IoT u-healthcare Finnland].
+
+  \item - HIS: Hospital information system. This is a common term for the various types of information systems at hospitals. The way these are implemented and used varies from across borders, regions, and even between different departments within the same hospital. [CITE][inteervju_heidi2013]. Because of this invariance in systems and practice, interoperability across communication protocols and data formats is of outmost importance.
+
+\end{itemize}
+
+% subsection system_architecture (end)
+
+\subsection{SoC Considerations} % (fold)
+\label{sub:soc_considerations}
+
+While deciding on what platform to use for our proposed design we looked through a wide array of different SoC solutions and boards enabling rapid prototyping and testing with Bluetooth Low Energy and physiological metrics. In order to increase reproducibility and ease later projects, this sections contain an overview over the different boards we considered, together with strengths and weaknesses.
+
+RedBears Nano [CITE][http://redbearlab.com/blenano] development boards were of particularly interesting because of their form factor. They are based on the Nordic NRF51822 chip and measure only 18.5mmx21.0mm. However, we because our goal was not related to mobility the actual size of the chip was not important to us. Another board of interest was Bitalino's development board for capturing body signals [CITE][http://bitalino.com/index.php/freestyle-kit]. Among other things, it comes with interfaces and built in analog to digital converter for ECG leads. This could have been a good starting point for our prototype, but the development kit only supports Bluetooth 2.0 which was of little interest to us.
+
+We looked at Zolertia [CITE][http://zolertia.io/store] development boards, and even ran some preliminary tests using simulated Zolertia Z1 motes and the Contiki Cooja Simulator. However, these are based on the 802.15.4 specification, and was therefore outside the scope of this project. The same accounts for the Tmote Sky [CITE][http://www.snm.ethz.ch/Projects/TmoteSky], which have been used extensively in earlier research [CITE][2006 System architecture WBAN u-health Otto, 2006 WSN monitoring Implementation Otto, 2006 Wearable Contactless ECG, 2012 h-Sensor network, 2005 Interoperability and Security WBAN,2007 Biomedical Wireless Sensor Network SINTEF].
+
+Among more medical targeted development kits we looked at Shimmer Tools [CITE][http://www.shimmersensing.com/shop/ecg-development-kit] which offer professional, medical grade wireless sensors suited for ``academic, applied and clinical researchers''. These were of particular interest because of the configurable ECG options and that it shipped with libraries [CITE][http://www.shimmersensing.com/shop/shimmer-android-id] for streaming and parsing data on the Android platform. However, the Bluetooth module used for wireless transmission is based on the RN-42 chip [CITE][http://www.microchip.com/wwwproducts/en/RN42], which only supports the 2.1 version of the Bluetooth protocol. Another, similar development kit targeting clinical trials, research and teaching labs, is the BioRadio from Great Lakes NeuroTechnologies [CITE][https://glneurotech.com/bioradio/]. This is a highly configurable device with both adjustable sampling rate (250Hz-16kHz) and sample resolution (12-24 bit), as well as a SDK for pc [CITE][https://glneurotech.com/bioradio/support-page/sdk-download/]. To our knowledge the BioRadio has a newer Bluetooth chip supporting version 4.0. However, because of the high sample rate and resolution, it is highly unlikely that they utilize the low energy features of the specification, due to the bandwidth constraints of the low energy specification. A further discussion on Bluetooth bandwidth versus the minimum requirements for ECG can be found in Sect. 3. It is also unlikely that the firmware is customizable in commercial products like the ShimmerTools and BioRadio, and was these two devices was therefore not interesting to us.
+
+After investigating these different development platforms, we decided to avoid development kits capturing real physiological data (Bitalino, ShimmerTools and BioRadio) for the sake of testability and reproducibility. This way it would be easier to conduct consistent experiments. However, these devices offer a great deal of functionality and possibilities both in terms of hardware capabilities, technical specifications and ease of development, and should be considered in later research.
+
+Texas Instruments another major actor in the embedded community. They design and develop a wide array of semiconductors and hardware for industries ranging from audio and hifi to medical devices[CITE][http://www.ti.com/]. In fact they have a own sensory product line for biological signals. TI also has an active research community publishing reference designs for various applications branded under the name TIDesigns [CITE][http://www.ti.com/general/docs/refdesignsearchresults.tsp]. In the later stages of this project, we became aware of an for a 5-lead ECG monitor based on Bluetooth Low Energy [CITE][2014 Wireless Heart Rate Monitor Reference Design]. The existence of this reference design have not influenced neither our design choices nor research questions, as it was discovered late in the project. An overview of the TI's proposed design and the implications an earlier discovery of this reference design could have had are discussed in Sect. 6.
+
+Most of the relevant development kits we evaluated were based on one of the Nordic nRF51-series chips [CITE][ADAFRUIT, REDBEAR, ...]. Because hardware design and development was uncharted territory for the researchers, the availability of online communities and documentation was a critical factor when assessing/deciding on what development kit to base our prototype on. Nordic themselves has a thriving community on their Stack Overflow inspired developer zone [CITE][https://devzone.nordicsemi.com/questions/], which has at the time of writing has over 13,800 questions asked. Because of this we decided a development kit based on the  nRF51822 chip was our best alternative. Because Nordic Semiconductor also offer their own development kits, we decided to use those as the basis of our prototype, reducing the number of external dependencies. 
+
+In terms of software development on these different boards, we investigated the different IoT operating systems and assessed the feasibility of using these for our purpose. After a quick survey, the small RiotOS, running on only 1.5kB RAM and 5kB of ROM, looked like the most promising alternative. A comparison of the major operating systems for IoT-applications can be found at [CITE][2013 RIOT OS - Towards an OS for the Internet of Things]. For our project however, it was concluded that the node functionality would be limited and specialized rather than general. Hence, adding a dedicated operating system to our already growing technology stack would impose more risk to our project. It should also be mentioned that this technology and the platforms that are being built around them are not very mature: The seeds for RiotOS were planted less than 10 years ago as it started out as an operating system for wireless sensor networks in Germany in 2008[CITE][https://www.riot-os.org/#about]. An example of this lack of maturity, is that we have yet to find a RiotOS library for accessing the Bluetooth stack on nRF51822 trough SoftDevices.
+
+Due to the increasing risk and complexity more dependencies add to the development, we dropped support for 6LoWPAN, although an increased insight in this was of interest when we started the project. In addition, a concurrent research project investigating the practical limitations of using IPv6 enabled Bluetooth Smart (6LoWPAN) technology, was already in progress at the Department of Telematics.
+
+% subsection soc_considerations (end)
+
+\subsection{Node} % (fold)
+\label{sub:node}
+
+The first prototype iteration used a Nordic nRF51 evaluation kit from 2013, which supported Bluetooth Smart version 4.0 trough a software stack Nordic calls SoftDevices. Because of it's relative old age (development in this area happens at a rapid pace) the latest Nordic SDK[SIDENOTE] support for this board was version 6, while the most recent SDK is at version 10. This turned out to cause a lot of compatibility problems, and the development process was tedious: We had to flash both SoftDevices and our own compiled software onto the board manually using Segger's J-Link software. In addition to this, the J-Link debugging options were not supported on our development system.
+
+[SIDENOTE]: The Nordic nRF5 SDK forms the foundation of what you need of drivers, libraries SoftDevices and code examples to develop your own low-energy Bluetooth, ANT product.
+
+Because of the compatibility/legacy issues we had with the node in our initial prototype, we decided to replace the 2013 evaluation kit for a nRF51 Development Kit originally released late 2014 [CITE][https://www.nordicsemi.com/eng/Products/nRF51-DK]. This board supports a newer SDK (version 8), two new SoftDevices and ARM's mBED development platform [CITE][https://developer.mbed.org/]. The latter was crucial as it drastically eased the process of compiling and installing software on the development board. mBED is a online development platform for embedded devices developed and maintained by Arm [CITE][http://www.arm.com/] along with partners and contributors. It solves the problem of setting up an correct environment for compiling C++ code specific to a given development board, by building and compiling programs in the cloud. This means they maintain and keep track of all dependencies and environment configurations needed for correctly building and compiling code specific to a given board before making a binary file available for download. An mBED enabled board connected to your computer via USB will be available as a mass storage device. In order to install the software, you simply drag the bundled binaries over to the mass storage device, and the software will auto-install. 
+
+In order to simulate the ECG data stream on the board, different existing ECG simulators written in C++ were considered[CITE][https://github.com/peterisza/mobilecg, https://github.com/lynchzilla/ecg_simulator, https://physionet.org/physiotools/ecgsyn/]. We decided to go for ECGSYN, a realistic ECG waveform generator created at Oxford and MIT [CITE][https://physionet.org/physiotools/ecgsyn/]. This is a flexible program that let us customize sampling frequency and mean heart rate among other things. ECGSYN generates a synthesized ECG signal based on algorithms described in [CITE][https://physionet.org/physiotools/ecgsyn/paper/]. Se figure [FIGURE][ecgsyn_terminal] for an overview of the different adjustable parameters.
+
+\begin{lstlisting}[caption={ECGSYN menu}, label={lst:ECGSYN}]
+
+    >> ecgsyn $
+    ECGSYN: A program for generating a realistic synthetic ECG
+    Copyright (c) 2003 by Patrick McSharry & Gari Clifford. All rights reserved.
+     
+    O Name of output data file                 "ecgsyn.dat"
+    n Approximate number of heart beats        256
+    s ECG sampling frequency [Hz]              256
+    S Internal Sampling frequency [Hz]         256
+    a Amplitude of additive uniform noise [mV] 0
+    h Heart rate mean [bpm]                    60
+    H Heart rate standard deviation [bpm]      1
+    f Low frequency [Hz]                       0.1
+    F High frequency [Hz]                      0.25
+    v Low frequency standard deviation [Hz]    0.01
+    V High frequency standard deviation [Hz]   0.01
+    q LF/HF ratio                              0.5
+    R Seed                                     1
+    (Type ? for Help)
+    ->
+
+\end{lstlisting}
+
+\subsubsection{Maximum Throughput} % (fold)
+\label{ssub:maximum_throughput}
+
+Because experience with embedded software development was limited, we did some preliminary research on max throughput on Bluetooth Smart, before starting implementation of the ECGYN software on the development board. As mentioned in Chapt. 3 Bluetooth Smart specifies the theoretical max throughput to be 1 Mbit/s. However there are always factors limiting this theoretical capacity. In the following section will elaborate on these limiting factors, and comparing our findings with the minimum requirements of clinical ECG.
+
+Note that in the following section, the mobile gateway acts the role of the client, and the wireless sensor acts the role of the server - the one with data. Once a Bluetooth Smart connection is established between two devices, the connection parameters [CITE][https://www.bluetooth.com/specifications/adopted-specifications?_ga=1.222469723.1371097346.1463347155] control the frequency at which data can be sent between the two devices. The two connection parameters of interest to us are, minimum and maximum connection interval, which specify the minimum and maximum rate at which the client will ask for data from the server. By the specification, both fields have an allowed minimum and maximum value of 6 and 3200. By multiplying these values by 1.25ms we get the highest and the lowest frequency at which a central may ask for data: 7,5ms and 4s (4000ms).
+
+The GATT protocol specifies different commands for the client to get information about the server. Among these, GATT offers notifications and indications. In high-throughput applications a client can request/register a notification on a given characteristic. This means that the server will send a notification containing maximum 20 Byte of user data to the client whenever data becomes available. These notifications buffered by the SoftDevice and ACK-ed in the link layer. The Bluetooth specification allows for up to 6 packets to be sent per connection interval, but this number may vary between different implementations. This gives the following formula for calculating max throughput:
+
+connection interval x packets per interval x bytes per packet x 8 bits/byte = throughput.
+
+Because packets per interval and the bytes per packet may vary between devices 
+
+% subsubsection maximum_throughput (end)
+
+% subsection node (end)
+
+\subsection{Gateway} % (fold)
+\label{sub:gateway}
+
+Due to previous experience with the Android Development platform, choosing a development environment for our gateway software was a trivial task. In the following section we will describe how we approached the design and requirements for the gateway application. 
+
+Although creating a user friendly application was not part of the scope of this project, we believe some thoughts on usability and context should be put into the creation of any artifact. The next section will briefly discuss different practical solutions to connecting to and managing wireless body sensors.
+
+This section will cover the following:
+	- Usability considerations
+	- Application structure (class diagram?)	
+		- Background running Service 
+		- Application front-end
+
+The notation also differs, some call it a personal gateway, others a WBAN sink. 
+
+The considerations that go into designing the architecture of a system should be based on the quality attributes of the system and its environment. Important quality attributes for this research project are testability and reproducibility. However, as mentioned in Chapt. 3 we took inspiration from other WBAN architectures, and will in the following section describe which architecture suited our proposed design and why.
+
+Shahamabadi et. al. propose three different organizations of WBANs in order to support mobility. We have decided to go for the first and most intuitive organization in our prototype. For a proposed design, however we must something the importance of the multi-hop topology, as pointed out by 
+However, on order to contribute to the development of WBANs and wireless monitoring, we believe a different set of attributes also should be considered. Mobility and scalability are two quality attributes in patient monitoring scenarios we used to guide our architectural choices. Mobility in terms of the sensor node concerns form factor size and placement of the node. Mobility in terms of the WBAN gateway concerns roaming, handover costs as well as size.
+
+As mentioned in Sect. 3, many earlier research projects have been scoped so that they only focus on a given set of system components. We believe WBAN interoperability 
+
+% subsection gateway (end)
+
+\subsection{Server} % (fold)
+\label{sub:server}
+
+This section describes the HTTP web server developed as part of the prototype. 
+ 
+	- 
+Meteor+websockets. Mention the TCP downside, but say it was out of our scope. 
+
+Android. service + app
+
+% subsection server (end)
+
+\subsection{Evaluation} % (fold)
+\label{sub:evaluation}
+
+As mentioned earlier, we wanted to evaluate our prototype on the criteria listed below.
+
+\begin{itemize}
+	\item - End to end latency
+	\item - Battery life
+	\item - Maximum throughput
+\end{itemize}
+
+Because of the discoveries made during the development of the prototype, maximum throughput and battery lifetime has not been addressed experimentally, but are discussed in detail.
+
+
+
+% subsection evaluation (end)
+
+% section proposed_design (end)
