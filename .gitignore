@@ -3,6 +3,9 @@ main.pdf
 out/
 old/
 
+.0_abstract.lb
+.main.lb
+
 # Created by https://www.gitignore.io/api/osx,node
 
 ### OSX ###
