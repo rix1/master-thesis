@@ -1,0 +1,129 @@
+\section{Testing}
+In this chapter we will describe how the testing process has been conducted and present its results. The test plan is derived and developed from the Standard for Software Test Documentation (IEEE 829-1998) \cite{iee829}. Items from the standard that the group did not consider necessary are not included in the report.
+
+\subsection{Introduction}
+This section will cover any background information, general testing strategy as well as definitions and acronyms used specifically in this chapter and related documents in the Appendix.
+
+\subsubsection{Objectives}
+When the group had a working implementation of a module with the basic functionality, all the related tests were ran to ensure that the module worked as intended. The test plan was updated for each report delivery. When a sprint introduced new requirements or features, the test plan was updated during or after that particular sprint. The major work activities related to the test plan was the initial writing of the document itself, generating the test items and finally executing the tests.
+
+\subsubsection{Testing Strategy}
+The tests described in this document were executed on the final product to uncover hidden bugs or errors and ensure that everything was working as expected. Tests for each module was also used during the development process to ensure that the module was implemented correctly. No testing frameworks were used in the testing process because the group did not have any experience with automatic tests, and did not have time to learn it during the project.
+
+\subsubsection{Scope}
+The Test Case was updated as new components and features needed testing, and most of the tests became a requirement for the implementation itself. The Test Plan only had one big rewrite between the mid-term and the final report.
+
+\subsubsection{Reference Material}
+Individual tests and test items are listed in the Test Case document, Appendix \ref{testdoc}. The requirements for each of the test items are referencing the requirements in report chapter \ref{requirements}.
+
+\subsubsection{Definitions and Acronyms}
+The names for each test item is composed of a prefix to indicate what part of the system the item is from, followed by an underscore and an incremental ID for each prefix: e.g. UI\textunderscore0003 will be the third test item from the User Interface part of the system.
+
+Full list of prefixes and their relation:
+\begin{itemize}
+\item UI  	   	- User interface
+\item SYS  		- General system requirements
+\item NET 		- Communication with other systems
+\item SEC 		- Security requirements
+
+\end{itemize}
+
+\subsection{Features to be tested}
+All modules listed in the test case document, Appendix \ref{testitems} were tested. This includes all user interface components, general application workflow, service communication and basic security measures.
+
+\subsection{Features not to be tested}
+Android platform specific security was not tested, as it goes beyond the scope of this project. 
+
+The QR code feature, requirement 6, will not be tested, as this is a separate application and will only be used to type in the patient SSN faster.
+
+Requirement 10, stripping of data in offline mode, was not tested as this was a feature the group determined it was a feature that was no longer needed. This is covered further in the evaluation, chapter \ref{evaloffline}.
+
+\noindent
+Because of time constraints, a complete acceptance test of the final application was not conducted. An informal test with an end user was however performed (see section \ref{acceptance_test}). In addition to this test, the final product was presented and approved by the customer.
+
+\subsection{Approach}
+This section describes how the group conducted the different types of tests.
+
+\subsubsection{Component Testing}
+Each component of the system was tested manually during development, and the group as a whole worked together to uncover more bugs on the finished implementation of each module. This was quite easy and effective, as the product do not require every part of the system to work correctly in order to run. Because none of the group members had any experience with automated test frameworks and testability was not a success criteria, we did not take use of this.
+
+To ensure that the finished product worked as expected, the group also ran all the tests described in the Test Case document at the end of the development process. 
+
+\subsubsection{Interface Testing}
+
+After the first round of GUI mockups was finished, an usability test was done with a small group of students to test if the UI was intuitive and user friendly. The final implementation and design did differ a bit from the original mockups, but mainly this was not due to the results from the usability test. The reason we modified it was because the look and feel of the implemented versions of the mockups, did not comply with what we had envisioned. However, these changes were never radical, but rather incremental improvements that iterated enough times until the design had changed quite a bit. We never conducted another usability test, but the user interface itself was tested as part of the acceptance test.
+
+\subsubsection{Security Testing}
+
+The group used a Risk Management Framework to identify risks and assets concerning the project. The important assets are mainly patient data and hospital information. The patient data is the most important asset to protect, as this includes the SSN and health information for each patient. 
+
+Mainly three threats were identified for the business risks. Together with the potential of data leakage, the fact that our research suggested that most hospital systems currently do not support multimedia on their EMR systems, could be a game breaker. The technical risks are included at the end of the risk assessment (part \ref{risk}) in the Appendix.
+\noindent
+Only the most basic security tests were actually conducted, as the group did not have the required knowledge to perform advanced security tests on the Android platform. A lot of security measures were also left to third party software like SQLCipher and LDAPS. At the end of the day, the application itself can only do so much, and the most vulnerable parts are in the service which the hospitals themselves or the EMR provider is providing. Because of this, threats regarding the service module will not be covered.
+
+\subsubsection{Regression Testing}
+
+After implementing a new functionality or changing existing modules, basic testing was conducted to uncover bugs and to ensure that the new implementation worked as expected. Some of this testing overlapped with the component testing, as new functionality often meant a new components.
+
+\subsubsection{Acceptance Testing}
+% TODO: skrive  at vi i hovedsak testet Usability attributene USA[1,2 and 4,5]. 
+
+The acceptance test was performed during a meeting with Dr. Ole Christian Mjøstad at St. Olavs Hospital, head of Department of Circulation and Medical Imaging. Dr. Mjølstad has published papers covering usage of the Vscan, and was therefore considered the perfect user to gather feedback from.
+
+During the meeting with, the group explained what purpose the application served, and was asked to try it out. No scenario was presented.
+
+\subsubsection{Quality Attributes Testing}
+The strategy for testing the quality attributes have been separated in to the respective domains of the qualities. Testing the usability attributes were done in the acceptance test with Dr. Mjølstad. The strategy for testing the security attributes can be found in the Security Testing section earlier in this chapter. Testing the modularity and mobility attribute was impossible for the group to conduct due to reasons stated throughout this report. The group did for example not have access to a hospital with the infrastructure needed in order to connect a mobile device to the intranet, as required by the MOB1 attribute.
+
+
+\subsection{Testing Process}
+
+This section describes the pass and fail criteria for the test modules.
+
+\subsubsection{Suspension Criteria}
+
+If an item failed to produce the expected result defined in the Test Case document, the testing of the affected module was suspended. During the development process, the affected module was fixed before the module was tested again, according to the resumption criteria. After the development process, when all test were conducted on the application, any failed tests ended up in the test log and were not fixed.
+
+\subsubsection{Resumption Criteria}
+
+When the suspended item was resolved, the affected module was tested again, to ensure that any changes made had not affect the functionality of the module. If the changes did affect the functionality, the affected modules were fixed and the tests were conducted again.
+
+\subsubsection{Approval Criteria}
+
+When all test items in a module produced the expected result, the module was approved until any changes were made to the module itself or any modules used by it.
+
+\subsection{Test Deliverables}
+
+\begin{itemize}
+\item Test Case document - Appendix \ref{testcase}
+\item Test Item List - Appendix \ref{testitems}
+\item Test Results - Section \ref{testresult}
+
+\end{itemize}
+
+\subsection{Environmental Requirements}
+For testing with a physical device, the group used devices running Android 4.0 or later. Each member of the group had a device available for themselves.
+For testing with a virtual device the default Android emulator included in the Android SDK or Genymotion was used.
+
+\subsection{Test Results}
+\label{testresult}
+This following section contains all results from tests conducted during this project.
+
+\subsubsection{Component and Security Testing}
+This section will cover the final results from component testing conducted on the final product. Any failed or partially failed tests are covered in the evaluation part of this report, section \ref{productEval}. Other than some missing dialogs and error messages, two potentially huge problems were found. First off, TestID 7.4, the "delete everything"-option in settings did not require the technical password. This is not a security problem, but may be used for sabotage. The other huge problem was the fact that there is no brute force protection built into the application, uncovered by TestID 13.1.
+
+\subsubsection{Usability testing}
+In the process of designing the GUI of the application, a usability test was developed. After a mockup of the GUI was completed, the test was conducted. 
+
+The test gave us very good indications of which parts of the application that worked, and which parts that needed improvement. 
+During the usability test several potential issues were detected. Certain icons needed to be improved in order to meet the project criteria for usability. We also established that the intended imaging functionality needed some adjustments in order to seem more intuitive and easy to use. Based on these results, we put more effort into the full screen image viewer.
+
+Appendix \ref{usability} contains the full report of the usability testing.
+
+\subsubsection{Acceptance Testing}
+\label{acceptance_test}
+While the group conducted their acceptance test, feedback was given both during and after the process, and was almost entirely positive. Dr. Mjøstad explained that the functionality this application served, filled the the biggest shortcomings of the Vscan today. The application was also thought to be intuitive and easy to use. The only issue experienced with the GUI was that image notes was not as easy to reach.
+It was however pointed out by him that this was something the user would learn after first time usage of the feature. 
+
+Mjølstad was explained that the application had the functionality necessary to upload video as well, which he encouraged to work further on. Because Dr. Mjøstad is not considered a technical user we could not conclude USA2 - ease of configuration by technical user, as fulfilled.
+
