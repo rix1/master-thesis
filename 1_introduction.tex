@@ -1,5 +1,12 @@
-\section{Introduction} % (fold)
+\section{Introduction} 
+
+% (fold)
 \label{sec:introduction}
+
+\subsection{Background and motivation} 
+
+% (fold)
+\label{sub:background_and_motivation}
 
 During the last couple of years there has been a significant increase in the number of connected devices. Hardware is getting cheaper and smaller, and the demand for information is growing. Economic prosperity, aging population, the growing middle income population and sensitive public policy are key demand drivers for better healthcare and infrastructure. In addition, a population growth of 4 billion is expected within the next 90 years \cite{WPP2015_Methodology}. In order to facilitate these changes, we need infrastructure that is cost effective, sustainable and scales well. How the healthcare advances in this time of change will have a major impact on how this expected population growth impact our societies. 
 
@@ -7,62 +14,81 @@ In recent years we have seen an increased effort made by both big and small acto
 
 One of the most radical changes to todays clinical practices is likely to come from the prevalence of new sensory technology, similar to the ones being developed for the consumer market. New measuring tools and techniques, embedded in small, low energy wireless sensors, could enable an affordable but rigid monitoring system offering patients as well as physicians good user experiences. 
 
-What we need is a low cost, wearable, wireless system for monitoring physiological health information (PHI). This system must offer both patients and physicians the same services and level of quality they get from existing monitoring systems, but with an improved user experience and security measures to match the expectations users have from modern  consumer products. 
+What we need is a low cost, wearable, wireless system for monitoring physiological health information (PHI). This system must offer both patients and physicians the same services and level of quality they get from existing monitoring systems, but with an improved user experience and security measures to match the expectations users have from modern consumer products. 
 
 One possible orchestration of these sensors are in a wireless body area network, or WBAN for short. This is a collective term for wireless networks situated inside, on or around the human body. This means entire systems of devices communicating with each other in immediate proximity of a human body. Researchers have spent the past 20 years investigating applications, optimizations and possibilities of WBANs. The technology however, has until recent years not been small enough nor energy efficient enough for networks like these to be practically feasible for patient monitoring.
 
 Electronic patient monitoring is today an established practice at modern hospitals. It involves \textit{repeated or continuous observations or measurements of patients, their physiological functions, and the function of the life support equipment} \cite{PMID:10315668}. Studying monitoring systems in a multidisciplinary task: A system that affords good management decisions, can only be created by studying and finding the optimal compromise between several design factors; clinical, engineering and economic \cite{Anonymous:yOjY0N0Y}. On the contrary, personal monitoring devices like fitness trackers etc. blurs the lines of what monitoring might mean. Because of this ambiguity, we use the following definition of ``monitoring'' throughout this thesis:
-
-\begin{quote} 
-\textit{A repeated or continuous measurement of the physiological functions of one or more patients conducted in a clinical environment.}
+\begin{quote}
+	\textit{A repeated or continuous measurement of the physiological functions of one or more patients conducted in a clinical environment.} 
 \end{quote}
 
 Traditionally, monitoring vital signs has been conducted only on patients in given situations or with special needs for monitoring, and different physiological metrics are captured individually. An electrocardiography (ECG) test produces one example of such physiological metric. First invented by Willem Einthoven in the early 1900's, it is a technique that captures the electrical activity of the heart over time. Today, ECG is monitored in several different ways, both wired and wirelessly. This thesis will focus on the latter, which consist of two different approaches, depending on the diagnostic need and intention. Telemetry is the process of sampling measurements and transmitting them to receiving equipment for monitoring. An ECG telemetry system is sampling and transmitting the heart's electric activity of patients wirelessly inside a hospital. Another wireless approach to capturing ECG are Holter monitors \cite{holter_13}. These are battery driven devices that capture ECG continuously for 24-48 hours. One drawback with a Holter monitor, is that they collect data. Data processing and analysis is done offline, and the devices often have to be sent to the manufacturer, using days or weeks before the results return \cite{ziopatch_14}.
 
 Throughout this thesis, ECG will be used as a benchmark for monitoring physiological metrics because of it's technical requirements, and the availability of existing wireless ECG solutions today.
 
-\subsection{Problem Statement} % (fold)
+% TODO Introduce Bluetooth
+% TODO Finish up with motivation
+This research project was motivated by the need for 
+
+% subsection background_and_motivation (end)
+\subsection{Problem Statement} 
+
+% (fold)
 \label{sub:problem_statement}
 
 Today's telemetry systems have a short battery lifetime, and the systems and infrastructure are specialized for ECG monitoring. Wireless monitoring today is therefore expensive and offer little flexibility. 
-		
+
 The purpose of this master thesis is to investigate the required capabilities of a wireless monitoring system, in order to assess the feasibility of creating a monitoring solution for wireless ECG, based on available technology and open standards.
 
 Whats the value of using available technology? Available technology is cheaper, developer friendly and more flexible. (...)
 
 Using open standards enables different sensor and service providers to co-exist and take part in the same infrastructure. This makes it cheaper and faster to change certain devices or changing manufacturer in an increasingly complex ecosystem of wireless sensors and medical infrastructure.
-
-
-\begin{itemize}
-\item Is Bluetooth an appropriate protocol for medical applications such as continuous ECG monitoring? We will look at the technical qualities of Bluetooth and evaluate against the capability requirements of a wireless monitoring system with respect to practical aspects such as energy consumption, range and transfer rate. These aspects will be tested experimentally with a prototype. If applicable, what is the desired configuration?
-
-Wireless transfer of data is a huge cost on battery. 
-
-\item 2. What are todays ECG monitoring practices? How can these routines be adjusted to accommodate for low energy monitoring?
-
-\item 3. Something
-
-
-\end{itemize}
 % subsection problem_statement (end)
 
-\subsection{Scope} % (fold)
+\subsection{Research Questions} 
+
+% (fold)
+\label{ssub:research_questions}
+\begin{enumerate}
+	
+	\item \textit{What need to be understood in order to design a ECG monitoring system?}
+	\begin{itemize}
+    
+		\item \textit{What is the practice of ECG monitoring used at hospitals today?}\\To be written
+		
+		\item \textit{What factors are most critical when conducting wireless, clinical grade ECG, and what are the minimum requirements in terms of bandwidth, battery capacity and end to end latency?}\\To be written
+     
+	\end{itemize}
+	
+	\item \textit{Is Bluetooth Low Energy able to fulfill the requirements of clinical grade ECG?}\\To be written.
+	
+  \item \textit{What are the main challenges of introducing a WBAN monitoring system in clinical environments?}\\This one is a given
+  
+\end{enumerate}
+
+% subsection research_questions (end)
+\subsection{Scope} 
+
+% (fold)
 \label{sub:scope}
 
-Due to the nature of this project, the research conducted would ideally take several safety and security considerations. Personal health information is considered highly sensitive, and health care is also a safety critical environment. A faulty system can result in life-threatening situations, and ensuring privacy is of outmost importance. However, in order to reduce the scope, the security features of a wireless monitoring system has not been the main focus of this research.
+Due to the multidisciplinary nature of this project, scoping the research and clearly defining our goals was crucial. This meant excluding important quality attributes like security, usability and privacy as well as narrowing the research down to just a small set of clearly defined use cases.
 
-Should this be where I talk about usability? Considerations when researching hospital systems 
+be restricted by safety and security considerations. Personal health information is considered highly sensitive, and health care is also a safety critical environment. We have our project to avoid 
 
+% TODO How have we restrictd the scope?
 % subsection scope (end)
+\subsection{Contributions} 
 
-\subsection{Contributions} % (fold)
+% (fold)
 \label{sub:contributions}
 
 % subsection contributions (end)
+\subsection{Structure} 
 
-\subsection{Structure} % (fold)
+% (fold)
 \label{sub:structure}
 
 % subsection structure (end)
-
 % section introduction (end)
