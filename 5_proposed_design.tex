@@ -176,13 +176,14 @@ The GATT protocol specifies different commands for the client to get information
 \frac{1000\: ms/s}{CI}\: \times\: PPI\: \times\: BPP\: \times\: 8\: bits/byte = Throughput
 \]
 
+\newline
 \noindent
 Here, CI is connection interval, PPI is packets per interval, and BPP represents the number of bytes sent per packet. Because packets per interval and the bytes per packet may vary between devices and operating systems, the maximum throughput over a Bluetooth Low Energy link is relative. However, maximizing the allowed values above, we get the following result: 
 
 \[
 \frac{1000\: ms/s}{7,5ms}\: \times\: 6\: packets\: \times\: 20\:bytes/packet\: \times\: 8\: bits/byte = 128\:Kbit/s
 \]
-
+\newline
 \noindent
 This is substantially lower than the advertised 1Mbit/s. In Table~\ref{tab:ble_device_throughput}  we present calculated throughputs for different devices based on their implementation of the Bluetooth specification. In Table~\ref{tab:ecg_sampling_rate} we list different configurations for capturing ECG with the minimum recommended sampling rates from \cite{Anonymous:j4z9MACD}. We see that low energy Bluetooth is not well suited for clinical ECG due to it's restricted and variable throughput.
 
