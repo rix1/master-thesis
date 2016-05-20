@@ -5,7 +5,7 @@ old/
 .main.watcher_pid
 .0_abstract.lb
 .main.lb
-
+*.watcher_pid
 .*.lb
 *.pdf
 
