@@ -6,6 +6,9 @@ old/
 .0_abstract.lb
 .main.lb
 
+.*.lb
+*.pdf
+
 # Created by https://www.gitignore.io/api/osx,node
 
 ### OSX ###
