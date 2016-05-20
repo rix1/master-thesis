@@ -1,13 +1,14 @@
-\section{Literature Review} % (fold)
+\section{Literature Review} 
+
+% (fold)
 \label{sec:literature_review}
 
 % section literature_review (end)
+This section cover the literature review and how we approached it. Open with how we searched for literature: What were the keywords? How was the approach? Write some sentences about how this is a active research field with changing technology. What years were we looking for?
 
-This section cover the literature review and how we approached it.
-Open with how we searched for literature: What were the keywords? How was the approach? Write some sentences about how this is a active research field with changing technology. What years were we looking for?
+\subsection{Electrocardiogram} 
 
-
-\subsection{Electrocardiogram} % (fold)
+% (fold)
 \label{sub:electrocardiogram}
 
 Because of reasons already mentioned, most of the reviewed WBAN literature discuss or mention ECG in some form or another. However, we found many inconsistencies and simplifications about ECG, that in worst case may have invalidated parts of the research conducted. Because of this, we spent some time understanding both the measurement itself and how it is conducted. In the following section we introduce ECG before reviewing other research involving the measurement. Lastly we present our findings with recommendations to realistic requirements for a ECG application based on WBAN.
@@ -17,20 +18,23 @@ Electrocardiogram is a measurement of the electrical activity around the heart. 
 In other research there have been a lot of approaches to what ECG is and how it's measured. In \cite{Alesanco:2010kc}, Alesanco and García state that «(...) only eight leads should be transmitted since the other four can be derived from them». This is about the most accurate/realistic description of measuring ECG we've found. Some research \cite{yubin:2012tr}, only consider 1 or 2 leads, something we have yet to find being practiced at medical institutions.
 
 % subsection electrocardiogram (end)
+\subsection{Wireless Body Area Networks} 
 
-\subsection{Wireless Body Area Networks} % (fold)
+% (fold)
 \label{sub:wireless_body_area_networks}
 
-\subsubsection{Architecture} % (fold)
+\subsubsection{Architecture} 
+
+% (fold)
 \label{ssub:architecture}
 
 This section will introduce the different architectures previous research have proposed to WBANs, and what requirements have driven a given architectures. 
 
 % subsubsection architecture (end)
-
 % subsection wireless_body_area_networks (end)
+\subsection{Bluetooth} 
 
-\subsection{Bluetooth} % (fold)
+% (fold)
 \label{sub:bluetooth}
 
 As we'll see in later sections, Bluetooth was an attractive technology for us because of its widespread presence, as well as the low energy features introduced with version 4.0 of the specification. In this section we will cover the basics of Bluetooth Smart and discuss related research projects using the technology.
@@ -39,24 +43,24 @@ Bluetooth was originally developed at Ericsson in (...).
 
 (...) Because of confusion around the ``low energy'' devices and regular Bluetooth devices Bluetooth SIG announced their new branding strategy in 2011, with a new logo and name: Bluetooth Smart. Throughout this thesis we will use both the old Low Energy suffix as well as Bluetooth Smart (we should probably fix this?).
 
-GATT and Profiles
-The profile defines the types of state data that a device exposes and how that data can be used. Profiles are organized like this: 
-Services > Characteristics and Descriptors.
+GATT and Profiles The profile defines the types of state data that a device exposes and how that data can be used. Profiles are organized like this: Services > Characteristics and Descriptors.
 
 How are Bluetooth Smart profiles implemented? Efforts are being made by Bluetooth SIG to standardize data profiles in order to ensure interoperability between devices supporting the protocol. A profile for a type of device defines the GATT Services which a device of this type must or may implement. This is related to interoperability which we will cover in the next section.
 
 % subsection bluetooth (end)
+\subsection{Interoperability} 
 
-\subsection{Interoperability} % (fold)
+% (fold)
 \label{sub:interoperability}
 
 Rahmani et. al. gives a clear overview of different forms of interoperability in their 2015 paper about Smart e-Health Gateways \cite{DrAmirMohammadRahmani:2014vx}. They separate the concern of interoperability and reconfigurability into the following categories: Device interoperability, protocol interoperability, data interoperability, reconfigurability and device discovery and mobility support. In the following sections we will give an overview of data interoperability related to Bluetooth.
 
-\subsubsection{Data Interoperability} % (fold)
+\subsubsection{Data Interoperability} 
+
+% (fold)
 \label{ssub:data_interoperability}
 
 % subsubsection data_interoperability (end)
-
 Document and message standardization in health care is a huge topic and certain actors like HL7 have been working actively with standardization development for the least 30 years. In this section we will cover WBAN related papers discussing interoperability as well as giving an brief overview of the latest standardization efforts made by actors like HL7, Continua and the Bluetooth SIG.
 
 The Continua Alliance develops interoperability guidelines and offer device manufacturers a way of certifying their Bluetooth Smart devices for Personal Connected Health. Their guidelines are globally recognized as the only standard for Personal Connected Health \cite{newRef:27}. The certification program is organized as follows: Continua selects and approves certain GATT Profiles (aka. Smart Profiles). Devices that support these profiles can be certified, meaning that they will be compliant and that the data they deliver can be ``mapped into the Continua & HL7 Record-set and shared, where it can become available as needed to social media, care providers, hospitals, clinicians, etc.'' \cite{newRef:27}.
@@ -71,7 +75,5 @@ The HDP specification does not specify the format nor content transmitted, but c
 
 The Health Device Profile specification mention ECG as an example of data transmitted on Streaming Data Channels,
 
-
 % subsection interoperability (end)
-
 % section section_name (end)
