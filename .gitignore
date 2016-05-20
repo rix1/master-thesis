@@ -2,7 +2,7 @@
 main.pdf
 out/
 old/
-
+.main.watcher_pid
 .0_abstract.lb
 .main.lb
 

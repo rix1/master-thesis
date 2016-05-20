@@ -12,7 +12,6 @@ We wanted to come up with a proposed design that enabled us to test different as
 
 In order to validate our proposed design we decided to build a working prototype. Our prototype takes the form of a test bed that can be used to address the stated capability requirements of patient monitoring experimentally. In this section starts with a discussion on different technical and architectural alternatives we had and the decisions made. Later we describe the implementation of the prototype, before we evaluate the baseline functional tests.
 
-
 \subsection{System architecture} % (fold)
 \label{sub:system_architecture}
 
@@ -226,34 +225,75 @@ Because of Meteor's feature rich platform, our prototype has support for user ac
 \subsection{Evaluation} % (fold)
 \label{sub:evaluation}
 
-As mentioned earlier, we wanted to evaluate our prototype on the criteria listed below.
+Because of inconsistencies and missing information in previous research, we wanted to conduct a series of tests that could validate our technology choices. Because of obvious limitations in our ability to perform some of these experiments traditionally, they have been designed to give us some indications on how the technology performs in practice. Therefore the experiments are linked to the use cases. 
+
+Originally we had several other experiments as well, but these were removed in order to reduce the scope. 
 
 \begin{itemize}
-	\item - End to end latency
-	\item - Battery life
-	\item - Maximum throughput
+	\item End to end latency
+	\item Battery life
+	\item Maximum throughput
 \end{itemize}
-
-Because of the discoveries made during the development of the prototype, maximum throughput and battery lifetime has not been addressed experimentally, but are discussed in detail.
+\noindent
+Because of the discoveries made during the development of the prototype, maximum throughput and battery lifetime has not been addressed experimentally, but are rather discussed.
 
 \subsubsection{End to end latency} % (fold)
 \label{ssub:end_to_end_latency}
 
-Here well write a short introduction to the experiment. 
-(...)
-This experiment is based on the hypothesis
-(...)
-For the experiment, the following setup was used.
-(...)
-By utilizing the following methods. We achieved the this result, which is in accordance with our expectations.
+In order to get a baseline indication on the overall network performance of our prototype we set up an experiment measuring the end-to-end latency/delay. We were only interested in the $\Delta$ between the node and the client (the two endpoints) and not the intermediate steps. Because of this we were able to set up an experiment on our prototype where we synchronize the sending between the node and client. The goal for this experiment was to compare our delay with the maximum comfortable delay found in \cite{Alesanco:2010kc}, through clinical studies.
+\\
+\\
+\noindent
+\textbf{Hypothesis:} The transmission delay is marginal, even on a public area network with variable traffic.
+\\
+\\
+\noindent
+\textbf{Method:} We set up the node with software to send a application-layer message containing two control counters in a controlled interval. One acted as a global counter counting the total number of messages sent, the other one always started at zero and was incremented at each stop in the prototype pipeline: in the gateway, the server and the client. In order to synchronize the sending interval, the node was connected directly to the client over an USB interface. When sending the message to the gateway over Bluetooth, the node would also send a trigger pulse to the client over the UART protocol. See Figure~\ref{fig:transmission_delay_figure} for an overview of the setup. The client would receive this trigger pulse and make a timestamp indicating that the transmission has begun. When the client receives the message it makes another timestamp and calculates $\Delta$ along with checking the control counters to see if any messages have been lost during transmission.
+% TODO make fig:transmission_delay_figure
+\\
+\\
+\noindent
+\textbf{Results:} 
 
 % subsubsection end_to_end_latency (end)
 
-\subsubsection{Battery and throughput} % (fold)
-\label{ssub:battery_and_throughput}
+\subsubsection{Battery} % (fold)
+\label{ssub:battery}
 
-To be written.
+Conducting an experiment to test battery life made little sense as we discovered the required throughput did not match the maximum throughput available over Bluetooth Low Energy. Instead we base our battery evaluation on two excel spreadsheets created by Texas Instruments and Nordic Semiconductor, respectively. Texas Instruments have also released a technical document \cite{ti_battery_calculations} describing the different measurements and techniques for measuring and calculating Bluetooth Low Energy power consumption.
+\\
+\\
+\noindent % Focus on cause and effect. Independent variables and Dependent variables
+\textbf{Hypothesis:} Streaming continuous data over a Bluetooth Low Energy link with maximum throughput is more energy efficient than the existing telemetry solutions, lasting 24-48 hours.
+\\
+\\
+\noindent
+\textbf{Method:} Explain the Excel sheet
+\\
+\\
+\noindent
+\textbf{Results:} Various limitations: we do not account for excess power for having indication lights and buttons on the sensor node.
+% subsubsection battery (end)
 
-% subsubsection battery_and_throughput (end)
+\subsubsection{Throughput} % (fold)
+\label{ssub:throughput}
+
+Conducting an experiment to test battery life made little sense as we discovered the required throughput did not match the maximum throughput available over Bluetooth Low Energy. Instead we base our battery evaluation on two excel spreadsheets created by Texas Instruments and Nordic Semiconductor, respectively. Texas Instruments have also released a technical document \cite{ti_battery_calculations} describing the different measurements and techniques for measuring and calculating Bluetooth Low Energy power consumption.
+\\
+\\
+\noindent
+\textbf{Hypothesis:} A Bluetooth Low Energy enabled node is able to transmit a continuous data stream equivalent to that of a 5 lead clinical grade ECG.
+\\
+\\
+\noindent
+\textbf{Method:} We wanted to set up the sensory node with software reaching maximum available throughput and measuring it on a Windows machine using the Master Controller Software from Nordic. This was not conducted.
+\\
+\\
+\noindent
+\textbf{Results:} To be written.
+
+
+% subsubsection throughput (end)
+
 % subsection evaluation (end)
 % section proposed_design (end)
