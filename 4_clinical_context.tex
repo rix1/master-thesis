@@ -15,6 +15,8 @@ Below is a description of the three most important stakeholders.
 
 \end{itemize}
 
+The rest of this chapter will be organized as follows: (...)
+We will end this chapter with a detailed overview of different use cases.
 
 \subsection{Intended use} % (fold)
 \label{sub:intended_use}
@@ -82,27 +84,35 @@ Information on transmission delay is also scarce in the literature we reviewed. 
 
 % subsubsection the_information_centre (end)
 
-% subsection existing_solutions (end)
-
-\subsection{Requirements} % (fold)
-\label{sub:requirements}
-
-We are going to wrap up Section~\ref{sec:literature_review} and ~\ref{sec:interviews} up with an overview of the functional and non functional requirements for a modern monitoring system.
-
-\subsubsection{Non functional Requirements} % (fold)
-\label{ssub:non_functional_requirements}
-
-(I should limit this to my scope)
-
-% subsubsection non_functional_requirements (end)
-
-\subsubsection{Functional Requirements} % (fold)
-\label{ssub:functional_requirements}
-
-What requirements does physicians demand from physiological sensors? In this section we discuss different requirements such as timeliness, ECG resolution and sample rate. (This could be moved to literature review)
-
-% subsubsection functional_requirements (end)
-
 % subsection requirements (end)
+
+\subsection{Use Cases} % (fold)
+\label{ssub:use_cases}
+
+One limitation of previous research is the lack of practical use cases. We believe these has to be included in order to get an understanding of the context the solution have to support. The following use cases are related to the technical and mobility aspects of the monitoring solution. Keep in mind that these use cases only assess some parts of the system.
+
+\newline
+\noindent
+\textbf{Patient}
+
+\begin{enumerate}
+
+  \item[\textsc{U1.1}:]\textbf{Stationary:} This use case will describe the situation where a patients monitored while lying in bed. Here both gateway and sensor would be stationary.
+
+  \item[\textsc{U1.2}:]\textbf{Partly ambulatory:} Here patients are monitored while walking around their bed. This means the patient is ambulatory while the gateway is stationary.
+
+  \item[\textsc{U1.3}:]\textbf{Ambulatory:} This use case describe the situation where patients are monitored while walking around the room or ward, with the personal gateway in their pocket. This means the patient is fully ambulatory.
+
+\end{enumerate}
+
+\newline
+\noindent
+\textbf{Medical Professional}
+\begin{enumerate}
+
+  \item[\textsc{U2.1}:] Setting up the patients personal gateway
+  \item[\textsc{U2.2}:] Monitor a patients ECG on a separate device
+
+\end{enumerate}
 
 % section clinical_context (end)

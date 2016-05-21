@@ -8,13 +8,13 @@ The most critical success factors in every research project lies in the research
 
 Wireless monitoring of physiological metrics is a wide topic covering many similar or related instances of the same problem. In order to reduce the scope we decided to look at only one instance, namely wireless ECG monitoring. Because of this, the project in it self can be considered a case study in ECG. It was important to us that we investigated ECG in depth, as well as studying the practice in it's natural, clinical setting. This is reflected in our data collection methods, which include multiple sources and methods and has a focus on relationships and processes.
 
-Like in any project involving people and technology there is an inherent complexity that the researchers have to unravel in order to understand the forces that guide the socio-technical systems in front of them. For this research project it was clear that we needed to approach the practical clinical aspects in addition to the technical aspects of ECG monitoring. Because of this, we differentiate our data collection methods in those applied when researching the technical side of these systems, and those applied when exploring the medical domain and current practices.\\
+Like in any project involving people and technology there is an inherent complexity that the researchers have to unravel in order to understand the forces that guide the socio-technical systems in front of them. For this research project it was clear that we needed to approach the practical clinical aspects in addition to the technical aspects of ECG monitoring. Different stakeholders may have different views and knowledge about various aspects of the challenges with todays monitoring systems. In order to achieve a deeper understanding of the context and difficulties, we decided to approach both medical professionals and technical engineers. Because of this, we differentiate our data collection methods in those applied when researching the technical side of these systems, and those applied when exploring the medical domain and current practices.\\
 \newline
 \noindent
 \textbf{Clinical:} In order to understand how and why ECG monitoring is practiced, we applied mainly qualitative techniques. This was done through observations and interviews with medical professionals, and will be discussed further in Section~\ref{ssub:interviews} and Chapter \ref{sec:clinical_context}.\\
 \newline
 \noindent
-\textbf{Technical:} Our strategy for researching the technical requirements to clinical ECG monitoring systems involved understanding both today's existing technical solutions and those proposed in literature. Because this a wide field field, several methods for data collection has been utilized. These include interviews, document and literature analysis, as well as experiments, and is discussed further in Section~\ref{sec:experiments} and Chapter~\ref{sec:technology_assessment}.
+\textbf{Technical:} Our strategy for researching the technical requirements to clinical ECG monitoring systems involved understanding both today's existing technical solutions and those proposed in literature. Because this a wide field spanning different domains, several methods for data collection have been utilized. These include interviews, document and literature analysis, and experiments, as discussed further in Section~\ref{sec:experiments} and Chapter~\ref{sec:technology_assessment}.
 \\
 \newline
 \noindent
@@ -31,38 +31,55 @@ This neatly ties together our study of clinical practices with the technical res
 \subsection{Interviews and observations} % (fold)
 \label{sub:interviews}
 
-% TODO skrive om hvordan jeg gjorde det på to sykehus for å få flere sources
-
 % subsection interviews (end)
-This section will describe interviews, their pros and cons and how they are conducted.
+This section will describe interviews, how they were conducted and the inherent strengths and weaknesses of doing interviews.
 
-Different stakeholders may have different views and knowledge about various aspects of the challenges with todays monitoring systems. In order to achieve a deeper understanding of the context and difficulties, we decided to approach different stakeholders.
+Because we knew little about existing practices and wanted multiple sources, we decided to conduct interviews at two different Norwegian hospitals. This way we could either record the differences in ECG monitoring practices or confirm that they were the same. Norwegian hospitals are usually organized with an in-house department for technical engineers, which made it easier for us to organize the interviews with different stakeholders.
+
+A lot of knowledge is embedded in the people and practices of their every day routines. An introductory conversation at the first hospital revealed that nurses at both the intensive care units and the cardiac observation unit had most practical experience with the technology. In these units they handle ECG and telemetry solutions on a daily basis. After this quick survey we constructed both unstructured and semi-structured interviews for both hospitals with a focus on open questions. This way we were able to develop a understanding of how people viewed their work and how they interpreted the technology that was part of their everyday routines. This also made the research more flexible, as we were able to do interviews with nurses in their natural working environment on a short notice.
+
+We also arranged for two observation sessions at the second hospital, in order to see for ourself how different aspects of patient monitoring were carried out. In the first session we observed a nurse preparing and conducting a full 12-lead ECG test on a colleague, and in the second session we observed another nurse monitoring 10 remote telemetry patients, and 6 bedside patients in a intensive care unit. During both observations, we got the chance to ask follow-up questions, which further increased our understanding.
+
+Although nurses have most practical experience with the monitoring practices, they do not assess the ECG plots diagnostically. Because of this we also conducted two semi-structured interviews, with a cardiovascular surgeon and anesthesiologist. These interviews were conducted later in the project and provided clarifications, useful diagnostic insight as well as domain knowledge.
+
+Because this is a highly specialized field, most knowledge is embedded in the workplace. This also holds for the technical knowledge. In order to learn about the technical solutions backing the ECG monitoring we reached out to the clinical engineers at both hospitals. Conducting structured interviews was inexpedient in the beginning, and we began with unstructured interviews at the first hospital. After we had established a basic understanding of the components and solutions, we moved on to conduct semi-structured interviews at the second hospital. This enabled comparison of the technical solutions between the two hostpial.
+
+
+% TODO Write about interviews with researchers
+As mentioned in Chapter~\ref{sec:literature_review}, wireless body area networks and sensor technology are active research areas. In order to gain valuable insight in this development we conducted yet another unstructured interview with a researcher working with short-range wireless monitoring in critical care at The Intervention Centre at Oslo University Hospital.≤
+
+All in all we conducted 8 different interview sessions, interviewing a total of 11 people. This included 4 clinical engineers, 3 nurses, 2 physicians as well as 2 researchers from The Intervention Centre at Oslo University Hospital. During all interviews we took note of people's experience with, interpretations of, and reactions to the technical monitoring systems and daily routines. We observed what people said and did, and afterwards reflected over what they did not say or do. This way we were able to search for latent needs in the existing practices. The knowledge gained from these interviews are treated in Section~\ref{sec:clinical_context}. 
 
 % subsubsection interviews (end)
-
-This section will describe observations, the abilities it enables and how they are conducted.
 
 \subsection{Experiments} % (fold)
 \label{sub:experiments}
 
 % TODO Wirite about how we want to make a protoype 
 
+
+
 % subsection experiments (end)
 
 
-\subsubsection{Data Collections and Analysis} % (fold)
-\label{ssub:data_collections_and_analysis}
+\subsection{Document and literature analysis} % (fold)
+\label{sub:document_and_literature_analysis}
 
-As we will see in Section~\ref{sec:method}, literature review was a major part of this research project in terms of data collection and analysis. A lot of work has been done within the field of WBANs and WSNs, and a systematic approach to gathering and analyzing and extracting knowledge from previous work was an absolute necessity. Literature was also consulted in order to learn about patient monitoring.
+A lot of work has been done within the field of WBANs and telemetry, and a systematic approach to gathering, analyzing and extracting knowledge from previous work was an absolute necessity. Section~\ref{ssub:method_literature_analysis} will describe how we collected and analyzed literature from previous research to  investigating the topic of WBANs. Documents provided from technical engineers was assessed in order to learn about existing patient monitoring solutions.
 
-However, wireless technology is changing at a rapid pace and certain practical issues are directly linked to the technology in question. This puts a limit on the information and knowledge you can gather from literature. Because of this, we chose interviews as a method for gathering information about the domain and existing practices. A lot of knowledge is embedded in the people and practices of their every day routines. We used both unstructured and semi-structured interviews and with a focus on open questions. This way we were able to develop a understanding of how people viewed their work and how they interpreted the technology that was part of their everyday routines. This also made the research more flexible, and we were able to do interviews on a short notice. This strategy enabled us to talk to people in their natural working environment.
+\subsubsection{Literature analysis} % (fold)
+\label{ssub:method_literature_analysis}
 
-We took note of people's experience with, interpretations of, and reactions to the technical monitoring systems they had at hand. We observed what people said and did, and afterwards reflected over what they did not say or do. This way we were able to search for latent needs in the existing practices. 
+
+
+% subsubsection literature_analysis (end)
+
+
+However, wireless technology is changing at a rapid pace and certain practical issues are directly linked to the technology in question. This puts a limit on the information and knowledge you can gather from literature. 
+
 
 Two stakeholders was selected for the survey: Medical engineers and medical practitioners. In order assess the validity of our observations, we chose to conduct interviews in two rounds on two separate hospitals, talking with stakeholders in both and comparing the results. This approach was helpful not only because we got to compare the technical solutions deployed but also the practices around patient monitoring. An alternative approach could have been to target departments higher in the organizational level like purchasing organizations, and do the comparison on the information gathered. This approach however could easily suffer from a mismatch between the general guidelines and the deployed technology as well as long turnover times, meaning a lot of time would have gone by just waiting for an answer from the respective departments.
 
-% subsubsection data_collections_and_analysis (end)
-
-% subsection research_strategies_and_methods (end)
+% subsection document_and_literature_analysis (end)
 
 % section method (end)
