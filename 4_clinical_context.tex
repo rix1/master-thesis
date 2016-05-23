@@ -1,9 +1,7 @@
 \section{Clinical Context} % (fold)
 \label{sec:clinical_context}
 
-This section describes the requirements for the prototype. First we outline the prototype, then an introduction of the stakeholders and their roles follow, before elaborating on non-functional requirements. Lastly, a comparison of the different stakeholders and their concerns are conducted. 
-
-Below is a description of the three most important stakeholders.
+This section describes our findings from the interviews of clinical practices. These findings form the basis of our use cases as well as some functional requirements. We will discuss both similarities and differences found in clinical practices as well as describing the patient monitoring solutions deployed today. Throughout this section we will refer to the three most important stakeholders, which is listed below:
 
 \begin{itemize}
 
@@ -11,29 +9,36 @@ Below is a description of the three most important stakeholders.
 
   \item[\textbf{Physicians}] Physicians and clinicians are the medical staff that are responsible for care and treatment of patients, as well as operating their respective wards and departments. They are the ones that will install the sensors on the patient.
 
-  \item[\textbf{Technical engineer}] Technical engineer is defined as the medical and biomedical maintenance engineer responsible for installing and maintaining the technical equipment used for medical purposes at hospitals. Among other things, they are responsible for doing technical maintenance  on the central heart monitoring system, which is as close as we come to an established way of monitoring vital signs of multiple patients in hospitals today.
+  \item[\textbf{Clinical engineer}] Clinical engineer is defined as the medical and biomedical maintenance engineer responsible for installing and maintaining the technical equipment used for medical purposes at hospitals. Among other things, they are responsible for doing technical maintenance  on the central heart monitoring system, which is as close as we come to an established way of monitoring vital signs of multiple patients in hospitals today.
 
 \end{itemize}
 
-The rest of this chapter will be organized as follows: (...)
+The rest of this chapter will be organized as follows: 
 We will end this chapter with a detailed overview of different use cases.
 
 \subsection{Intended use} % (fold)
 \label{sub:intended_use}
 
-I paid several visits to both St. Olavs and Vestre Viken HF in order to observe and talk to experts in the domain of patient monitoring. Karl Øyri made it clear that I had to consider the *intended use* for my prototype. However convenient, monitoring ambulatory patients is merely an action following an an intention, not the goal in itself. As mentioned, many before me have taken the rather deterministic approach of looking at the technology and claiming it will revolutionize health care because of its properties and possibilities. Therefore we must ask the question, for what patient profile are we solving the problem? What use cases? What is the intended use?
+The researcher at The Intervention Centre made it clear that we had to consider the \textit{intended} use for our prototype. However convenient, monitoring ambulatory patients is merely an action following an an intention, not the goal in itself. We want to avoid the deterministic approach of attributing properties to technology that guarantee the effects and outcome it will have health care. We must therefore ask the question, for what patient profile are we solving the problem? What use cases? What is the intended use?
+\\
+\newline
+(...)
+\\
+\newline
+At second hospital, a centralized monitoring station similar to the one we found at the first hospital was located at the intensive care unit. In addition to patients located in the ICU, they also monitored patients in other parts of the hospital connected via telemetry. Both the local and the remote patients were connected to a 5 lead (EASI) ECG setup. If there was something suspicious with the readings on the screen, both the ICU and the unit with the remote patients had several standalone 12-lead ECG units that could be connected to the patient on request. We observed how a patient could be connected to the standalone ECG device with 10 electrodes in order to get the full 12-lead resolution. This device was mobile (on wheels) and had the form factor of a small laptop computer. See Figure~\ref{fig:10_leadECG}. It was standalone in the sense that it's only output was a printed exert from the examination as shown in Figure~\ref{fig:pappa_ecg} from a built in printer. We also visited two other medical units at the same hospital that did ECG monitoring. Both of which used a 3-lead setup. This stands to show that at the second hospital, 3 and 5-lead setups are most used in continuous monitoring. The full 12-lead was only used in short examinations on demand. This practice was also confirmed at the Clinic of Cardiology at the first hospital.
 
-At Vestre Viken a centralized monitoring station similar to the one I visited at St. Olavs was located at the intensive care unit. In addition to patients located in the ICU, they also monitored patients in other parts of the hospital connected via telemetry. Both the local and the remote patients were connected to a 5 lead (EASI) ECG setup. If there was something suspicious with the readings on the screen, both the ICU and the unit with the remote patients had several standalone 12-lead ECG units that could be connected to the patient on request. Through a demonstration, I was shown how a patient was connected to the standalone ECG device with 10 electrodes in order to get the full 12-lead resolution. This device was mobile (on wheels) and had the form factor of a small laptop computer. It was standalone in the sense that it's only output was a printed exert from the examination as shown in Figure~\ref{fig:pappa_ecg} from a built in printer. We also visited two other medical units at the same hospital that did ECG monitoring. Both of which used a 3-lead setup. This stands to show that at Vestre Viken, 3 and 5-lead setups are most used in continuous monitoring. The full 12-lead was only used in short examinations on demand. This practice was also confirmed at the Clinic of Cardiology at St. Olavs.
-
-% TODO Insert pappa_ecg
+% TODO insert fig:10_leadECG
+% TODO Insert fig:pappa_ecg
 
 Based on these observations, the intended use of the prototype should be similar to the role played by telemetry systems today. These systems are used for monitoring patients that are expected to experience, or are vulnerable to, heart defects either pre or post surgery, or during treatment. See table Table~\ref{tab:table_heart_irregularities} for a description of the most common irregularities and how they are identified. Because irregularities can happen at any time of the day, continuous monitoring is a fundamental requirement to the prototype.
 
 % TODO Insert table_heart_irregularities
-
-% TODO Insert footnote
-\footnote{Through conversations with a medical professional it became clear that that the prevalence of heart abnormalities of medical interest was likely to happen during physically straining activities like walking stairs etc. However, this could also be happening while resting, as confirmed by an patient who experienced irregular heart beats (cardiac arrhythmia) while sleeping}
-
+\\
+\newline
+(...)
+\\
+\newline
+During the interview with one of the medical professionals it was mentioned that in his experience, the prevalence of cardiac abnormalities of medical interest might happen during physically straining activities like walking stairs etc. However, today they had no practical way of seeing this correlation. The only place where you can monitor the real-time ECG stream is at the central monitoring station. A great deal of planning and synchronization would have to happen in order to conduct a simple ECG-test on a patient under physically strain: One would have to record the time and place while watching the patient doing the activity, then return to the monitoring central and look at the history in order to get a clear view of how the patient's heart reacted to the activity. A better solution would be ability to watch the ECG on a tablet device while observing the patient doing the activity. An improved version of this would be to record indoor location, a step counter and altitude together with the ECG. This way, the medical professional wouldn't have to consult with neither the patient nor the monitoring central. They could just look at the historic ECG data with activity data overlaid.
 
 % subsection intended_use (end)
 
@@ -42,7 +47,7 @@ Based on these observations, the intended use of the prototype should be similar
 
 What can we learn from the systems employed today?
 
-Interviews with medical engineers at both hospitals revealed that both had a telemetry system from Philips installed. In both cases the network infrastructure and equipment was produced by Philips, but was delivered and maintained by different partners (Vingmed AS at Vestre Viken and HEMIT at St. Olavs). In this section I will describe the IntelliVue telemetry system from Philips, which is deployed at Norwegian hospitals today. The studying these systems were conducted in order to gain insight in the practice of wireless patient monitoring today, as well as giving us an indication of how prepared hospitals are for WBANs from a infrastructural point of view.
+Interviews with medical engineers at both hospitals revealed that both had a telemetry system from Philips installed. In both cases the network infrastructure and equipment was produced by Philips, but was delivered and maintained by different local partners. This section will describe the IntelliVue telemetry system from Philips, which as we found out, is deployed at several Norwegian hospitals today. The studying these systems were conducted in order to gain insight in the practice of wireless patient monitoring today, as well as giving us an indication of how prepared hospitals are for WBANs from a infrastructural point of view.
 
 \subsubsection{System Architecture} % (fold)
 \label{ssub:system_architecture}
@@ -61,10 +66,11 @@ Offering every piece in this architecture enables Philips and its local distribu
 \label{sub:the_transceivers}
 
 Although the IntelliVue wireless transceivers provide ambulatory and bedside patient monitoring, there's a catch with increasing the mobility other than the movements themselves. Usually when doing a detailed 12-lead ECG, medical practitioners place the 4 extremity electrodes at the wrists ankles. In telemetry these electrodes are often moved to shoulders and hips in order to increase mobility. However, because of the large muscle mass located in these areas, the recorded ECG signal is prone to more muscle noise. We observed this ourself while studying a 5-lead telemetry reading at one of the hospitals. Accurate, unobtrusive and noise resilient sensors like the ones in \cite{ChulsungPark:2006tf, Anonymous:FtVb5yQr} will be an absolute necessity in persuasive patient monitoring. 
-
-\cite{}
+\\
+\newline
 (...)
-
+\\
+\newline
 Unlike multimedia streams, a physiological data stream cannot be buffered to mask jitter and latency on the receiving end. End to end latency will therefore be experienced as gaps in the monitoring stream, thereby invalidating the purpose of the system.
 
 % TODO Insert this somewhere

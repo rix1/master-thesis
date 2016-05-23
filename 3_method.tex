@@ -34,7 +34,7 @@ This neatly ties together our study of clinical practices with the technical res
 % subsection interviews (end)
 This section will describe interviews, how they were conducted and the inherent strengths and weaknesses of doing interviews.
 
-Because we knew little about existing practices and wanted multiple sources, we decided to conduct interviews at two different Norwegian hospitals. This way we could either record the differences in ECG monitoring practices or confirm that they were the same. Norwegian hospitals are usually organized with an in-house department for technical engineers, which made it easier for us to organize the interviews with different stakeholders.
+In order assess the validity of our observations and get multiple sources, we decided to conduct interviews at two different Norwegian hospitals. This way we could either record the differences in ECG monitoring practices or confirm that they were the same. Norwegian hospitals are usually organized with an in-house department for technical engineers, which made it easier for us to organize the interviews with different stakeholders.
 
 A lot of knowledge is embedded in the people and practices of their every day routines. An introductory conversation at the first hospital revealed that nurses at both the intensive care units and the cardiac observation unit had most practical experience with the technology. In these units they handle ECG and telemetry solutions on a daily basis. After this quick survey we constructed both unstructured and semi-structured interviews for both hospitals with a focus on open questions. This way we were able to develop a understanding of how people viewed their work and how they interpreted the technology that was part of their everyday routines. This also made the research more flexible, as we were able to do interviews with nurses in their natural working environment on a short notice.
 
@@ -44,11 +44,9 @@ Although nurses have most practical experience with the monitoring practices, th
 
 Because this is a highly specialized field, most knowledge is embedded in the workplace. This also holds for the technical knowledge. In order to learn about the technical solutions backing the ECG monitoring we reached out to the clinical engineers at both hospitals. Conducting structured interviews was inexpedient in the beginning, and we began with unstructured interviews at the first hospital. After we had established a basic understanding of the components and solutions, we moved on to conduct semi-structured interviews at the second hospital. This enabled comparison of the technical solutions between the two hostpial.
 
+As mentioned in Chapter~\ref{sec:literature_review}, wireless body area networks and sensor technology are active research areas. In order to gain valuable insight in this development we conducted another unstructured interview with a researcher working with short-range wireless monitoring in critical care at The Intervention Centre at Oslo University Hospital.
 
-% TODO Write about interviews with researchers
-As mentioned in Chapter~\ref{sec:literature_review}, wireless body area networks and sensor technology are active research areas. In order to gain valuable insight in this development we conducted yet another unstructured interview with a researcher working with short-range wireless monitoring in critical care at The Intervention Centre at Oslo University Hospital.≤
-
-All in all we conducted 8 different interview sessions, interviewing a total of 11 people. This included 4 clinical engineers, 3 nurses, 2 physicians as well as 2 researchers from The Intervention Centre at Oslo University Hospital. During all interviews we took note of people's experience with, interpretations of, and reactions to the technical monitoring systems and daily routines. We observed what people said and did, and afterwards reflected over what they did not say or do. This way we were able to search for latent needs in the existing practices. The knowledge gained from these interviews are treated in Section~\ref{sec:clinical_context}. 
+All in all we conducted 8 different interview sessions, talking to a total of 10 people. This included 4 clinical engineers, 3 nurses, 2 physicians as well as the clinical researcher from The Intervention Centre. During all interviews we took note of people's experience with, interpretations of, and reactions to the technical monitoring systems and daily routines. We observed what people said and did, and afterwards reflected over what they did not say or do. This way we were able to search for latent needs in the existing practices. The knowledge gained from these interviews are treated in  Section~\ref{sec:clinical_context}.
 
 % subsubsection interviews (end)
 
@@ -57,7 +55,7 @@ All in all we conducted 8 different interview sessions, interviewing a total of 
 
 % TODO Wirite about how we want to make a protoype 
 
-
+In order to answer our problem statement and main research question, we wanted to build a working prototype based on available technology and open standards. The prototype was validated through experiments, testing certain critical aspects of ECG based on the knowledge gained throughout the project. These experiments can be found in Subsection~\ref{sub:evaluation}. We wanted to test if these minimum requirements could be upheld, and did not exceed the requirements required for clinical use.
 
 % subsection experiments (end)
 
@@ -65,20 +63,11 @@ All in all we conducted 8 different interview sessions, interviewing a total of 
 \subsection{Document and literature analysis} % (fold)
 \label{sub:document_and_literature_analysis}
 
-A lot of work has been done within the field of WBANs and telemetry, and a systematic approach to gathering, analyzing and extracting knowledge from previous work was an absolute necessity. Section~\ref{ssub:method_literature_analysis} will describe how we collected and analyzed literature from previous research to  investigating the topic of WBANs. Documents provided from technical engineers was assessed in order to learn about existing patient monitoring solutions.
+A lot of work has been done within the field of WBANs and telemetry, and a systematic approach to gathering, analyzing and extracting knowledge from previous work was an absolute necessity. This section will describe how we collected literature and documents from previous research and existing solutions to investigating the topic of WBANs.
 
-\subsubsection{Literature analysis} % (fold)
-\label{ssub:method_literature_analysis}
+Searching for information was a maturing process. Finding the right search terms did take some time, but we found the most relevant results on Google Scholar using a combination of keywords such as \textit{``WBAN, WSN, patient monitoring, BLE, Bluetooth Smart, ambulatory patient monitoring, ECG''}.
 
-
-
-% subsubsection literature_analysis (end)
-
-
-However, wireless technology is changing at a rapid pace and certain practical issues are directly linked to the technology in question. This puts a limit on the information and knowledge you can gather from literature. 
-
-
-Two stakeholders was selected for the survey: Medical engineers and medical practitioners. In order assess the validity of our observations, we chose to conduct interviews in two rounds on two separate hospitals, talking with stakeholders in both and comparing the results. This approach was helpful not only because we got to compare the technical solutions deployed but also the practices around patient monitoring. An alternative approach could have been to target departments higher in the organizational level like purchasing organizations, and do the comparison on the information gathered. This approach however could easily suffer from a mismatch between the general guidelines and the deployed technology as well as long turnover times, meaning a lot of time would have gone by just waiting for an answer from the respective departments.
+Documents were collected from two sources: The Norwegian Directorate for e-Health supplied us with standardization documents and guidelines from Continua Health Alliance. These are documents describing interoperability aspects such as how data should be exchanged between sensors, gateways and end services. We received in total 8 documents in the H.810-813 series, dated 2014. One of the clinical engineers also supplied us with installation and service manuals to the telemetry system they had installed. This were 2 documents and one presentation dated 2007, describing the Philips IntelliVue telemetry system in detail.
 
 % subsection document_and_literature_analysis (end)
 
