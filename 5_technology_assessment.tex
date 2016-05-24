@@ -40,11 +40,11 @@ An overview of the different prototype components:
 
   \item[\textbf{Node:}] A node is the sensory device that does one or more physiological measurements and communicates it wirelessly to either another node or to a sink in the WBAN. In order to achieve wearability the nodes has to be as small as possible. Batteries are often the largest part of today’s sensory nodes and the biggest energy consumer is typically the antenna \cite{Ullah:2010ci}.
 
-  \item[\textbf{WBAN:}] Multiple nodes connected together constitute the wireless body area network (WBAN). The network topology of these vary depending on the communication protocol between the nodes, but they are typically organized as single hop stars, or multi-hop mesh networks \cite{Anonymous:6F6UBBK9}. Desirable qualities in a WBAN is a low energy PHY layer, and a flexible MAC protocol capable of doing smart routing and the ability to be self organizing \cite{Anonymous:XKViPHhV} \cite{Anonymous:OEjzuKTe}.
+  % \item[\textbf{WBAN:}] Multiple nodes connected together constitute the wireless body area network (WBAN). The network topology of these vary depending on the communication protocol between the nodes, but they are typically organized as single hop stars, or multi-hop mesh networks \cite{Anonymous:6F6UBBK9}. Desirable qualities in a WBAN is a low energy PHY layer, and a flexible MAC protocol capable of doing smart routing and the ability to be self organizing \cite{Anonymous:XKViPHhV} \cite{Anonymous:OEjzuKTe}.
 
   \item[\textbf{Personal gateway:}] In previous literature this tier in the patient monitoring stack is also called a Personal Server (PS) or a WBAN sink. This can be a touch device with a graphical user interface, a tele health station, or just a dedicated sink in the WBAN with a larger battery. Because of the low energy consumption of the nodes, you typically need to facilitate communication between the WBAN and a boarder router with some device that has more battery capacity, a stronger antenna and that is easier to replace on a frequent basis. For the remainder of this thesis we will assume the personal gateway is a feature rich touch device, with a graphical user interface like the Samsung Galaxy S6.
 
-  \item[\textbf{Boarder router:}] The border router can be categorized as a end node in a local area network providing access network access for proprietary devices through one or more wireless networking interfaces. Based on the network configuration and overall architecture of the monitoring system this router may have different responsibilities. A smart-gateway can for example provide additional services specialized for sensory data. These services can include but are not limited to local caching, pre-processing and on-demand-processing, WBAN discovery, localization and more \cite{DrAmirMohammadRahmani:2014vx}.
+  % \item[\textbf{Boarder router:}] The border router can be categorized as a end node in a local area network providing access network access for proprietary devices through one or more wireless networking interfaces. Based on the network configuration and overall architecture of the monitoring system this router may have different responsibilities. A smart-gateway can for example provide additional services specialized for sensory data. These services can include but are not limited to local caching, pre-processing and on-demand-processing, WBAN discovery, localization and more \cite{DrAmirMohammadRahmani:2014vx}.
 
   \item[\textbf{HIS:}] Hospital information system. This is a common term for the various types of information systems at hospitals. The way these are implemented and used varies from across borders, regions, and even between different departments within the same hospital. Because of this invariance in systems and practice, interoperability across communication protocols and data formats is of outmost importance. For the remainder of this thesis we will discuss only one HIS, namely the monitoring central. This is responsible for collecting, processing and storing and serving sensor data to clients.
 
@@ -71,16 +71,18 @@ Most of the relevant development kits we evaluated were based on one of the Nord
 
 In terms of software development on these different boards, we investigated the different IoT operating systems and assessed the feasibility of using these for our purpose. After a quick survey, the small RiotOS \cite{Anonymous:a1din1ZK}, running on only 1.5kB RAM and 5kB of ROM, looked like the most promising alternative. A comparison of the major operating systems for IoT-applications can be found at \cite{Anonymous:a1din1ZK}. For our project however, it was concluded that the node functionality would be limited and specialized rather than general. Hence, adding a dedicated operating system to our already growing technology stack would impose more risk to our project. It should also be mentioned that this technology and the platforms that are being built around them are not very mature: The seeds for RiotOS were planted less than 10 years ago as it started out as an operating system for wireless sensor networks in Germany in 2008 \cite{newRef:52}. An example of this lack of maturity, is that we have yet to find a RiotOS library for accessing the Bluetooth stack on nRF51822 trough SoftDevices.
 
-Due to the increasing risk and complexity more dependencies add to the development, we dropped support for 6LoWPAN, although an increased insight in this was of interest when we started the project. In addition, a concurrent research project investigating the practical limitations of using IPv6 enabled Bluetooth Smart (6LoWPAN) technology, was already in progress at the Department of Telematics.
+Due to the increasing risk and complexity more dependencies add to the development, we dropped support for 6LoWPAN, although this is an important advance for network interoperability in low energy devices. There was an interest for this when we started the project, but a concurrent research project investigating the practical limitations of using IPv6 enabled Bluetooth Smart (6LoWPAN) technology, was already in progress at the Department of Telematics.
 
 % subsection soc_considerations (end)
 
 \subsection{Node} % (fold)
 \label{sub:node}
 
-The first prototype iteration used a Nordic nRF51 evaluation kit from 2013, which supported Bluetooth Smart version 4.0 trough a software stack Nordic calls SoftDevices. Because of it's relative old age (development in this area happens at a rapid pace) the latest Nordic SDK \footnote{The Nordic nRF5 SDK forms the foundation of what you need of drivers, libraries SoftDevices and code examples to develop your own low-energy Bluetooth, ANT product} support for this board was version 6, while the most recent SDK is at version 10. This turned out to cause a lot of compatibility problems, and the development process was tedious: We had to flash both SoftDevices and our own compiled software onto the board manually using Segger's J-Link software. In addition to this, the J-Link debugging options were not supported on our development system.
+The first prototype iteration used a Nordic nRF51 evaluation kit from 2013, which supported Bluetooth Smart version 4.0 trough a software stack Nordic calls SoftDevices. A SoftDevice is a precompiled and linked binary that implements the Bluetooth protocol stack for NRF51 boards. Because of the board's relative old age (development in this area happens at a rapid pace) the latest Nordic SDK\footnote{The Nordic nRF5 SDK forms the foundation of what you need of drivers, libraries SoftDevices and code examples to develop your own low-energy Bluetooth, ANT product} support for this board was version 6, while the most recent SDK is at version 10. This turned out to cause a lot of compatibility problems, and the development process was tedious: We had to flash both SoftDevice and our own compiled software onto the board manually using Segger's J-Link software. In addition to this, the J-Link debugging options were not supported on our development system.
 
 Because of the compatibility/legacy issues we had with the node in our initial prototype, we decided to replace the 2013 evaluation kit for a nRF51 Development Kit originally released late 2014 \cite{newRef:53}. This board supports a newer SDK (version 8), two new SoftDevices and ARM's mBED development platform \cite{newRef:54} The latter was crucial as it drastically eased the process of compiling and installing software on the development board. mBED is a online development platform for embedded devices developed and maintained by Arm \cite{newRef:55} along with partners and contributors. It solves the problem of setting up an correct environment for compiling C++ code specific to a given development board, by building and compiling programs in the cloud. This means they maintain and keep track of all dependencies and environment configurations needed for correctly building and compiling code specific to a given board before making a binary file available for download. An mBED enabled board connected to your computer via USB will be available as a mass storage device. In order to install the software, you simply drag the bundled binaries over to the mass storage device, and the software will auto-install. 
+
+While the development process was eased, programming ARM Cortex M is still complicated, and so is Bluetooth Low Energy. Simulating ECG data is also a non-trivial task, and based on these three factors we decided to use as much available code for the board programming as possible.
 
 In order to simulate the ECG data stream on the board, different existing ECG simulators written in C++ were considered \cite{newRef:56, newRef:56:1, newRef:56:2}. We decided to go for ECGSYN, a realistic ECG waveform generator created at Oxford and MIT \cite{newRef:56:2}. This is a flexible program that let us customize sampling frequency and mean heart rate among other things. ECGSYN generates a synthesized ECG signal based on algorithms described in \cite{newRef:58}. Se figure Listing~\ref{lst:ecgsyn:terminal} for an overview of the different adjustable parameters.
 
@@ -111,11 +113,11 @@ In order to simulate the ECG data stream on the board, different existing ECG si
 \subsubsection{Maximum Throughput} % (fold)
 \label{ssub:maximum_throughput}
 
-Because experience with embedded software development was limited, we did some preliminary research on max throughput on Bluetooth Smart, before starting implementation of the ECGYN software on the development board. As mentioned in Section~\ref{sec:literature_review}, Bluetooth Smart specifies the theoretical max throughput to be 1 Mbit/s. However there are always factors limiting this theoretical capacity. In the following section will elaborate on these limiting factors, and comparing our findings with the minimum requirements of clinical ECG.
+Because experience with embedded software development was limited, we did some preliminary research on max throughput on Bluetooth Smart, before starting the customization and implementation of the ECGYN software on the development board. As mentioned in Section~\ref{sec:literature_review}, Bluetooth Smart specifies the theoretical max throughput to be 1 Mbit/s. However there are always factors limiting this theoretical capacity. In the following section will elaborate on these limiting factors, and comparing our findings with the minimum requirements of clinical ECG.
 
 Note that in the following section, the mobile gateway acts the role of the client, and the wireless sensor acts the role of the server - the one with data. Once a Bluetooth Smart connection is established between two devices, the connection parameters \cite{newRef:59} control the frequency at which data can be sent between the two devices. The two connection parameters of interest to us are, minimum and maximum connection interval, which specify the minimum and maximum rate at which the client will ask for data from the server. By the specification, both fields have an allowed minimum and maximum value of 6 and 3200. By multiplying these values by 1.25ms we get the highest and the lowest frequency at which a central may ask for data: 7,5ms and 4s (4000ms).
 
-The GATT protocol specifies different commands for the client to get information about the server. Among these, GATT offers notifications and indications. In high-throughput applications a client can request/register a notification on a given characteristic. This means that the server will send a notification containing maximum 20 Byte of user data to the client whenever data becomes available. These notifications buffered by the SoftDevice and ACK-ed in the link layer. The Bluetooth specification allows for up to 6 packets to be sent per connection interval, but this number may vary between different implementations. This gives the following formula for calculating max throughput:
+The GATT protocol specifies different commands for the client to get information about the server. Among these, GATT offers notifications and indications. In high-throughput applications a client can request/register a notification on a given characteristic. This means that the server will send a notification containing maximum 20 Byte of user data to the client whenever data becomes available. These notifications are buffered by the SoftDevice and ACK-ed in the link layer. The Bluetooth specification allows for up to 6 packets to be sent per connection interval, but this number may vary between different implementations. This gives the following formula for calculating max throughput:
 
 \[
 \frac{1000\: ms/s}{CI}\: \times\: PPI\: \times\: BPP\: \times\: 8\: bits/byte = Throughput
@@ -123,14 +125,16 @@ The GATT protocol specifies different commands for the client to get information
 
 \newline
 \noindent
-Here, CI is connection interval, PPI is packets per interval, and BPP represents the number of bytes sent per packet. Because packets per interval and the bytes per packet may vary between devices and operating systems, the maximum throughput over a Bluetooth Low Energy link is relative. However, maximizing the allowed values above, we get the following result: 
+Here, $CI$ is connection interval, $PPI$ is packets per interval, and $BPP$ represents the number of bytes sent per packet. Because packets per interval and the bytes per packet may vary between devices and operating systems, the maximum throughput over a Bluetooth Low Energy link is relative. However, maximizing the allowed values above, we get the following result: 
 
 \[
 \frac{1000\: ms/s}{7,5ms}\: \times\: 6\: packets\: \times\: 20\:bytes/packet\: \times\: 8\: bits/byte = 128\:Kbit/s
 \]
 \newline
 \noindent
-This is substantially lower than the advertised 1Mbit/s. In Table~\ref{tab:ble_device_throughput}  we present calculated throughputs for different devices based on their implementation of the Bluetooth specification. In Table~\ref{tab:ecg_sampling_rate} we list different configurations for capturing ECG with the minimum recommended sampling rates from \cite{Anonymous:j4z9MACD}. We see that low energy Bluetooth is not well suited for clinical ECG due to it's restricted and variable throughput.
+This is substantially lower than the advertised 1Mbit/s. In Table~\ref{tab:ble_device_throughput}  we present calculated throughputs for different devices based on their implementation of the Bluetooth specification. In Table~\ref{tab:ecg_sampling_rate} we list different configurations for capturing ECG with the minimum recommended sampling rates from \cite{Anonymous:j4z9MACD}. Generally, we see from this that low energy Bluetooth \textit{at the moment} is not well suited for clinical ECG due to it's restricted and variable throughput.
+
+To confirm this discovery we tried installing some firmware \cite{nordic:throughputtest} to see if we indeed could achieve the 128 Kbps throughput. However, our LG G4 test device did not support the low connection interval, and dropped the connection as soon as the throughput test started. This proves that there are differences between different Android devices, as the operating system should support the optimal configuration.
 
 % subsubsection maximum_throughput (end)
 
@@ -163,21 +167,38 @@ Although creating a user friendly application was not part of the scope of this 
 \end{table}
 
 With an architecture dependent on a personal mobile gateway we chose a technology that was in accordance with our mission statement: available and open. The Android platform is not only more open than it's counterparts, but also supports higher throughput as seen in Table~\ref{tab:throughput_overview}.
-The gateway would ideally be a multi-purpose touch device with a rich user interface, enabling an easy and practical way of setting up and configuring the wireless sensors a patient would be equipped with. Although outside the scope of this project, some thought have gone into the practicalities of setting up and managing a network of wireless sensor nodes. For further research we recommend looking into using Near Field Communication (NFC) technology for physically completing events such as \emph{(A)} pairing sensors, \emph{(B)} connecting the gateway to the WBAN and \emph{(C)} authenticating medical professionals and patients on the personal gateway. We believe these are all use cases where an active NFC chip could drastically improve the user experience, but the subject need more research.
+The gateway would ideally be a multi-purpose touch device with a rich user interface, enabling an easy and practical way of setting up and configuring the wireless sensors a patient would be equipped with. Although outside the scope of this project, some thought have gone into the practicalities of setting up and managing a network of wireless sensor nodes. For further research we recommend looking into using Near Field Communication (NFC) technology for physically conducting events such as \emph{(A)} pairing sensors, \emph{(B)} connecting the gateway to the WBAN and \emph{(C)} authenticating medical professionals and patients on the personal gateway. We believe these are all use cases where an active NFC chip could drastically improve the user experience, but the subject need more research.
 
 In the following section we will describe how we approached the implementation of the gateway application. Because we only intended to make a prototype, some details will be kept out for brevity. 
-\\
-\newline
-(...)
+
+\subsubsection{User interface} % (fold)
+\label{ssub:the_user_interface}
+
+The functional requirements were prioritized and we developed the user interface in a iterative fashion as more functionality gradually were added. The resulting user interface is not user tested as this was outside the scope of this project. The ``front-end'' of the application consist of two simple views, as seen in Figure~\ref{fig:android_frontend}. As the application is opened the user is presented with a list of sensors connected to the gateway. Clicking either a sensor or the plus sign in the downright corner brings the user to the next screen, where you can either modify the existing device or add a new one. 
+
+The application has prioritized functionality over reliability, but still some basic error handling and connection tests are implemented. Both when connecting to a Bluetooth Smart sensor and when selecting endpoint, the application tests the connection. How this is implemented is described in Section~\ref{ssub:bluetooth_module} and \ref{ssub:endpoint_module}. When both sensor and endpoint is selected, the user is able to activate the routing of the data by clicking on activate. The user would then be navigated back to the overview of previously added devices.
+
+In terms of the interoperability issues mentioned in \ref{sub:system_architecture} we imagine the gateway application could be extended with a an online repository containing a growing amount of sensor peripherals as well as standardized data formats the data streams could be transformed into. These settings would be downloaded and stored together with the sensor node settings. Making the gateway application compliant with a wide array of proprietary sensors and compliant data formats.
+
+% subsubsection the_user_interface (end)
+
+\subsubsection{Bluetooth Module} % (fold)
+\label{ssub:bluetooth_module}
+
+We have split the Bluetooth functionality out in a separate and isolated part of the program. Depending on the hardware, a future version of the application could replace the Bluetooth module with, say a Zigbee interface.
+
+% subsubsection bluetooth_module (end)
+
+\subsubsection{Endpoint module} % (fold)
+\label{ssub:endpoint_module}
+
+% subsubsection endpoint_module (end)
 
 % (I intend to cover the following aspects of the gateway software:)
-% 1. The Bluetooth background service thread. 2. The main activity and the data transformation to a compliant format (+ briefly different UI decisions) and 3. The Meteor socket component
 
 % TODO insert Figure~\ref{fig:architectureWorkflow} 
 
 % node -> bluetooth le -> android gateway -> websockets -> meteor webserver -> socket -> mongoDB -> 
-
-% As mentioned in Sect. 3, many earlier research projects have been scoped so that they only focus on a given set of system components. We believe WBAN interoperability
 
 % subsection gateway (end)
 
