@@ -77,32 +77,33 @@ We also visited two other medical units at the same hospital that did some ECG m
 \subsubsection{The Information Centre} % (fold)
 \label{ssub:the_information_centre}
 
-The Philips IntelliVue Information Center constitute the the central monitoring post. Here clinicians has the ability to view multiple real-time patient leads at once, get details on demand, and adjust alarms and thresholds. The IntelliVue supports up to XX patients at once.
+The Philips IntelliVue Information Center constitute the the central monitoring post. Here clinicians has the ability to view multiple real-time patient leads at once, see detailed view on a given patient, and adjust alarms and thresholds. The IntelliVue Telemetry System supports up to 128 2,4Ghz transceivers.
 
-
-
-% TODO Kanskje noe om lagring?
+% TODO Kanskje noe om lagring? I så fall måtte det bli for å snakke om 
 
 % an provide a web view for accessing the patient data from outside the monitoring central. According to the service manuals they claim that the information displayed in the web view should be near-real time with little delay, but recommend users to always use the bedside monitor or the information center for real-time monitoring.
 
-We were unable to find a accurate metric for the end-to-end latency in IntelliVue's documentation. However, because the providers have full control over the whole infrastructure and the distances at a hospital are relatively small, it is reasonable to assume this delay is less than 2 seconds from the measurement to the information center. An alternative approach to getting information about acceptable transmission delay would be to measure the actual network traffic in the systems deployed today. But as mentioned, we were unsuccessful in getting in touch with the network administrator at either hospitals.
+To this project, the most interesting aspects of the monitoring central was the end-to-end latency between the electrode on the patient to the central. We were unable to find an accurate metric for the end-to-end latency in IntelliVue's documentation. Information on transmission delay is also scarce in the literature we reviewed. Within the field of WBAN very few address this issue, and and we had to look into Telemedicine in order to find any suggestions to end to end latency at all. Through clinical trails, Alesanco and Garcia suggest 3-4 seconds as the maximum acceptable delay for a reliable real-time ECG transmission \cite{Alesanco:2010kc}. Their research however is concerned with telemedicine over 2G/3G networks, where the intended use and QoS are different. 
+Because Philips have full control over the whole infrastructure and the distances at a hospital are relatively small, it is reasonable to assume the delay from the measurement to the information center is less than 2 seconds. An alternative approach to getting information about acceptable transmission delay would be to measure the actual network traffic in the systems deployed today. But as mentioned, we were unsuccessful in getting in touch with the network administrator at either hospitals.
 
-Information on transmission delay is also scarce in the literature we reviewed. Within the field of WBAN very few address this issue, and and we had to look into Telemedicine in order to find any suggestions to end to end latency at all. Through clinical trails, Alesanco and Garcia suggest 3-4 seconds as the maximum acceptable delay for a reliable real-time ECG transmission. Their research however is concerned with telemedicine over 2G/3G networks, and the intended use and QoS are different. This being the only exact metric we could relate to, we chose to use this as our baseline for network delay.
+As Alesanco and Garcia's requirement was the only exact metric we could relate to, we chose to use this as our baseline for network delay.
 
 % subsubsection the_information_centre (end)
 
 \subsection{Use Cases} % (fold)
 \label{ssub:use_cases}
 
-Having established the intended use, we will use this section to describe different use cases. As mentioned, one limitation of previous research is the lack of practical use cases. We believe these has to be included in order to get an understanding of the context the solution have to support. Keep in mind that these use cases only assess some parts of the system, and have been tailored to account for the technical and mobility aspects our monitoring solution. 
-
+Having established the intended use, we will use this section to describe different use cases. We believe this has to be included in order to get an understanding of the context the solution have to support. Keep in mind that these use cases only assess some parts of the system, and cover more practical features rather than technical.
+\\
 \newline
 \noindent
 \textbf{Patient}
-
 \begin{enumerate}
 
   \item[\textsc{U1.1}:]\textbf{Stationary:} This use case will describe the situation where a patients monitored while lying in bed. Here both gateway and sensor would be stationary.
+  
+  A patient is being monitored wirelessly while lying in bed.
+  
 
   \item[\textsc{U1.2}:]\textbf{Partly ambulatory:} Here patients are monitored while walking around their bed. This means the patient is ambulatory while the gateway is stationary.
 
@@ -110,7 +111,6 @@ Having established the intended use, we will use this section to describe differ
 
 \end{enumerate}
 
-\newline
 \noindent
 \textbf{Medical Professional}
 \begin{enumerate}
@@ -119,5 +119,179 @@ Having established the intended use, we will use this section to describe differ
   \item[\textsc{U2.2}:] Monitor a patients ECG on a separate device
 
 \end{enumerate}
+
+
+\newline
+
+\begin{table}[H]
+\renewcommand{\arraystretch}{1.2}
+\captionof{table}{Use case: Stationary}
+\begin{tabular}{|p{4cm}|p{9cm}|}
+\hline
+ID & U1 \\ \hline
+Name & Stationary \\ \hline
+Goal & \begin{tabular}[c]{@{}l@{}}
+Store ECG data using a stationary sensor and a\\ stationary gateway.
+\end{tabular} \\ \hline
+Actors &  Patient\\ \hline
+Start requirements & \begin{tabular}[c]{@{}l@{}}
+1. Mobile gateway is connected to the sensor\\
+2. Mobile gateway is connected to the local WiFi.
+\end{tabular} \\ \hline
+End requirements & \begin{tabular}[c]{@{}l@{}}
+Patient ECG stream is transmitted to the monitoring\\ station and the data is stored.
+\end{tabular} \\ \hline
+Main flow & \begin{tabular}[c]{@{}l@{}}
+The gateway is activated and data gets routed\\ from sensor to network.
+\end{tabular} \\ \hline
+Alternative flow & \begin{tabular}[c]{@{}l@{}}
+None
+\end{tabular} \\ \hline
+Parent use case & None \\ \hline
+Child use case & U2 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\renewcommand{\arraystretch}{1.2}
+\captionof{table}{Use case: Partly Ambulatory}
+\begin{tabular}{|p{4cm}|p{9cm}|}
+\hline
+ID & U2 \\ \hline
+Name & Partly Ambulatory \\ \hline
+Goal & \begin{tabular}[c]{@{}l@{}}
+Store ECG data while having a moving\\ sensor and a stationary gateway.
+\end{tabular} \\ \hline
+Actors &  Patient\\ \hline
+Start requirements & \begin{tabular}[c]{@{}l@{}}
+1. Mobile gateway is connected to the sensor\\
+2. Mobile gateway is connected to the local WiFi.\\
+3. The gateway is activated and data gets routed\\ from sensor to network.
+\end{tabular} \\ \hline
+End requirements & \begin{tabular}[c]{@{}l@{}}
+Patens are able to move freely around their beds\\ while the gateway is stationary on the nightstand.
+\end{tabular} \\ \hline
+Main flow & \begin{tabular}[c]{@{}l@{}}
+Patients are able to get out of bed and move walk\\ around undisturbed.
+\end{tabular} \\ \hline
+Alternative flow & \begin{tabular}[c]{@{}l@{}}
+None
+\end{tabular} \\ \hline
+Parent use case & U1 \\ \hline
+Child use case & U2 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\renewcommand{\arraystretch}{1.2}
+\captionof{table}{Use case: Ambulatory}
+\begin{tabular}{|p{4cm}|p{9cm}|}
+\hline
+ID & U3 \\ \hline
+Name & Ambulatory \\ \hline
+Goal & \begin{tabular}[c]{@{}l@{}}
+Store ECG data having a both a moving sensor\\ and a moving gateway.
+\end{tabular} \\ \hline
+Actors &  Patient\\ \hline
+Start requirements & \begin{tabular}[c]{@{}l@{}}
+1. Mobile gateway is connected to the sensor\\
+2. Mobile gateway is connected to the local WiFi.\\
+3. The gateway is activated and data gets routed\\ from sensor to network.
+\end{tabular} \\ \hline
+End requirements & \begin{tabular}[c]{@{}l@{}}
+1. Patens can move freely outside their room.\\
+2. The gateway automatically connects to new\\ access points.
+\end{tabular} \\ \hline
+Main flow & \begin{tabular}[c]{@{}l@{}}
+Patients pick up the mobile gateway and walks out\\ of the room.
+\end{tabular} \\ \hline
+Alternative flow & \begin{tabular}[c]{@{}l@{}}
+None
+\end{tabular} \\ \hline
+Parent use case & U2 \\ \hline
+Child use case & None \\ \hline
+\end{tabular}
+\end{table}
+
+
+% TODO Insert figures
+% \begin{figure}[H]
+% \centering
+% \includegraphics[scale=0.8]{img/usecase/receive.png}
+% \caption{Receive images from Vscan}
+% \label{fig:receive_image_uc}
+% \end{figure}
+
+\begin{table}[H]
+\renewcommand{\arraystretch}{1.2}
+\captionof{table}{Use case: Set up gateway}
+\begin{tabular}{|p{4cm}|p{9cm}|}
+\hline
+ID & U4 \\ \hline
+Name & Set up gateway \\ \hline
+Goal & \begin{tabular}[c]{@{}l@{}}
+The gateway is configured and ready to proxy\\sensor node data to endpoint
+\end{tabular} \\ \hline
+Actors &  Clinician\\ \hline
+Start requirements & \begin{tabular}[c]{@{}l@{}}
+1. Sensor node and gateway have sufficient battery.\\
+2. The clinician is authenticated and authorized\\
+to configure the gateway application.\\
+3. Monitoring server is running.
+\end{tabular} \\ \hline
+End requirements & \begin{tabular}[c]{@{}l@{}}
+The gateway is ready to stream data from the sensor\\
+node to the endpoint.
+\end{tabular} \\ \hline
+Main flow & \begin{tabular}[c]{@{}l@{}}
+1. The clinician opens the application and click ``new''.\\
+2. The clinician click scan for sensor and select\\
+the correct sensor.\\
+3. The clinician selects an endpoint from the list.\\
+4. Clicks ``activate'' which test and activates the\\
+gateway routing.
+\end{tabular} \\ \hline
+Alternative flow & \begin{tabular}[c]{@{}l@{}}
+The gateway is not able to connect to either sensor\\
+or endpoint. Error message is shown.
+\end{tabular} \\ \hline
+Parent use case & None \\ \hline
+Child use case & U1,U2,U3 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\renewcommand{\arraystretch}{1.2}
+\captionof{table}{Use case: Monitor ECG}
+\begin{tabular}{|p{4cm}|p{9cm}|}
+\hline
+ID & U5 \\ \hline
+Name & Monitor ECG\\ \hline
+Goal & \begin{tabular}[c]{@{}l@{}}
+The clinician is able to monitor a ECG plot\\
+on a separate device.
+\end{tabular} \\ \hline
+Actors &  Clinician\\ \hline
+Start requirements & \begin{tabular}[c]{@{}l@{}}
+The clinician is authorized to monitor ECG.\\
+\end{tabular} \\ \hline
+End requirements & \begin{tabular}[c]{@{}l@{}}
+The ECG stream is available at the clinicians\\
+device
+\end{tabular} \\ \hline
+Main flow & \begin{tabular}[c]{@{}l@{}}
+1. A clinician navigates to the correct URL\\
+on a web enabled device.\\
+2. The clinician selects the correct patient\\
+and sees a live ECG plot in her web browser.
+\end{tabular} \\ \hline
+Alternative flow & \begin{tabular}[c]{@{}l@{}}
+The clinician is not authorized and do not\\
+get access to the ECG stream.
+\end{tabular} \\ \hline
+Parent use case & U4 and U1 or U2 or U3.\\ \hline
+Child use case & None\\ \hline
+\end{tabular}
+\end{table}
 
 % section clinical_context (end)
