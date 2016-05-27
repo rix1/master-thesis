@@ -35,6 +35,10 @@ One possible configuration could be wiring up a patient with 10 electrodes, but 
 
 We need a section where we discuss the Bluetooth throughput.
 
+Had we investigated the limitations of Bluetooth earlier in the project, we might have - as we first discovered this when implementing the code.
+
+Gateway: In retrospect, we see that aiming for making a flexible solution took much more time to develop, and proved to be generate more edge cases, making the experimentation more prone to errors. Instead we could have hard-coded the devices and endpoints into the gateway, which could have eased the execution of the end-to-end experiment. We made a mistake by prioritizing functionality over reliability in the gateway implementation.
+
 % subsection bluetooth (end)
 
 \subsection{Limitations and Advantages} % (fold)
