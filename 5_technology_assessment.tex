@@ -135,7 +135,7 @@ To confirm this discovery we installed some firmware \cite{nordic:throughputtest
 \\
 \newline
 \noindent
-Based on the discoveries made above we decided not to implement ECGSYN for simulating streaming ECG from the node. The reason for this is addressed in Section~\ref{ssub:throughput}. For the end-to-end latency experiment, we based our code on the BLE_HeartRate repository \cite{mbed:bleheartrate} published by the Bluetooth Low Energy team at the mBed platform. The details of this implementation will be addressed in Section~\ref{ssub:end_to_end_latency}.
+Based on the discoveries made above we decided not to implement ECGSYN for simulating streaming ECG from the node. The reason for this is addressed in Section~\ref{ssub:throughput}. For the end-to-end latency experiment, we based our code on the BLE\_HeartRate repository \cite{mbed:bleheartrate} published by the Bluetooth Low Energy team at the mBed platform. The details of this implementation will be addressed in Section~\ref{ssub:end_to_end_latency}.
 
 % subsection node (end)
 
@@ -331,7 +331,7 @@ In order to get a baseline indication on the overall network performance of our 
 \noindent
 \textbf{Method:} Our basic setup here was the same as the solution would have been in practice: A sensor node streams data to a mobile gateway. This gateway routes the traffic to a monitoring server, which stores the data and updates it's connected clients. See Figure~\ref{fig:architecture} for an overview. But in order to accurately measure the time a message was sent and received in the client, we had to add two more components, as well as making some modifications to the Nordic development board and web client.
 
-First off we connected the development board to a computer using a USB cable. We changed the original BLE_HeartRate example code that generated and sent a ``heart rate measurement''. We modified it to increment a number and sending it over the Bluetooth interface\footnote{Still using the Heart Rate Measurement Characteristic} in a 1 second interval. Because the counter was initialized as a \code{uint8_t}\footnote{Integer represented by exactly 8 bits}, we reset the counter after 100 seconds, letting the experiment run for extended time periods without triggering an integer overflow. 
+First off we connected the development board to a computer using a USB cable. We changed the original BLE\_HeartRate example code that generated and sent a ``heart rate measurement''. We modified it to increment a number and sending it over the Bluetooth interface\footnote{Still using the Heart Rate Measurement Characteristic} in a 1 second interval. Because the counter was initialized as a \code{uint8\_t}\footnote{Integer represented by exactly 8 bits}, we reset the counter after 100 seconds, letting the experiment run for extended time periods without triggering an integer overflow. 
 
 The moment the current counter value was sent to the gateway, we also logged the current value of the counter to the connected computer using mBed's SerialPC interface. This enables the micro controller to communicate with a computer through a USB Virtual Serial Port. On the computer we created a NodeJS application\footnote{From this point addressed as BLE-emit-logger.} that listened to the serial port and registered the counter value along with a timestamp. This setup assumes the delay over the USB cable is negligible. 
 
@@ -347,7 +347,7 @@ synchronizing time in networked based computer games\cite{timesync:algo}. The ex
 \\
 \noindent
 \textbf{Results:} 
-After setting everything up, we let the experiment run for 24 hours, sending a total of 86 400 messages from the sensor node to the web client. This was done to see if there was any noticeable effect on other network traffic which would increase during the day. Because the counter (called msg_id) was reset every 100 seconds we matched up pairs of events closely related in time with the same \code{msg_id} and calculated the $\delta t$ between them. We processed the data in Excel and generated a plot as seen in Figure~\ref{fig:endToEndPlot}.
+After setting everything up, we let the experiment run for 24 hours, sending a total of 86 400 messages from the sensor node to the web client. This was done to see if there was any noticeable effect on other network traffic which would increase during the day. Because the counter (called msg{\_id) was reset every 100 seconds we matched up pairs of events closely related in time with the same \code{msg\_id} and calculated the $\Delta t$ between them. We processed the data in Excel and generated a plot as seen in Figure~\ref{fig:endToEndPlot}.
 
 To be continued...
 
