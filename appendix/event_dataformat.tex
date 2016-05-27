@@ -1,0 +1,35 @@
+\section{Data formats} % (fold)
+\label{sec:data_formats}
+
+Data format for events logged in experiment~\ref{ssub:end_to_end_latency}:
+
+\begin{lstlisting}[caption={Event data format}, label={lst:event_dataformat}, basicstyle=\small]
+  
+  // Event registered when a message was
+  // sent from the Nordic BLE development kit
+
+{
+	"_id" : "MBSbcKFQKErd6WFFA",
+	"msg_id" : "16",
+	"timestamp" : 1464302487111,
+	"eventtype" : "send",
+	"client_id" : "ble_node"
+}
+
+  // Event registered when message arrived
+  // in web client
+{
+	"_id" : "4P5r3pR6GG4qdawdq",
+	"msg_id" : "16",
+	"timestamp" : 14643024891232,
+	"eventtype" : "receive",
+	"clinet_id" : "LJxMCrPSnpP5TpFoo"     // SessionID of the web client
+}
+
+
+\end{lstlisting}
+
+
+
+
+% section data_formats (end)

@@ -248,60 +248,19 @@ In the client we have been looking at various ways of rendering the stream of va
 \subsection{Evaluation} % (fold)
 \label{sub:evaluation}
 
-Because of inconsistencies and missing information in previous research, we wanted to conduct a series of tests that could validate our technology choices. Because of limitations in our ability to perform some of these experiments traditionally, they have been designed to give us some indications on how the technology performs in practice. Therefore the experiments are linked to the use cases:
+Inconsistencies and missing information in previous research, motivated us to evaluate the evaluate the performance of the technology in our baseline functional tests. To do this we set up one experiment and based the evaluation of the two other requirements on information from a combination of sources. An overall goal with this evaluation was to get indications on how the technology performed in practice. Because of this we link the requirements to our cases:
 
 \begin{itemize}
-	\item \textbf{End to end latency:} Would give us an indication of the overall overhead between the physical entities in our proposed design and the interfaces that connect them. This 
-	\item Battery life
-	\item Maximum throughput
+	\item \textbf{Maximum throughput:} In order for this telemetry solution to be used in a clinical context, it would have to support the minimum requirements for clinical ECG. This requirement is therefore critical for all use cases to be considered in the clinical context.
+  	\item \textbf{Battery life:} The prototype would have to perform at least as good as the existing solutions. This requirement is applicable in both U1,U2 and U3. 
+  	\item \textbf{End to end latency:} Would give us an indication of the overall overhead between the physical entities in our proposed design and the interfaces that connect them. This applies to use case U5, as this delay must not exceed 3 seconds.
 \end{itemize}
 \noindent
-Because of the discoveries made during the development of the prototype, maximum throughput and battery lifetime has not been addressed experimentally, but are rather discussed.
-
-As we became aware of, standard compliant Bluetooth Smart have some restrictions in terms of practical throughput. These findings were validation enough for us, and we did not conduct any further experiments
-
-\subsubsection{End to end latency} % (fold)
-\label{ssub:end_to_end_latency}
-
-In order to get a baseline indication on the overall network performance of our prototype we set up an experiment measuring the end-to-end latency/delay. We were only interested in the $\Delta$ between the node and the client (the two endpoints) and not the intermediate steps. Because of this we were able to set up an experiment on our prototype where we synchronize the sending between the node and client. The goal for this experiment was to compare our delay with the maximum comfortable delay found in \cite{Alesanco:2010kc}, through clinical studies.
-\\
-\\
-\noindent
-\textbf{Hypothesis:} The transmission delay is marginal, even on a public area network with variable traffic.
-\\
-\\
-\noindent
-\textbf{Method:} We set up the node with software to send a application-layer message containing two control counters in a controlled interval. One acted as a global counter counting the total number of messages sent, the other one always started at zero and was incremented at each stop in the prototype pipeline: in the gateway, the server and the client. In order to synchronize the sending interval, the node was connected directly to the client over an USB interface. When sending the message to the gateway over Bluetooth, the node would also send a trigger pulse to the client over the UART protocol. See Figure~\ref{fig:transmission_delay_figure} for an overview of the setup. The client would receive this trigger pulse and make a timestamp indicating that the transmission has begun. When the client receives the message it makes another timestamp and calculates $\Delta$ along with checking the control counters to see if any messages have been lost during transmission.
-% TODO make fig:transmission_delay_figure
-\\
-\\
-\noindent
-\textbf{Results:} 
-
-% subsubsection end_to_end_latency (end)
-
-\subsubsection{Battery} % (fold)
-\label{ssub:battery}
-
-Conducting an experiment to test battery life made little sense as we discovered the required throughput did not match the maximum throughput available over Bluetooth Low Energy. Instead we base our battery evaluation on two excel spreadsheets created by Texas Instruments and Nordic Semiconductor, respectively. Texas Instruments have also released a technical document \cite{TIbatteryCalculations} describing the different measurements and techniques for measuring and calculating Bluetooth Low Energy power consumption.
-\\
-\\
-\noindent % Focus on cause and effect. Independent variables and Dependent variables
-\textbf{Hypothesis:} Streaming continuous data over a Bluetooth Low Energy link with maximum throughput is more energy efficient than the existing telemetry solutions, lasting 24-48 hours \cite{philipsIntellivueTrancievers}.
-\\
-\\
-\noindent
-\textbf{Method:} Explain the Excel sheet
-\\
-\\
-\noindent
-\textbf{Results:} Various limitations: we do not account for excess power for having indication lights and buttons on the sensor node.
-% subsubsection battery (end)
 
 \subsubsection{Throughput} % (fold)
 \label{ssub:throughput}
 
-Conducting an experiment to test battery life made little sense as we discovered the required throughput did not match the maximum throughput available over Bluetooth Low Energy. Instead we base our battery evaluation on two excel spreadsheets created by Texas Instruments and Nordic Semiconductor, respectively. Texas Instruments have also released a technical document \cite{TIbatteryCalculations} describing the different measurements and techniques for measuring and calculating Bluetooth Low Energy power consumption.
+In terms of throughput and data generated from ECG there has been a lot of different metrics used in previous research. Part of our motivation for finding the required throughput was clearing up in this confusion, establishing a realistic minimum for throughput required in order to do wireless, clinical grade ECG, within the context of our indented use (as shown in Section~\ref{sub:intended_use}).
 \\
 \\
 \noindent
@@ -309,7 +268,9 @@ Conducting an experiment to test battery life made little sense as we discovered
 \\
 \\
 \noindent
-\textbf{Method:} We wanted to set up the sensory node with software reaching maximum available throughput and measuring it on a Windows machine using the Master Controller Software from Nordic. This was not conducted.
+\textbf{Method:} In Section~\ref{ssub:maximum_throughput} we saw the maximum practical throughput over a Bluetooth Low Energy link. In order to evaluate this capacity with the required throughput for clinical grade ECG, will list the different configurations of a clinical ECG, and calculate the throughput required for each configuration.
+
+% TODO Ennå ikke sikker på om dette kan regnes ut ved å ta antall elektroder * bit-dybde
 \\
 \\
 \noindent
@@ -317,6 +278,80 @@ Conducting an experiment to test battery life made little sense as we discovered
 
 
 % subsubsection throughput (end)
+
+\subsubsection{Battery} % (fold)
+\label{ssub:battery}
+
+Conducting an experiment to test battery life made little sense as we decided to not implement any form of ECG simulation. Instead we base our battery evaluation on two excel spreadsheets created by Texas Instruments and Nordic Semiconductor, as well as results from earlier research. Texas Instruments have also released a technical document \cite{TIbatteryCalculations} describing the different measurements and techniques for measuring and calculating Bluetooth Low Energy power consumption.
+\\
+\\
+\noindent % Focus on cause and effect. Independent variables and Dependent variables
+\textbf{Hypothesis:} Streaming continuous data over a Bluetooth Low Energy link with maximum throughput is more energy efficient than the existing telemetry solutions, lasting 24-48 hours \cite{philipsIntellivueTrancievers}.
+\\
+\\
+\noindent
+\textbf{Method:} Based on our throughput evaluation, we knew the  Bluetooth connection in a 5-lead streaming ECG scenario would be required to be set up with optimal connection parameters, as discussed in Section~\ref{ssub:maximum_throughput}. Because of this, we were able to input these configuration parameters into  the Excel sheets provided by Texas Instruments and Nordic, and get a theoretical metric for battery life.
+\\
+\\
+\noindent
+\textbf{Results:} 
+Not surprisingly the two numbers we get from the Excel sheets are different. The results from Texas Instruments calculations, suggest the ECG board to have a life time of XX using a 1000 mAh battery, while Nordics calculations resulted in XX using the same 1000 mAh battery. Comparing these results from Bluegiga's online Bluetooth Smart battery estimator, we see that the results are way above the  the established minimum requirement we set of 48 hours. However these are clearly approximations, and there may be many internal and external factors affecting the battery life. An example is the excess power going to indication lights, buttons and potential audible alarms that may be installed on in a commercial sensor node.
+
+% subsubsection battery (end)
+
+\subsubsection{End to end latency} % (fold)
+\label{ssub:end_to_end_latency}
+
+In order to get a baseline indication on the overall network performance of our prototype we set up an experiment measuring the end-to-end latency. We were interested in the $\Delta t$ between the node and the client (the two endpoints) and not the intermediate steps. Because of this we set up an experiment where we measure the time it takes for a message from the patients node to the clinician's web client. The goal for this experiment was to compare our delay with the maximum comfortable delay for a ECG transmission found in \cite{Alesanco:2010kc}.
+\\
+\\
+\noindent
+\textbf{Hypothesis:} The end-to-end transmission delay in the system is within the comfortable limits of clinical ECG monitoring.
+\\
+\\
+\noindent
+\textbf{Equipment:} 
+\begin{itemize}
+
+  \item nRF51 Development Kit
+  
+  \item LG G4 with gateway software
+  
+  \item Monitoring server
+  
+  \item Clinician's web client 
+  
+  \item Time synchronization server
+
+  \item Bluetooth event logging server
+  
+\end{itemize}
+\\
+\\
+\noindent
+\textbf{Method:} Our basic setup here was the same as the solution would have been in practice: A sensor node streams data to a mobile gateway. This gateway routes the traffic to a monitoring server, which stores the data and updates it's connected clients. See Figure~\ref{fig:architecture} for an overview. But in order to accurately measure the time a message was sent and received in the client, we had to add two more components, as well as making some modifications to the Nordic development board and web client.
+
+First off we connected the development board to a computer using a USB cable. We changed the original BLE_HeartRate example code that generated and sent a ``heart rate measurement''. We modified it to increment a number and sending it over the Bluetooth interface\footnote{Still using the Heart Rate Measurement Characteristic} in a 1 second interval. Because the counter was initialized as a \code{uint8_t}\footnote{Integer represented by exactly 8 bits}, we reset the counter after 100 seconds, letting the experiment run for extended time periods without triggering an integer overflow. 
+
+The moment the current counter value was sent to the gateway, we also logged the current value of the counter to the connected computer using mBed's SerialPC interface. This enables the micro controller to communicate with a computer through a USB Virtual Serial Port. On the computer we created a NodeJS application\footnote{From this point addressed as BLE-emit-logger.} that listened to the serial port and registered the counter value along with a timestamp. This setup assumes the delay over the USB cable is negligible. 
+
+The BLE-emit-logger then sent both the timestamp and counter value to the monitoring server, where it was registered in a data collection as an event. See Appendix ~\ref{sec:data_formats} for an example of the data format used. This was strictly not necessary, as we could have just stored the result locally, but this method eased the post-experiment work as all events from different sources would be located in the same data collection when the experiment finished. We also modified the web client to register the same type of event when it received an update, i.e. when a document was inserted in the data source.
+
+In order to get accurate timestamps, we synchronized the web client and BLE-emit-logger with a remote Time Synchronization server\footnote{Hereafter addressed as TSS} we set up on the same machine as the monitoring server was running. This way, both the BLE-emit-logger, the monitoring server and the web client would have synchronized timestamps. We based the TSS on enmasse.io's TimeSync library\cite{timesync} which is a NodeJS implementation of Zachary Booth Simpson's algorithm for
+synchronizing time in networked based computer games\cite{timesync:algo}. The experiment ran on NTNU's network infrastructure, which is available for students and employees. In order to create a realistic scenario, we set the monitoring server and TSS up on a machine located in a different building, making sure the traffic wouldn't only do a single hop through the nearest access point. A complete overview of the setup can be found in Figure~\ref{fig:experimentSetup}.
+
+% TODO Create figure fig:experimentSetup
+% TODO Si et sted at vi ikke gjorde det med interoperability
+
+\\
+\\
+\noindent
+\textbf{Results:} 
+After setting everything up, we let the experiment run for 24 hours, sending a total of 86 400 messages from the sensor node to the web client. This was done to see if there was any noticeable effect on other network traffic which would increase during the day. Because the counter (called msg_id) was reset every 100 seconds we matched up pairs of events closely related in time with the same \code{msg_id} and calculated the $\delta t$ between them. We processed the data in Excel and generated a plot as seen in Figure~\ref{fig:endToEndPlot}.
+
+To be continued...
+
+% subsubsection end_to_end_latency (end)
 
 % subsection evaluation (end)
 % section technology_assessment (end)
