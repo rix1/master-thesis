@@ -1,34 +1,37 @@
 \section{Discussion} % (fold)
 \label{sec:discussion}
 
-Intro.
+In this chapter we will pull together our findings from Chapter~\ref{sec:technology_assessment} and~\ref{sec:clinical_context} and discuss alternative approaches, strengths and weaknesses with this research project. 
 
-
-  % textit{What are the main challenges of introducing a WBAN monitoring system in clinical environments?}
 
 \subsection{Architecture} % (fold)
 \label{sub:architecture}
 
-The purpose of this section is to highlight that there are contradictory solutions/solutions with tradeoffs with different architectures based on your perspective and concerns. 
+We believe the usage of smart devices in health care will increase with time. A future where both medical staff and patients use their existing or hospital provided smart/touch devices as a tools in treatment and everyday medical related tasks, seems probable in a not too distant future. Some forms of this have already been deployed, like AFGA Healthcare's ORBISme! tablet sized EMR-device, being used in Germany today \cite{newRef:271}. 
 
-An example of this is the tradeoff between energy consumption and mobile gateway bottleneck problem: Some suggest that the mobile gateway should only be used as a device to administer roaming: That the WBAN sensors should send physiological data directly to a boarder router. This proposition solves the problem of the mobile gateway becoming a bottleneck in the WBAN in the case where all traffic have to be routed through the MG. However, this has a tradeoff with energy efficiency: With this organization the node antennas would have to consume more energy in order to send data directly to an access point/boarder router which would typically be located further away than the mobile gateway. This also conflicts with the less discussed topic of interoperability. Should the backend monitoring system not be developed by the same manufacturer as the WBAN nodes, data need to be packaged into interoperable/compliant formats for the information exchange. They might use a reduced format/document structure in order to save bandwidth and processing power. If routing all data through a mobile gateway, this could ensure interoperable data by packaging the data in compliant formats before sending it to the external endpoint. In addition the data would need to be associated with a patient. Such authentication would most likely have to happen through a device with a graphical user interface, such as a touch device acting as a mobile gateway. This also happens to be a less flexible solution: By having a mobile gateway, the owner of the gateway, i.e. the patient could decide weather to send the data to endpoint A, B or maybe only store it locally.
-
-On the same side, the consumer market has recently showed an increased interest in ``smart boarder routers'' or ``hubs'', with Bluetooth Smart and 802.15.4 support in addition to the standard 802.11.X interface. Most notably are the OnHub WiFi router from Google \cite{newRef:60} and Cassia Hub Bluetooth Router \cite{newRef:61}.
-
-% TODO MOVED FROM CHAPT 5 START
-We believe the usage of smart devices in health care will increase with time. A future where both medical staff and patients use their existing or hospital provided smart/touch devices as a tools in treatment and everyday medical related tasks, seems probable in a not too distant future. Some forms of this have already been deployed, like AFGA Healthcare's ORBISme! tablet sized EMR-device, being used in Germany today \cite{newRef:271}. This device might just as well be used as a WBAN hub, a mobile gateway connecting WBAN sensors to local area network and external services. The notion of a mobile gateway has been widely adopted and discussed \cite{Movassaghi:2014hi, Mohammed:2014dw, Touati:2015gy, EmilJovanov:2005ty} in earlier research.
+In the Section~\ref{sec:technology_assessment} we proposed that these devices might just as well be used as a WBAN hub, a mobile gateway connecting WBAN sensors to local area network and external services. On the same side, the consumer market has recently showed an increased interest in ``smart access points'' or ``hubs''. These are WiFi access points with built in support for Bluetooth Smart and 802.15.4 in addition to the standard 802.11.X interface\footnote{ For more information, see  OnHub WiFi router from Google \cite{newRef:60} and Cassia Hub Bluetooth Router \cite{newRef:61}.}.
 
 Something that have not been widely discussed in research, but that is currently being worked on in the industry is data interoperability between different wireless sensors nodes. There is a difference between consumer technology and medical devices. But with the growing interest for personal health monitoring within the consumer market, this distinction easily becomes blurry. Although not having any diagnostic value, it is not improbable that consumer devices soon will see it's way into a medical setting one way or the other: Just recently was the first reported case of medical professionals using historic data form a personal fitness tracker to make an informed, life saving medical decision \cite{newRef:29}.
-% TODO MOVED FROM CHAPT 5 END
 
-% subsection architecture (end)
 
-\subsection{Design alternatives} % (fold)
-\label{sub:design_alternatives}
+---
+
+For our proposed design we chose a two-tier architecture based on a personal\footnote{ Personal in the sense that each patient has it's own gateway. Whether or not these are private devices or hostpial provided raises several security and privacy questions which is the topic for another discussion entirely.}, mobile gateway. To enable a multi-manufacturer sensor environment and ensure interoperability in a scalable manner, we proposed using a repository pattern where a mobile gateway could install the ``profiles'' required for mapping sensor data to the correct formats based on the context, i.e. what sensors was connected, an at what hostpial the patient was located in. 
+
+However there are tradeoffs with this solution. Making a single gateway the sink of several sensors organized in a WBAN creates a single point of failure, as well as a bottleneck. As mentioned in Section~\ref{sub:wireless_body_area_networks}, previous research have proposed categorizing WBAN data in different tiers, based on priority. A real-time ECG stream may be more important and have higher requirements QoS than the occasional temperature measurement\footnote{ Note that deep Vein Thrombosis, or blood clots, can be detected by sudden temperature changes in extremities.}.  With a single point of failure, ensuring the personal gateway is working properly will become of outmost importance, as a faulty gateway will not only take down the low priority sensor measurements, but also the ones with high priority. 
+
+As suggested by Shahamabadi et. al.~\cite{Shahamabadi:2013df}, this architecture is also susceptible to becoming a bottleneck. With a growing number of sensor nodes participating in the WBAN, the amount of data being routed through the gateway increases, and the available capacity for intermediate analysis or other processing such as data transformation (as we suggested in Section~\ref{sub:system_architecture}) decreases. 
+
+An alternate approach involve using mobile gateway just as a facilitator for ``administrative'' tasks like roaming. This require that the WBAN sensors send physiological data directly to a smart access point. This proposition solves the problem of the mobile gateway becoming a bottleneck because traffic does not have to be routed through the gateway. A smart access point would also have more resources for doing intermediate data-processing~\cite{DrAmirMohammadRahmani:2014vx}. However, there is no silver bullet, as this has approach involve a higher energy consumption: With this organization the node antennas would have to consume more energy in order to send data directly to an access point/boarder router which would typically be located further away than the mobile gateway. 
+
+We also suggest this reduces the flexibility and interoperability of he monitoring solution. Should the backend monitoring system not be developed by the same manufacturer as the WBAN nodes, data need to be transformed into compliant application layer data formats for the information exchange\footnote{ This should indeed be standardized between manufacturers and wireless protocols, but from the experience of HL7 and OpenEHR we know this to be a hard problem.}. From a practical standpoint, we believe this transformation scales better at a personal gateway tier. Based on the assumption that the environment will be crowded by similar sensors from different manufacturers, we believe it is easier for one personal device to maintain this responsibility rather than all access points supporting all sensors present in the clinical setting.
+
+----
+
 
 One possible configuration could be wiring up a patient with 10 electrodes, but only having 3 of them activated at a time. Further, one would need to calculate the trade off between doing the ECG analysis onboard the chip versus streaming the data continuously to a WBAN gateway. Either way, the central monitoring station would get notified when abnormalities happened. If the signals were fuzzy, or the doctor demanded higher resolution{1} the remaining 7 electrodes could be activated resulting in a 12-lead ECG. This would match the existing practice of doing low resolution monitoring, and getting details on demand.
 
-% subsection design_alternatives (end)
+% subsection architecture (end)
 
 \subsection{Bluetooth} % (fold)
 \label{sub:bluetooth}
