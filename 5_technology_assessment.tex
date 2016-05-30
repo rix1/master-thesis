@@ -388,13 +388,31 @@ In order to get accurate, synchronized timestamps across different machines, we 
 \\
 \noindent
 \textbf{Results:} 
-Because the timestamp from the Nordic board (called \code{msg\_id}) was present in both \texttt{send} and \texttt{receive} events, we matched up pairs of events with the same \code{msg\_id} and calculated the $\Delta t$ between them. We processed the data in Excel and generated a plot as seen in Figure~\ref{fig:endToEndPlot}.
+Because the incremented value from the Nordic board (called \code{msg\_id}) was present in both \texttt{send} and \texttt{receive} events, we matched up pairs of events with the same \code{msg\_id}. The value on the board was initialized with as an 8 bit unsigned integer, and so the counter returned to zero after reaching 255. Because of this we and other reasons\footnote{In MongoDB documents are not necessarily stored in the consecutive order they were inserted.} we sorted the data set first on the \code{msg\_id} field, and then the \code{timestamp} field, in order to get paired events after each other. After this we calculated the $\Delta t$ between the events and calculated minimum, maximum and average transmission time using Excel. See Table~\ref{tab:end_to_end_results} and a generated a plot in Figure~\ref{fig:endToEndPlot}.
 
-AVG: 60,82ms
-MAX: 297,00ms
-MIN: 18,50ms
+\begin{quote}
+\textbf{Max} 9634,00ms
+\textbf{Avg} 70,61ms
+\textbf{Min} 8,00ms  
+\end{quote}
+
+\noindent
+As we see, the general latency is well below what was reported in \cite{Alesanco:2010kc} as a upper limit for clinically analyzing near real-time ECG. However, we did record some transmissions that were severely delayed. These deviations had a fairly uniform distribution when grouped in 1000ms intervals, as seen in Table~\ref{tab:delayOverThreshold}. The counts are valid for the interval listed on the bottom row. As such, only 1 message had a delay of more than 9,5 seconds, and 99,82\% of the messages arrived less than 500ms after they were sent. 
+
+\begin{table}[]
+\centering
+\caption{End to end delays larger than given thresholds}
+\label{tab:delayOverThreshold}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llllllllll}
+\toprule
+\multicolumn{1}{c}{4} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{1} \\
+0,3 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,1 \textperthousand               \\
+500 ms                & 1500 ms               & 2500 ms               & 3500 ms               & 4500 ms               & 5500 ms               & 6500 ms               & 7500 ms               & 8500 ms               & \textgreater 9500 ms  \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
 
 % subsubsection end_to_end_latency (end)
-
 % subsection evaluation (end)
 % section technology_assessment (end)
