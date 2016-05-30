@@ -3,52 +3,56 @@
 
 % section literature_review (end)
 
-This section cover the literature review and how we approached it.
-Open with how we searched for literature: What were the keywords? How was the approach? Write some sentences about how this is a active research field with changing technology. What years were we looking for?
-
+This section cover the literature review, as well as required background information on Bluetooth and ECG.
 
 \subsection{Electrocardiogram} % (fold)
 \label{sub:electrocardiogram}
 
-Because of reasons already mentioned, most of the reviewed WBAN literature discuss or mention ECG in some form or another. However, we found many inconsistencies and simplifications about ECG, that in worst case may have invalidated parts of the research conducted. Because of this, we spent some time understanding both the measurement itself and how it is conducted. In the following section we introduce ECG before reviewing other research involving the measurement. Lastly we present our findings with recommendations to realistic requirements for a ECG application based on WBAN.
+Because Electrocardiogram, or ECG has such high demands to QoS and continuous streaming, most of the reviewed WBAN literature discuss or mention ECG in some form or another. However, we found many inconsistencies and simplifications about ECG, that in worst case may have invalidated parts of the research conducted. Because of this, we spent some time understanding both the measurement itself and how it is conducted. In the following section we introduce ECG before reviewing other research involving the diagnostic tool.
 
-Electrocardiogram is a measurement of the electrical activity around the heart. The measurements are done by a set of external electrodes attached to the skin at certain places around the chest. These electrodes measure the depolarization of electrical charges that happen in the cell membranes covering the heart at every heart beat. An ECG is conducted by having either 3, 5 or 12 leads. The term lead refers to the voltage difference between a given pair of electrodes, parallel to the direction of the lead. Based on the signal strength of each lead, cardiologists can get information about angles and properties of a given heart. The leads can either be actual or calculated by summing or subtracting a combination of other leads\footnote{ The Cabrera circle uses a vector representation to give a good overview of the different leads, and their relationship}. Typically 3 and 5 electrodes are used for 3 and 5-lead ECG. A full 12-lead ECG however, is often achieved by 10 electrodes: One at each extremity (limb) and 6 on the chest. This has been confirmed through observations at the different hospitals. 
+Electrocardiogram is a measurement of the electrical activity around the heart. The measurements are done by a set of external electrodes attached to the skin at certain places around the chest. These electrodes measure the depolarization of electrical charges that happen in the cell membranes covering the heart at every heart beat. An ECG is conducted by having either 3, 5 or 12 leads. The term lead refers to the voltage difference between a given pair of electrodes, parallel to the direction of the lead. Based on the signal strength of each lead, cardiologists can get information about angles and properties of a given heart. The leads can either be actual or derived from a vector model\footnote{ The Cabrera circle uses a vector representation to give a good overview of the different leads, and their relationship} based on 2 or more actual leads. Typically 3 and 5 electrodes are used for 3 and 5-lead ECG. A full 12-lead ECG however, is often achieved by 10 electrodes: One at each extremity (limb) and 6 on the chest. The differences roles these leads play in practice, are discussed further in Section~\ref{sec:clinical_context}.
 
-In other research there have been a lot of approaches to what ECG is and how it's measured. In \cite{Alesanco:2010kc}, Alesanco and García state that «(...) only eight leads should be transmitted since the other four can be derived from them». This is about the most accurate/realistic description of measuring ECG we've found. Some research \cite{yubin:2012tr}, only consider 1 or 2 leads, something we have yet to find being practiced at medical institutions.
+After the leads are sampled they can be streamed in raw, or compressed and optimized for wireless transmission\cite{Balouchestani:2013dr, Alesanco:2010kc}. Later the signals are analyzed at a processing unit, where common angles and intervals in the QRS complex as well as heart rate are calculated. 
+
+\begin{itemize}
+  \item The QRS complex itself (...)
+  \item The intervals 
+  \item In other research there have been a lot of approaches to what ECG is and how it's measured. In \cite{Alesanco:2010kc}, Alesanco and García state that «(...) only eight leads should be transmitted since the other four can be derived from them». This is about the most accurate/realistic description of measuring ECG we've found. Some research \cite{yubin:2012tr}, only consider 1 or 2 leads, which has been proven insufficient by~\cite{Drew:1998wp}.
+
+\end{itemize}
 
 % subsection electrocardiogram (end)
 
 \subsection{Wireless Body Area Networks} % (fold)
 \label{sub:wireless_body_area_networks}
 
-
-The notion of a mobile gateway has been widely adopted and discussed \cite{Movassaghi:2014hi, Mohammed:2014dw, Touati:2015gy, EmilJovanov:2005ty} in earlier research.
-
+% The notion of a mobile gateway has been widely adopted and discussed \cite{Movassaghi:2014hi, Mohammed:2014dw, Touati:2015gy, EmilJovanov:2005ty} in earlier research.
+Missing.
 % TODO mention the differnt classes of prioritized data
 
 % subsection wireless_body_area_networks (end)
 
-\subsection{Bluetooth} % (fold)
+\subsection{Bluetooth and ambulatory ECG} % (fold)
 \label{sub:bluetooth}
 
 As we'll see in later sections, Bluetooth was an attractive technology for us because of its widespread presence, as well as the low energy features introduced with version 4.0 of the specification. In this section we will cover the basics of Bluetooth Smart and discuss related research projects using the technology.
 
-Bluetooth was originally developed at Ericsson in (...). 
+% Bluetooth was originally developed at Ericsson in (...). 
 
-(...) Because of confusion around the ``low energy'' devices and regular Bluetooth devices Bluetooth SIG announced their new branding strategy in 2011, with a new logo and name: Bluetooth Smart. Throughout this thesis we will use both the old Low Energy suffix as well as Bluetooth Smart (we should probably fix this?).
+% (...) Because of confusion around the ``low energy'' devices and regular Bluetooth devices Bluetooth SIG announced their new branding strategy in 2011, with a new logo and name: Bluetooth Smart. Throughout this thesis we will use both the old Low Energy suffix as well as Bluetooth Smart (we should probably fix this?).
 
-GATT and Profiles
-The profile defines the types of state data that a device exposes and how that data can be used. Profiles are organized like this: 
-Services > Characteristics and Descriptors.
+% GATT and Profiles
+% The profile defines the types of state data that a device exposes and how that data can be used. Profiles are organized like this:
+% Services > Characteristics and Descriptors.
 
-How are Bluetooth Smart profiles implemented? Efforts are being made by Bluetooth SIG to standardize data profiles in order to ensure interoperability between devices supporting the protocol. A profile for a type of device defines the GATT Services which a device of this type must or may implement. This is related to interoperability which we will cover in the next section.
+% How are Bluetooth Smart profiles implemented? Efforts are being made by Bluetooth SIG to standardize data profiles in order to ensure interoperability between devices supporting the protocol. A profile for a type of device defines the GATT Services which a device of this type must or may implement. This is related to interoperability which we will cover in the next section.
 
 % subsection bluetooth (end)
 
 \subsection{Interoperability} % (fold)
 \label{sub:interoperability}
 
-Rahmani et. al. gives a clear overview of different forms of interoperability in their 2015 paper about Smart e-Health Gateways \cite{DrAmirMohammadRahmani:2014vx}. They separate the concern of interoperability and reconfigurability into the following categories: Device interoperability, protocol interoperability, data interoperability, reconfigurability and device discovery and mobility support. In the following sections we will give an overview of data interoperability related to Bluetooth.
+Rahmani et. al. gives a clear overview of different forms of interoperability in their 2015 paper about Smart e-Health Gateways~\cite{DrAmirMohammadRahmani:2014vx}. They separate the concern of interoperability and reconfigurability into the following categories: Device interoperability, protocol interoperability, data interoperability, reconfigurability and device discovery and mobility support. In the following sections we will give an overview of data interoperability related to Bluetooth.
 
 \subsubsection{Data Interoperability} % (fold)
 \label{ssub:data_interoperability}

@@ -26,35 +26,52 @@ We would also suggest this reduces the flexibility and interoperability of he mo
 
 % subsection monitoring_architecture (end)
 
-\subsection{Research methods and results} % (fold)
-\label{ssub:research_methods_and_results}
+\subsection{Research methods} % (fold)
+\label{ssub:research_methods}
 
-We need a section where we discuss the Bluetooth throughput.
+Working with this many different components and across several domains have also proven to be a challenge. As mentioned in the introduction, scoping this project had to be done along the way. Because the goals and intentions also shifted, we ended up making decisions that had to be revisited and in some cases undone at a later point.
 
-Had we investigated the limitations of Bluetooth earlier in the project, we might have - as we first discovered this when implementing the code.
+Having set the path, we are satisfied with the decision of comparing two different hospitals. As we visited the second hospital, several misconceptions were cleared and we got a broadened view, especially on the organization of patients and how the the practice of on-demand monitoring were conducted in relation to the telemetry monitoring. The challenge with qualitative research methods however, is to convert increased personal insight and experience,  into knowledge for everyone else. We took an explanatory approach to this in Chapter~\ref{sec:clinical_context}, where we focused on explaining the systems and practices in a logical manner. We did not structure the chapter after the source of the information, as we rather focused on mixing sources, hopefully creating a more compound impression of today's systems and practices.
 
-Gateway: In retrospect, we see that aiming for making a flexible solution took much more time to develop, and proved to be generate more edge cases, making the experimentation more prone to errors. Instead we could have hard-code   d the devices and endpoints into the gateway, which could have eased the execution of the end-to-end experiment. We made a mistake by prioritizing functionality over reliability in the gateway implementation.
+We spent a lot of time finding the minimum requirements for ECG, without ever finding any gold standards. This is why we present our own guidelines to this in Chapter~\ref{sec:technology_assessment}. Although we searched literature, the reason we didn't find this might be related to our approach and research strategy. For the technical aspects of our prototype, the heavy focus on practice and use cases did not play as big of a role as we first imagined it to do. An alternative approach could have been to target departments and instances at a higher organizational level for our interviews. Here access to standardization documents and practices might be more accessible, as compliance is usually the concern of middle, and higher level management. However, this approach however could easily suffered from a mismatch between the general guidelines and the technology deployed in practice. This would also increase turnover times, meaning a lot of time would have gone by just waiting for answers from the respective higher level organizational departments.
+
+In terms of our data collection, one thing is clear: Getting information from the manufacturers and solution providers, is not worth pursuing unless a collaboration or sponsorship is established before the research begins. The time spent running down dead ends, in order to find ECG related technical specifications on commercial solutions, was in the end deemed unproductive.
+
+
+% subsubsection research_methods (end)
+
+\subsection{Implementation} % (fold)
+\label{sub:implementation}
+
+% TODO Why did we not implement the proposed repository pattern?
+
+Gateway: In retrospect, we see that aiming for making a flexible solution took much more time to develop, and proved to be generate more edge cases, making the experimentation more prone to errors. Because of the complex setup of our end-to-end latency experiment, more time could have gone into planning this making it more robust. In terms of the gateway, we could have focused less on the user interface. One alternative approach could have been to hard-code the devices, characteristics and endpoints into the gateway, which could have eased the implementation, debugging and testing. 
+
+By the time were conducting the first trails of the experiment, we saw that the code (especially on the gateway) did not perform well over time, which was critical for our experiment. We had to do modifications on the fly during the experimentation phase in order to make everything work. We unit tested the individual components manually as we developed, but we left little time for integration tests before conducting the experiment. Had this been planned better we would have reserved time for integration tests. All in all, we see that testing and debugging the time synchronizing on both clients, as well as working with the control flow and user interface of the gateway proved to be most time consuming. It should be mentioned that we intentionally spent as little time as possible on writing custom code for the sensor board. This was because we had little experience with hardware and software development for low energy development kits. 
+
+Implementation wise we admit more time should have been put into prioritizing reliability over functionality.
+
+% subsection implementation (end)
+
+\subsection{Results} % (fold)
+\label{sub:results}
+
+% subsection results (end)
+
+We originally ran the end-to-end experiment for 16 hours during both during the night and throughout the day. This was done to see if there was any noticeable effect on other network traffic which would increase during the day. However, due to the lack of integration tests, we discovered an error with some of the timestamps that invalidated the whole experiment.
 
 \begin{itemize}
 
-  \item Er glad vi fant intended use. Er lett å miste track 
-
-\end{itemize}
-
-
-On interviews: An alternative approach could have been to target departments higher in the organizational level like purchasing organizations, and do the comparison on the information gathered. This approach however could easily suffer from a mismatch between the general guidelines and the deployed technology as well as long turnover times, meaning a lot of time would have gone by just waiting for an answer from the respective higher level organizational departments.
-
-Temporary list of limitations of our study:
-
-\begin{itemize}
-
+  \item Results. Discuss them.
   \item TODO We have not looked into signal nor data compression.
-  \item TODO Network disadvantage - we had no control over the network traffic
+  \item TODO Network disadvantage - we had no control over the network traffic. To account for this we could have conducted the experiment from different locations, and over longer periods of time. Important to note that this is conducted only at application layer.
   \item TODO battery of gateway does also play an important role
 
 \end{itemize}
 
-% subsubsection research_methods_and_results (end)
+
+% subsubsection results (end)
+
 
 \subsection{Future work} % (fold)
 \label{sub:future_work}
