@@ -8,57 +8,53 @@
 % (fold)
 \label{sub:background_and_motivation}
 
-During the last couple of years there has been a significant increase in the number of connected devices. Hardware is getting cheaper and smaller, and the demand for information is growing. Economic prosperity, aging population, the growing middle income population and sensitive public policy are key demand drivers for better healthcare and infrastructure. In addition, a population growth of 4 billion is expected within the next 90 years \cite{WPP2015:Methodology}. In order to facilitate these changes, we need infrastructure that is cost effective, sustainable and scales well. How the healthcare advances in this time of change will have a major impact on how this expected population growth impact our societies. 
+During the last couple of years there has been a significant increase in the number of connected devices. Hardware is getting cheaper and smaller, and the demand for information is growing. Economic prosperity, aging population, the growing middle income population and sensitive public policy are key demand drivers for better healthcare and infrastructure. In addition, a population growth of 4 billion is expected within the next 90 years \cite{WPP2015:Methodology}. In order to facilitate these changes, we need infrastructure that is cost effective, sustainable and that scales well. How the healthcare advances in this time of change will have a major impact on how this expected population growth impact our societies. 
 
 In recent years we have seen an increased effort made by both big and small actors in the technology industry in trying to commercialize health technology. They offer devices that track and monitor activity, sleep and physical traits like weight and glucose levels to name a few \cite{fitbit, fitbit:scale:6}. Some suggest that having this increased access to information about our health and bodies might shift the entire model of medical care; that we are at the brink of a structural change, from a reactive to a proactive healthcare \cite{lynnechou:7, helsit:kari:8, johnmaeda:9, deloitte:healthcare3:0:10}.
 
-One of the most radical changes to todays clinical practices is likely to come from the prevalence of new sensory technology, similar to the ones being developed for the consumer market. New measuring tools and techniques, embedded in small, low energy wireless sensors, could enable an affordable but rigid monitoring system offering patients as well as physicians good user experiences. 
+One of the most radical changes to todays clinical practices is likely to come from the prevalence of new sensory technology, similar to the ones being developed for the consumer market. New measuring tools and techniques, embedded in small, low energy wireless sensors, could enable an affordable monitoring system offering patients as well as physicians good user experiences.
 
-What we need is a low cost, wearable, wireless system for monitoring physiological health information (PHI). This system must offer both patients and physicians the same services and level of quality they get from existing monitoring systems, but with an improved user experience and security measures to match the expectations users have from modern consumer products. 
+% TODO But the consumer industry is catching up?
+
+In short, there will soon be a need for a low cost, wearable, wireless system for monitoring physiological health information in a clinical setting (PHI). This system must offer both patients and physicians the same services and level of performance and quality they get from existing monitoring systems, but with an improved user experience and flexibility to match the expectations users have from modern consumer products. 
 
 One possible orchestration of these sensors are in a wireless body area network, or WBAN for short. This is a collective term for wireless networks situated inside, on or around the human body. This means entire systems of devices communicating with each other in immediate proximity of a human body. Researchers have spent the past 20 years investigating applications, optimizations and possibilities of WBANs. The technology however, has until recent years not been small enough nor energy efficient enough for sensor networks like these to be practically feasible for patient monitoring.
 
-Electronic patient monitoring is today an established practice at modern hospitals. It involves \textit{repeated or continuous observations or measurements of patients, their physiological functions, and the function of the life support equipment} \cite{PMID:10315668}. Studying monitoring systems in a multidisciplinary task: A system that affords good management decisions, can only be created by studying and finding the optimal compromise between several design factors; clinical, engineering and economic \cite{Anonymous:yOjY0N0Y}. On the contrary, personal monitoring devices like fitness trackers. blurs the lines of what monitoring might mean. Because of this ambiguity, we use the following definition of ``monitoring'' throughout this thesis: 
+Electronic patient monitoring is today an established practice at modern hospitals. It involves \textit{repeated or continuous observations or measurements of patients, their physiological functions, and the function of the life support equipment} \cite{PMID:10315668}. Studying monitoring systems in a multidisciplinary task. A system that affords good management decisions, can only be created by studying and finding the optimal compromise between several design factors; clinical, engineering and economic \cite{Anonymous:yOjY0N0Y}. On the contrary, personal monitoring devices like fitness trackers. blurs the lines of what monitoring might mean. Because of this ambiguity, we use the following definition of ``monitoring'' throughout this thesis: 
 
 \begin{quote}
 \textbf{Monitoring:} A repeated or continuous measurement of the physiological functions of one or more patients conducted in a clinical environment.
 \end{quote}
 
-\noindent Traditionally, monitoring vital signs has been conducted only on patients in given situations or with special needs for monitoring, and different physiological metrics are captured individually. An electrocardiography (ECG) test produces one example of such physiological metric. First invented by Willem Einthoven in the early 1900's, it is a technique that captures the electrical activity of the heart over time. Today, ECG is monitored in several different ways, both wired and wirelessly. This thesis will focus on the latter, which consist of two different approaches, depending on the diagnostic need and intention. Telemetry is the process of sampling measurements and transmitting them to receiving equipment for monitoring. An ECG telemetry system is sampling and transmitting the heart's electric activity of patients wirelessly inside a hospital. Another wireless approach to capturing ECG are Holter monitors \cite{holter:13}. These are battery driven devices that capture ECG continuously for 24-48 hours. One drawback with a Holter monitor, is that they collect data. Data processing and analysis is done offline, and the devices often have to be sent to the manufacturer, using days or weeks before the results return \cite{ziopatch:14}.
+\noindent Traditionally, monitoring vital signs has been conducted only on patients in given situations or with special needs for monitoring, and different physiological metrics are captured individually. An electrocardiography (ECG) test produces one example of such physiological metric. First invented by Willem Einthoven in the early 1900's, it is a technique that captures the electrical activity of the heart over time. Today, ECG is monitored in several different ways, both wired and wirelessly. This thesis will focus on the latter, which consist of two different approaches, depending on the diagnostic need and intention. Telemetry is the process of sampling measurements and transmitting them to receiving equipment for remote real-time monitoring. An ECG telemetry system is sampling and transmitting the heart's electric activity of patients wirelessly inside a hospital. Another wireless approach to capturing ECG are Holter monitors \cite{holter:13}. These are battery driven devices that capture ECG continuously for 24-48 hours. These are typically worn outside the hostpial in every day life. One drawback with a Holter monitor, is that they collect data. Data processing and analysis is done offline, and the devices often have to be sent to the manufacturer, using days or weeks before the results return \cite{ziopatch:14}.
 
 Throughout this thesis, ECG will be used as a benchmark for monitoring physiological metrics because of it's technical requirements, and the availability of existing wireless ECG solutions today.
 
 % TODO Introduce Bluetooth
-% TODO Finish up with motivation
-This research project was motivated by the need for 
+
+This thesis was motivated by an interest for clinical information systems and the usage of new technology at hospitals. Experience with development of wireless proximity solutions for the consumer market as well as experience with hospitals through prior employment.
 
 % subsection background_and_motivation (end)
-\subsection{Problem Statement} 
 
-% (fold)
+\subsection{Problem Statement} 
 \label{sub:problem_statement}
 
-Today's telemetry systems have a short battery life, and the systems and infrastructure are specialized for ECG monitoring. Wireless monitoring today is therefore expensive and offer little flexibility. 
+Today's telemetry systems have a short battery life, and the systems and infrastructure are specialized for ECG monitoring. Wireless monitoring today is therefore expensive and offer little flexibility for both it's users and maintainers. We asked ourselves, is it possible possible to create a monitoring solution for wireless ECG, based on available technology and open standards? 
 
-Is it possible possible to create a monitoring solution for wireless ECG, based on available technology and open standards? 
-
-What's the value of using available technology? Available technology is cheaper, developer friendly and more flexible.
-
-(...)
-
-Using open standards enables different sensor and service providers to co-exist and take part in the same infrastructure. This makes it cheaper and faster to change certain devices or changing manufacturer in an increasingly complex ecosystem of wireless sensors and medical infrastructure.
+What's the value of using available technology? Available technology is cheaper, more developer friendly and more flexible than expensive specialized solutions. Because of the user centric intentions that lies behind much of today's available technology, this technology is often more interoperable and compliant with other solutions. This emphasize the importance of using open standards as it enables different sensor and service providers to co-exist and take part in the same infrastructure. This synergy makes it cheaper and faster to improve and innovate, two factors that are becoming increasingly more important in today's clinical practice.
 
 % subsection problem_statement (end)
 \subsection{Research Questions} 
 
-
 % TODO Write descriptions to the questions
+
+Our research questions aims both wide and deep.
 
 % (fold)
 \label{ssub:research_questions} 
 \begin{enumerate}
 	
-	\item \textit{What need to be understood in order to design a ECG monitoring system?} 
+	\item \textit{What technical components are involved in a ECG monitoring solution?} 
 	\begin{itemize}
 		
 		\item \textit{What is the practice of ECG monitoring used at hospitals today?}
@@ -75,13 +71,15 @@ Using open standards enables different sensor and service providers to co-exist 
 % (fold)
 \label{sub:scope}
 
-Due to the multidisciplinary nature of this project, scoping the research and clearly defining our goals was crucial. This meant excluding important quality attributes like security, usability and privacy as well as narrowing the research down to just a small set of clearly defined use cases.
+Due to the multidisciplinary nature of this project, scoping the research and clearly defining our goals was crucial. For this project, this meant excluding important quality attributes like security, usability and privacy as well as narrowing the research down to just a small set of clearly defined use cases. However, as we had little knowledge about the domain, it was hard to scope the project completely up front. We wanted to learn as much as possible, and we had to adaptively reduce the scope as we grew our understanding of the people, technology and processes involved in wireless ECG monitoring. 
 
-be restricted by safety and security considerations. Personal health information is considered highly sensitive, and health care is also a safety critical environment. We have our project to avoid 
+Personal health information is considered highly sensitive, and health care is also a safety critical environment. Because of these factors combined with the time frame of this research project, we decided not to do any form of clinical experiments or clinical validation of our prototype.
 
 % TODO How have we restrictd the scope?
 % subsection scope (end)
-\subsection{Contributions} 
+\subsection{Contributions}
+
+This research project would not have been possible without the information and we have received at the two Norwegian hospitals where we conducted qualitative interviews on both clinicians, clinical engineers and researchers. The implementation of the prototype and experiment would not have been possible had it not been for all the open source software enthusiasts and maintainers doing all the hard work so that we could pick up the pieces and rearrange them.
 
 % (fold)
 \label{sub:contributions}
@@ -89,7 +87,7 @@ be restricted by safety and security considerations. Personal health information
 % subsection contributions (end)
 \subsection{Structure} 
 
-This thesis is structured as follows: (...)
+This thesis is structured as follows: We start Chapter 2 with background on the domain and previous research, through a literature review. In Chapter 3 we present our research strategies and methods for exploring clinical ECG monitoring in a structured and thought through manner. Based on this approach, we spend the next two chapters presenting our results and findings. In Chapter 4 we present our results from researching the clinical context and practices around both wired and wireless ECG monitoring, as well as investigating the monitoring solutions installed at two Norwegian hospitals today. In Chapter 5 assess the technology involved in this project. We propose a design for a modern monitoring solution, and present a prototype intended to validate this design. The rest of the chapter explains the implementation details of this prototype, before we end with an evaluation of the technology assessed. This is done by both by experiment, literature review and by combining our experiences and observations from the quantitative clinical research. In Chapter 6 we discuss our results, research strategies and choices taken along the way, before Chapter 7 concludes the research.
 
 % (fold)
 \label{sub:structure}
