@@ -153,8 +153,6 @@ To confirm this discovery we installed some firmware \cite{nordic:throughputtest
 \subsection{Gateway} % (fold)
 \label{sub:gateway}
 
-% TODO Create figure: tab:ble_device_throughput from excel sheet
-
 Although creating a user friendly application was not part of the scope of this project, we believe some thoughts on usability and context should be put into the creation of any artifact. We did not want to hard code the UUID address of Nordic chip into the gateway and connecting the data stream with a static endpoint address. Therefore we have created what we consider to be the bare minimum of a personal WBAN gateway user interface. The functional requirements of this user interface can be found in Table~\ref{tab:gatewayRequirements}.
 
 \begin{table}[]
@@ -390,11 +388,17 @@ In order to get accurate, synchronized timestamps across different machines, we 
 \textbf{Results:} 
 Because the incremented value from the Nordic board (called \code{msg\_id}) was present in both \texttt{send} and \texttt{receive} events, we matched up pairs of events with the same \code{msg\_id}. The value on the board was initialized with as an 8 bit unsigned integer, and so the counter returned to zero after reaching 255. Because of this we and other reasons\footnote{In MongoDB documents are not necessarily stored in the consecutive order they were inserted.} we sorted the data set first on the \code{msg\_id} field, and then the \code{timestamp} field, in order to get paired events after each other. After this we calculated the $\Delta t$ between the events and calculated minimum, maximum and average transmission time using Excel. See Table~\ref{tab:end_to_end_results} and a generated a plot in Figure~\ref{fig:endToEndPlot}.
 
-\begin{quote}
-\textbf{Max} 9634,00ms
-\textbf{Avg} 70,61ms
-\textbf{Min} 8,00ms  
-\end{quote}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{img/figures/end-to-end2.png}
+\caption{Distribution of transmission delay}
+\label{fig:qrsAnnotations}
+\end{figure}
+
+We observe that that in a systematic interval the property/delay gets 
+ systematic instead of probabilistic. no random occurrence.
+
+The data has a calculated standard deviation of $\sigma_{delay} = \si{220}{\milli\second}$ which also implies positive skewness towards the right.
 
 \noindent
 As we see, the general latency is well below what was reported in \cite{Alesanco:2010kc} as a upper limit for clinically analyzing near real-time ECG. However, we did record some transmissions that were severely delayed. These deviations had a fairly uniform distribution when grouped in 1000ms intervals, as seen in Table~\ref{tab:delayOverThreshold}. The counts are valid for the interval listed on the bottom row. As such, only 1 message had a delay of more than 9,5 seconds, and 99,82\% of the messages arrived less than 500ms after they were sent. 

@@ -14,6 +14,14 @@ Electrocardiogram is a measurement of the electrical activity around the heart. 
 
 After the leads are sampled they can be streamed in raw, or compressed and optimized for wireless transmission\cite{Balouchestani:2013dr, Alesanco:2010kc}. Later the signals are analyzed at a processing unit, where common angles and intervals in the QRS complex as well as heart rate are calculated. 
 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.55]{img/figures/QRS.png}
+\caption{QRS Complex with interval annotations}
+\label{fig:qrsAnnotations}
+\end{figure}
+
+
 \begin{itemize}
   \item The QRS complex itself (...)
   \item The intervals 
@@ -21,6 +29,19 @@ After the leads are sampled they can be streamed in raw, or compressed and optim
 
 \end{itemize}
 
+\begin{table}[]
+\centering
+\caption{Characteristic ECG intervals}
+\label{tab:characteristicECGintervals}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Interval QRS \textgreater 120ms} & \begin{tabular}[c]{@{}l@{}}Ventricular hypertrophy, necrosis, BCRRD,\\ BCRI, pacemakers, cardiomyopathies,  \\ electrolyte abnormalities.\end{tabular}     \\ \hline
+\textbf{Interval PQ \textgreater 200ms}  & Frist-degree AV block                                                                                                                                      \\ \hline
+\textbf{Interval PR \textless 120ms}     & \begin{tabular}[c]{@{}l@{}}Tachycardia, WPW, manners or \\ headphones low rates.\end{tabular}                                                              \\ \hline
+\textbf{Interval QT \textgreater 450ms}  & \begin{tabular}[c]{@{}l@{}}Antiarrhytmic medicines, ischemic heart deisease, \\ cardiomyopathies, hypocalcemia, mixedema, \\ long QT syndrome\end{tabular} \\ \hline
+\textbf{Interval QT \textless 350ms}     & \begin{tabular}[c]{@{}l@{}}Hypercalcemia, hyperkalemia,  early \\ repolarization, digoxin\end{tabular}                                                     \\ \hline
+\end{tabular}
+\end{table}
 % subsection electrocardiogram (end)
 
 \subsection{Wireless Body Area Networks} % (fold)
