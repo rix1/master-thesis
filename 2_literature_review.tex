@@ -8,30 +8,23 @@ This section cover the literature review, as well as required background informa
 \subsection{Electrocardiogram} % (fold)
 \label{sub:electrocardiogram}
 
-Because Electrocardiogram, or ECG has such high demands to QoS and continuous streaming, most of the reviewed WBAN literature discuss or mention ECG in some form or another. However, we found many inconsistencies and simplifications about ECG, that in worst case may have invalidated parts of the research conducted. Because of this, we spent some time understanding both the measurement itself and how it is conducted. In the following section we introduce ECG before reviewing other research involving the diagnostic tool.
+Most of the reviewed WBAN literature discuss or mention ECG in some form or another, because of it's high technical requirements. However, we found many inconsistencies and simplifications about ECG, that in worst case may have invalidated parts of previously conducted research. Because of this, we spent some time understanding both the measurement itself and how it is carried . In the following section we introduce ECG before reviewing other research involving the diagnostic tool.
 
-Electrocardiogram is a measurement of the electrical activity around the heart. The measurements are done by a set of external electrodes attached to the skin at certain places around the chest. These electrodes measure the depolarization of electrical charges that happen in the cell membranes covering the heart at every heart beat. An ECG is conducted by having either 3, 5 or 12 leads. The term lead refers to the voltage difference between a given pair of electrodes, parallel to the direction of the lead. Based on the signal strength of each lead, cardiologists can get information about angles and properties of a given heart. The leads can either be actual or derived from a vector model\footnote{ The Cabrera circle uses a vector representation to give a good overview of the different leads, and their relationship} based on 2 or more actual leads. Typically 3 and 5 electrodes are used for 3 and 5-lead ECG. A full 12-lead ECG however, is often achieved by 10 electrodes: One at each extremity (limb) and 6 on the chest. The differences roles these leads play in practice, are discussed further in Section~\ref{sec:clinical_context}.
-
-After the leads are sampled they can be streamed in raw, or compressed and optimized for wireless transmission\cite{Balouchestani:2013dr, Alesanco:2010kc}. Later the signals are analyzed at a processing unit, where common angles and intervals in the QRS complex as well as heart rate are calculated. 
+Electrocardiogram is a measurement of the electrical activity around the heart. The measurements are done by a set of external electrodes attached to the skin at certain places around the chest. These electrodes measure the depolarization of electrical charges that happen in the cell membranes covering the heart at every heart beat. An ECG is conducted by having either 3, 5 or 12 leads. The term lead refers to the voltage difference \textit{between a given pair} of electrodes, parallel to the direction of the lead. Based on the signal strength of each lead, cardiologists can get information about angles and properties of the heart. The leads can either be actual or derived from a vector model\footnote{ The Cabrera circle uses a vector representation to give a good overview of the different leads, and their relationship} based on 2 or more actual leads. Typically 5 electrodes can be used for a 3 and 5-lead ECG. It is however important to note that the amount of electrodes don't necessary correspond to the number of leads, and the amount of derived leads does not necessary correspond the the number of actual leads. The terminology here seem to confuse a lot of people, as we have seen and heard in both literature and in practice. Alesanco and García are among the few that describe this correctly in \cite{Alesanco:2010kc}, where they state that \textit{``(...) only eight leads should be transmitted since the other four can be derived from them''}. The this confusion is not unfounded, as there exist several techniques for deriving different leads from other leads. As we'll see later, a 12-lead EASI ECG may be derived from 5 electrodes capturing only 3 actual leads (or vectors). Even the traditional 12-lead ECG, is derived from 10 electrodes\footnote{ One at each extremity (limb) and 6 on the chest.} which capture 9 actual leads. The differences roles these leads play in practice, are discussed further in Section~\ref{sec:clinical_context}. The consequence of this confusion is that previous research either make incorrect assumptions or report ambiguous results that are hard to verify. Some research \cite{yubin:2012tr, Lee:2009bu, Alesanco:2010kc}, only consider 1 or 2 leads, which has been proven insufficient by~\cite{Drew:1998wp}.
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.55]{img/figures/QRS.png}
+\includegraphics[scale=0.35]{img/figures/QRS.png}
 \caption{QRS Complex with interval annotations}
 \label{fig:qrsAnnotations}
 \end{figure}
 
-
-\begin{itemize}
-  \item The QRS complex itself (...)
-  \item The intervals 
-  \item In other research there have been a lot of approaches to what ECG is and how it's measured. In \cite{Alesanco:2010kc}, Alesanco and García state that «(...) only eight leads should be transmitted since the other four can be derived from them». This is about the most accurate/realistic description of measuring ECG we've found. Some research \cite{yubin:2012tr}, only consider 1 or 2 leads, which has been proven insufficient by~\cite{Drew:1998wp}.
-
-\end{itemize}
+\noindent
+After the leads are sampled in a wireless ECG solution, they can be streamed in raw, or compressed and optimized for transmission\cite{Balouchestani:2013dr, Alesanco:2010kc}. In order to reduce the scope of this project, we will only focus on the the core aspects of ECG. Different compression and low sampling techniques are therefore omitted completely. After being transmitted, the signals are analyzed at a processing unit, where common angles and intervals in the QRS complex as well as heart rate are calculated. The QRS complex as seen in Figure~\ref{qrsAnnotations} denotes the plot or graphical representation of the electrical signals. On a per lead basis, these plots are printed on gridded paper or displayed on a monitor. Cardiologists learn to analyze the leads and are able to make a diagnosis based on different intervals in the complex, among other things. An overview of some common intervals and the different cardiac diseases they indicate are presented in Table~\ref{tab:characteristicECGintervals}. Based on this analysis, the ECG system may automatically trigger alarms if certain thresholds in the intervals are exceeded.
 
 \begin{table}[]
 \centering
-\caption{Characteristic ECG intervals}
+\caption{Characteristic ECG intervals from \cite{Jara:2012fi}}
 \label{tab:characteristicECGintervals}
 \begin{tabular}{|l|l|}
 \hline
@@ -42,6 +35,12 @@ After the leads are sampled they can be streamed in raw, or compressed and optim
 \textbf{Interval QT \textless 350ms}     & \begin{tabular}[c]{@{}l@{}}Hypercalcemia, hyperkalemia,  early \\ repolarization, digoxin\end{tabular}                                                     \\ \hline
 \end{tabular}
 \end{table}
+
+
+We have reviewed several earlier projects involving wireless ECG. Some of them are mentioned here, while others will be discussed in Section~\ref{sub:wireless_body_area_networks} and~\ref{sub:bluetooth}.
+
+
+
 % subsection electrocardiogram (end)
 
 \subsection{Wireless Body Area Networks} % (fold)
