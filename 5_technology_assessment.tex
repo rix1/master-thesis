@@ -5,7 +5,7 @@ According to the four types of prototypes in design science \cite{Johannesson:20
 \begin{itemize}
 	
 	\item End to end latency
-	\item Battery life
+	\item Battery lifetime
 	\item Maximum throughput
   
 \end{itemize}
@@ -263,7 +263,7 @@ Inconsistencies and missing information in previous research, motivated us to ev
 
 \begin{itemize}
 	\item \textbf{Maximum throughput:} In order for telemetry solution based on low energy sensors to be used in a clinical context, it should support the minimum throughput requirements for clinical ECG. This requirement is therefore critical for all use cases to be considered in the clinical context.
-  	\item \textbf{Battery life:} The prototype would have to perform at least as good as the existing solutions. This requirement is applicable in both U1,U2 and U3. 
+  	\item \textbf{Battery lifetime:} The prototype would have to perform at least as good as the existing solutions. This requirement is applicable in both U1,U2 and U3. 
   	\item \textbf{End to end latency:} Would give us an indication of the overall overhead between the physical entities in our proposed design and the interfaces that connect them. This applies to use case U5, as this delay must not exceed 3 seconds.
 \end{itemize}
 \noindent
@@ -326,7 +326,7 @@ Together with our findings on maximum Bluetooth throughput presented in Table~\r
 \subsubsection{Battery} % (fold)
 \label{ssub:battery}
 
-Conducting an experiment to test battery life made little sense as we decided to not implement any form of ECG simulation. Instead we base our battery evaluation on two excel spreadsheets created by Texas Instruments and Nordic Semiconductor, as well as results from earlier research. Texas Instruments have also released a technical document \cite{TIbatteryCalculations} describing the different measurements and techniques for measuring and calculating Bluetooth Low Energy power consumption.
+Conducting an experiment to test battery lifetime made little sense as we decided to not implement any form of ECG simulation. Instead we base our battery evaluation on two excel spreadsheets created by Texas Instruments and Nordic Semiconductor, as well as results from earlier research. Texas Instruments have also released a technical document \cite{TIbatteryCalculations} describing the different measurements and techniques for measuring and calculating Bluetooth Low Energy power consumption.
 \\
 \\
 \noindent % Focus on cause and effect. Independent variables and Dependent variables
@@ -334,12 +334,12 @@ Conducting an experiment to test battery life made little sense as we decided to
 \\
 \\
 \noindent
-\textbf{Method:} Based on our throughput evaluation, we knew the  Bluetooth connection in a 5-lead streaming ECG scenario would be required to be set up with at least optimal connection parameters, as discussed in Section~\ref{ssub:maximum_throughput}. Because of this, we were able to input these configuration parameters into the Excel sheets provided by Texas Instruments and Nordic, and get a theoretical metric for battery life.
+\textbf{Method:} Based on our throughput evaluation, we knew the  Bluetooth connection in a 5-lead streaming ECG scenario would be required to be set up with at least optimal connection parameters, as discussed in Section~\ref{ssub:maximum_throughput}. Because of this, we were able to input these configuration parameters into the Excel sheets provided by Texas Instruments and Nordic, and get a theoretical metric for battery lifetime.
 \\
 \\
 \noindent
 \textbf{Results:} 
-Not surprisingly the two numbers we got from the Excel sheets are different; these are after all just approximations. The results from Texas Instruments' calculations suggest the ECG board would have a life time of $\sim628$ hours\footnote{ Texas instruments estimation: 26 days.} using a 1000 mAh\footnote{ The coin cell battery with highest available capacity.} coin cell battery, while Nordic's calculations resulted in $\sim899$\footnote{ Nordic semiconductor estimation: 37 days} using the same 1000 mAh battery. Philips' telemetry transceivers are powered by two AA batteries with a capacity of 2500 mAh each. Comparing these results we see that the estimates are way above the the established minimum requirement we set of 48 hours. Even if a real life implementation's battery last only 25\% of these estimates, the implementation would still operate $\times 4,6$ times longer than today's transceivers from Philips. However these are clearly approximations, and there may be many internal and external factors affecting the battery life. An example is the excess power going to indication lights, buttons and potential audible alarms that may be installed on in a commercial sensor node. Philips' transceivers also support for a SpO$_2$ sensor that is not accounted for these estimations. Comparing the hourly consumption we see that the low energy solution would only consume 1,11 mAh/h while Philips' land on 104,17 mAh/h. Including a 0-75\% error margin\footnote{ Because of the great uncertainty of these estimates.}, the Bluetooth enabled sensor would reduce hourly power consumption with between 20-98\% compared to the existing solution.
+Not surprisingly the two numbers we got from the Excel sheets are different; these are after all just approximations. The results from Texas Instruments' calculations suggest the ECG board would have a life time of $\sim628$ hours\footnote{ Texas instruments estimation: 26 days.} using a 1000 mAh\footnote{ The coin cell battery with highest available capacity.} coin cell battery, while Nordic's calculations resulted in $\sim899$\footnote{ Nordic semiconductor estimation: 37 days} using the same 1000 mAh battery. Philips' telemetry transceivers are powered by two AA batteries with a capacity of 2500 mAh each. Comparing these results we see that the estimates are way above the the established minimum requirement we set of 48 hours. Even if a real life implementation's battery last only 25\% of these estimates, the implementation would still operate $\times 4,6$ times longer than today's transceivers from Philips. However these are clearly approximations, and there may be many internal and external factors affecting the battery lifetime. An example is the excess power going to indication lights, buttons and potential audible alarms that may be installed on in a commercial sensor node. Philips' transceivers also support for a SpO$_2$ sensor that is not accounted for these estimations. Comparing the hourly consumption we see that the low energy solution would only consume 1,11 mAh/h while Philips' land on 104,17 mAh/h. Including a 0-75\% error margin\footnote{ Because of the great uncertainty of these estimates.}, the Bluetooth enabled sensor would reduce hourly power consumption with between 20-98\% compared to the existing solution.
 
 % subsubsection battery (end)
 

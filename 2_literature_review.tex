@@ -8,9 +8,9 @@ This section cover the literature review, as well as required background informa
 \subsection{Electrocardiogram} % (fold)
 \label{sub:electrocardiogram}
 
-Most of the reviewed WBAN literature discuss or mention ECG in some form or another, because of it's high technical requirements. However, we found many inconsistencies and simplifications about ECG, that in worst case may have invalidated parts of previously conducted research. Because of this, we spent some time understanding both the measurement itself and how it is carried . In the following section we introduce ECG before reviewing other research involving the diagnostic tool.
+Most of the reviewed literature discuss or mention ECG in some form or another, because of it's high technical requirements. However, we found many inconsistencies and simplifications about ECG, that in worst case may have invalidated parts of previously conducted research. Because of this, we spent some time understanding both the measurement itself and how it is carried . In the following section we introduce ECG before reviewing other research involving the diagnostic tool.
 
-Electrocardiogram is a measurement of the electrical activity around the heart. The measurements are done by a set of external electrodes attached to the skin at certain places around the chest. These electrodes measure the depolarization of electrical charges that happen in the cell membranes covering the heart at every heart beat. An ECG is conducted by having either 3, 5 or 12 leads. The term lead refers to the voltage difference \textit{between a given pair} of electrodes, parallel to the direction of the lead. Based on the signal strength of each lead, cardiologists can get information about angles and properties of the heart. The leads can either be actual or derived from a vector model\footnote{ The Cabrera circle uses a vector representation to give a good overview of the different leads, and their relationship} based on 2 or more actual leads. Typically 5 electrodes can be used for a 3 and 5-lead ECG. It is however important to note that the amount of electrodes don't necessary correspond to the number of leads, and the amount of derived leads does not necessary correspond the the number of actual leads. The terminology here seem to confuse a lot of people, as we have seen and heard in both literature and in practice. Alesanco and García are among the few that describe this correctly in \cite{Alesanco:2010kc}, where they state that \textit{``(...) only eight leads should be transmitted since the other four can be derived from them''}. The this confusion is not unfounded, as there exist several techniques for deriving different leads from other leads. As we'll see later, a 12-lead EASI ECG may be derived from 5 electrodes capturing only 3 actual leads (or vectors). Even the traditional 12-lead ECG, is derived from 10 electrodes\footnote{ One at each extremity (limb) and 6 on the chest.} which capture 9 actual leads. The differences roles these leads play in practice, are discussed further in Section~\ref{sec:clinical_context}. The consequence of this confusion is that previous research either make incorrect assumptions or report ambiguous results that are hard to verify. Some research \cite{yubin:2012tr, Lee:2009bu, Alesanco:2010kc}, only consider 1 or 2 leads, which has been proven insufficient by~\cite{Drew:1998wp}.
+Electrocardiogram is a measurement of the electrical activity around the heart. The measurements are done by a set of external electrodes attached to the skin at certain places around the chest. These electrodes measure the depolarization of electrical charges that happen in the cell membranes covering the heart at every heart beat. An ECG is conducted by having either 3, 5 or 12 leads. The term lead refers to the voltage difference \textit{between a given pair} of electrodes, parallel to the direction of the lead. Based on the signal strength of each lead, cardiologists can get information about angles and properties of the heart. The leads can either be actual or derived from a vector model\footnote{ The Cabrera circle uses a vector representation to give a good overview of the different leads, and their relationship} based on 2 or more actual leads. Typically 5 electrodes can be used for a 3 and 5-lead ECG, where one of the electrodes are used as a reference point\footnote{ Also referred to as \emph{ground}.}. It is however important to note that the amount of electrodes don't necessary correspond to the number of leads, and the amount of derived leads does not necessary correspond the the number of actual leads. The terminology here seem to confuse a lot of people, as we have seen and heard in both literature and in practice. Alesanco and García are among the few that describe this correctly in \cite{Alesanco:2010kc}, where they state that \textit{``(...) only eight leads should be transmitted since the other four can be derived from them''}. The this confusion is not unfounded, as there exist several techniques for deriving different leads from other leads. As we'll see later, a 12-lead EASI ECG may be derived from 5 electrodes capturing only 3 actual leads (or vectors). Even the traditional 12-lead ECG, is derived from 10 electrodes\footnote{ One at each extremity (limb) and 6 on the chest.} which capture 9 actual leads. The differences roles these leads play in practice, are discussed further in Section~\ref{sec:clinical_context}. The consequence of this confusion is that previous research either make incorrect assumptions~\cite{jenniferporcello:2015wv} or report ambiguous results that are hard to verify. Some research \cite{yubin:2012tr, Lee:2009bu, Alesanco:2010kc}, only consider 1 or 2 leads, which has been proven insufficient by~\cite{Drew:1998wp}.
 
 \begin{figure}[H]
 \centering
@@ -36,26 +36,14 @@ After the leads are sampled in a wireless ECG solution, they can be streamed in 
 \end{tabular}
 \end{table}
 
-
-We have reviewed several earlier projects involving wireless ECG. Some of them are mentioned here, while others will be discussed in Section~\ref{sub:wireless_body_area_networks} and~\ref{sub:bluetooth}.
+We have reviewed several earlier projects involving wireless ECG. Below we will assess one such project, while others will be discussed in~\ref{sub:bluetooth}. In Chou and Hibbs 2006 paper \cite{ChulsungPark:2006tf} they present ``An ultra-wearable, wireless low power ECG monitoring system''. They have developed and tested a contact-less ECG capacitive sensor based on insulated bio-electrodes. The imagine that these sensors can integrated into clothes, making ECG monitoring ultra-wearable. They recognize that related work based on either standard wireless interfaces or general purpose sensor nodes suffer from large form factor, low battery lifetime or low transmission speed. Because of this, their approach involve using proprietary and custom hardware in order to reach their goals. Aside from the tiny form factor, an interesting observation is their solution's power consumption, which is less than 10 mA in transmission mode and 22 mA in receiving mode. As we'll see later, this is 10-20 times the average current drawn from today's low energy sensors based on interfaces like Bluetooth Smart. In terms of ECG, their solution support 1000 Hz sampling rate, and the analog to digital converter (ADC) is configured for 12-bit resolution. They mention their system uses 3 ECG sensors. Assuming they are referring to electrodes, and that one is for ground, this means they can only do a 1-lead ECG. Further, they do not address any clinical aspects of their work.
 
 % subsection electrocardiogram (end)
-
-\subsection{Wireless Body Area Networks} % (fold)
-\label{sub:wireless_body_area_networks}
-
-% The notion of a mobile gateway has been widely adopted and discussed \cite{Movassaghi:2014hi, Mohammed:2014dw, Touati:2015gy, EmilJovanov:2005ty} in earlier research.
-Missing.
-% TODO mention the differnt classes of prioritized data
-
-% subsection wireless_body_area_networks (end)
 
 \subsection{Bluetooth and ambulatory ECG} % (fold)
 \label{sub:bluetooth}
 
-As we'll see in later sections, Bluetooth was an attractive technology for us because of its widespread presence, as well as the low energy features introduced with version 4.0 of the specification. In this section we will cover the basics of Bluetooth Smart and discuss related research projects using the technology.
-
-% Bluetooth was originally developed at Ericsson in (...). 
+In accordance with our research goal of assessing available technology, Bluetooth was an attractive technology. This was because of its widespread presence\footnote{ In 2010, Bluetooth SIG estimated an annual sale of 2 billion Bluetooth enabled devices.}, as well as the low energy features introduced with version 4.0 of the specification. Bluetooth was standardized as IEEE 802.15.1, but IEEE no longer maintains the standard. The Bluetooth Special Interest Group (SIG) is comprised of more than 20,000 corporate members, which today maintain and oversees the development of the specification. There are two other IEEE 802.15 standards discussed in relevant literature, namely 802.15.4 and 802.15.6. The first one is likely to play a significant role in the development of future IoT applications\footnote{ See Google's Thread protocol and Zigbee for implementations of this standard.}. The second one will be discussed further in Section~\ref{sub:wireless_body_area_networks}. However, of these standards and their implementations, Bluetooth is the most available today. In this section we will cover the basics of Bluetooth Smart and discuss related research projects using the technology in combination with ECG monitoring.
 
 % (...) Because of confusion around the ``low energy'' devices and regular Bluetooth devices Bluetooth SIG announced their new branding strategy in 2011, with a new logo and name: Bluetooth Smart. Throughout this thesis we will use both the old Low Energy suffix as well as Bluetooth Smart (we should probably fix this?).
 
@@ -66,6 +54,15 @@ As we'll see in later sections, Bluetooth was an attractive technology for us be
 % How are Bluetooth Smart profiles implemented? Efforts are being made by Bluetooth SIG to standardize data profiles in order to ensure interoperability between devices supporting the protocol. A profile for a type of device defines the GATT Services which a device of this type must or may implement. This is related to interoperability which we will cover in the next section.
 
 % subsection bluetooth (end)
+
+\subsection{Wireless Body Area Networks} % (fold)
+\label{sub:wireless_body_area_networks}
+
+% The notion of a mobile gateway has been widely adopted and discussed \cite{Movassaghi:2014hi, Mohammed:2014dw, Touati:2015gy, EmilJovanov:2005ty} in earlier research.
+Missing.
+% TODO mention the differnt classes of prioritized data
+
+% subsection wireless_body_area_networks (end)
 
 \subsection{Interoperability} % (fold)
 \label{sub:interoperability}
