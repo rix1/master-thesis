@@ -175,7 +175,9 @@ Although creating a user friendly application was not part of the scope of this 
 \end{table}
 
 With an architecture dependent on a personal mobile gateway we chose a technology that was in accordance with our mission statement: available and open. The Android platform is not only more open than it's counterparts, but also supports higher throughput as seen in Table~\ref{tab:ble_device_throughput}.
-The gateway would ideally be a multi-purpose touch device with a rich user interface, enabling an easy and practical way of setting up and configuring the wireless sensors a patient would be equipped with. Although outside the scope of this project, some thought have gone into the practicalities of setting up and managing a network of wireless sensor nodes. For further research we recommend looking into using Near Field Communication (NFC) technology for physically conducting events such as \emph{(A)} pairing sensors, \emph{(B)} connecting the gateway to the WBAN and \emph{(C)} authenticating medical professionals and patients on the personal gateway. We believe these are all use cases where an active NFC chip could drastically improve the user experience, but the subject need more research.
+The gateway would ideally be a multi-purpose touch device with a rich user interface, enabling an easy and practical way of setting up and configuring the wireless sensors a patient would be equipped with. Although outside the scope of this project, some thought have gone into the practicalities of setting up and managing a network of wireless sensor nodes. For further research we recommend looking into using Near Field Communication (NFC) technology for physically conducting events such as \emph{(A)} pairing sensors, \emph{(B)} connecting the gateway to the WBAN and \emph{(C)} authenticating medical professionals and patients on the personal gateway. We believe these are all use cases where an active NFC chip could drastically improve the user experience, but doing this in a clinical context need more research. See \cite{atp:2006ue} for information on security in NFC and using it as a interface for pairing Bluetooth devices.
+
+
 
 In the following section we will describe how we approached the implementation of the gateway application. Because we only intended to make a prototype, some details will be kept out for brevity. 
 
@@ -399,6 +401,8 @@ We observe that that in a systematic interval the property/delay gets
  systematic instead of probabilistic. no random occurrence.
 
 The data has a calculated standard deviation of $\sigma_{delay} = \si{220}{\milli\second}$ which also implies positive skewness towards the right.
+
+% TODO Fix section about end to end experiment
 
 \noindent
 As we see, the general latency is well below what was reported in \cite{Alesanco:2010kc} as a upper limit for clinically analyzing near real-time ECG. However, we did record some transmissions that were severely delayed. These deviations had a fairly uniform distribution when grouped in 1000ms intervals, as seen in Table~\ref{tab:delayOverThreshold}. The counts are valid for the interval listed on the bottom row. As such, only 1 message had a delay of more than 9,5 seconds, and 99,82\% of the messages arrived less than 500ms after they were sent. 
