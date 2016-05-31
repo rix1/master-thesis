@@ -43,15 +43,40 @@ We have reviewed several earlier projects involving wireless ECG. Below we will 
 \subsection{Bluetooth and ambulatory ECG} % (fold)
 \label{sub:bluetooth}
 
-In accordance with our research goal of assessing available technology, Bluetooth was an attractive technology. This was because of its widespread presence\footnote{ In 2010, Bluetooth SIG estimated an annual sale of 2 billion Bluetooth enabled devices.}, as well as the low energy features introduced with version 4.0 of the specification. Bluetooth was standardized as IEEE 802.15.1, but IEEE no longer maintains the standard. The Bluetooth Special Interest Group (SIG) is comprised of more than 20,000 corporate members, which today maintain and oversees the development of the specification. There are two other IEEE 802.15 standards discussed in relevant literature, namely 802.15.4 and 802.15.6. The first one is likely to play a significant role in the development of future IoT applications\footnote{ See Google's Thread protocol and Zigbee for implementations of this standard.}. The second one will be discussed further in Section~\ref{sub:wireless_body_area_networks}. However, of these standards and their implementations, Bluetooth is the most available today. In this section we will cover the basics of Bluetooth Smart and discuss related research projects using the technology in combination with ECG monitoring.
+In accordance with our research goal of assessing available technology, Bluetooth was an attractive technology. This was because of its widespread presence\footnote{ In 2010, Bluetooth SIG estimated an annual sale of 2 billion Bluetooth enabled devices.}, as well as the low energy features introduced with version 4.0 of the specification. Bluetooth was standardized as IEEE 802.15.1, but IEEE no longer maintains the standard. The Bluetooth Special Interest Group (SIG) is comprised of more than 25,000 corporate members, which today maintain and oversees the development of the specification. There are two other IEEE 802.15 standards discussed in relevant literature, namely 802.15.4 and 802.15.6. The first one is likely to play a significant role in the development of future IoT applications\footnote{ See Google's Thread protocol and Zigbee for implementations of this standard.}. The second one will be discussed further in Section~\ref{sub:wireless_body_area_networks}. However, of these standards and their implementations, Bluetooth is the most available today. In this section we will cover the basics of Bluetooth Smart and discuss related research projects using the technology in combination with ECG monitoring.
 
-% (...) Because of confusion around the ``low energy'' devices and regular Bluetooth devices Bluetooth SIG announced their new branding strategy in 2011, with a new logo and name: Bluetooth Smart. Throughout this thesis we will use both the old Low Energy suffix as well as Bluetooth Smart (we should probably fix this?).
+\subsubsection{Bluetooth Smart} % (fold)
+\label{ssub:bluetooth}
 
-% GATT and Profiles
-% The profile defines the types of state data that a device exposes and how that data can be used. Profiles are organized like this:
-% Services > Characteristics and Descriptors.
+Bluetooth originated from Ericsson in 1994, and has it's name from a Danish/Norwegian viking king that was characterized as a ``good communicator''. Since it's origin, the standard has seen 4 major releases, and several minor ones\footnote{ The latest of which (4.2) was released in December 2014}. The next big release, version 5.0 is currently being being drafted, and is expected to be formally announced later this year. 
 
-% How are Bluetooth Smart profiles implemented? Efforts are being made by Bluetooth SIG to standardize data profiles in order to ensure interoperability between devices supporting the protocol. A profile for a type of device defines the GATT Services which a device of this type must or may implement. This is related to interoperability which we will cover in the next section.
+Version 4.0 introduced new low energy features, which was originally branded with the suffix ``LE'' or ``Low Energy''. Because of confusion around the ``low energy'' devices and those implementing older versions of the standard, Bluetooth SIG announced their new branding strategy in 2011. The new logo and name read \textit{Bluetooth Smart}. Throughout this thesis we will focus exclusively on the low energy features of the standard and we believe the suffix ``low energy'' is less ambiguous than ``Smart''. Because of this we will be using both the old and new name interchangeably.
+
+% subsubsection bluetooth (end)
+
+\subsubsection{GATT and Profiles} % (fold)
+\label{ssub:gatt_and_profiles}
+
+The Bluetooth standard specifies a series of communication protocols that together  constitute the complete Bluetooth stack. This stack is separated in two; the \texttt{Host} and \emph{Controller}. The controller stack is concerned with the lower network layers and is usually implemented in the firmware of silicon devices containing a Bluetooth radio. The host stack are upper layers, and is usually implemented as part of a operating system and runs on a processor together with the user application. With resource constrained devices such as those we'll investigate in this thesis, both the controller and host can be bundled together. They will then run on the same microprocessor,  making up what is known as a hostless system.
+
+% TODO wite about advertising, connection establishment? roles (master and slave / initiator advertisor)
+
+The profile defines the types of state data that a device exposes and how that data can be used. Profiles are organized like this: Services > Characteristics and Descriptors.
+
+How are Bluetooth Smart profiles implemented? Efforts are being made by Bluetooth SIG to standardize data profiles in order to ensure interoperability between devices supporting the protocol. A profile for a type of device defines the GATT Services which a device of this type must or may implement. This is related to interoperability which we will cover in the next section.
+
+% subsubsection gatt_and_profiles (end)
+
+\subsubsection{Bluetooth enabled ambulatory ECG} % (fold)
+\label{ssub:bluetooth_enabled_ambulatory_ecg}
+
+We have reviewed multiple previous research projects evaluating Bluetooth Low energy as a wireless technology for streaming ECG data. In this section we will review two of them.
+
+Jara et at. evaluated Bluetooth low energy as a technology for streaming continuous data from a wearable ECG in their 2012 paper. 
+
+%  93 papers reduced to 39 reduced to 5
+
+% subsubsection bluetooth_enabled_ambulatory_ecg (end)
 
 % subsection bluetooth (end)
 
@@ -61,6 +86,8 @@ In accordance with our research goal of assessing available technology, Bluetoot
 % The notion of a mobile gateway has been widely adopted and discussed \cite{Movassaghi:2014hi, Mohammed:2014dw, Touati:2015gy, EmilJovanov:2005ty} in earlier research.
 Missing.
 % TODO mention the differnt classes of prioritized data
+
+% TODO Mention 802.15.6
 
 % subsection wireless_body_area_networks (end)
 
