@@ -57,9 +57,11 @@ Version 4.0 introduced new low energy features, which was originally branded wit
 \subsubsection{GATT and Profiles} % (fold)
 \label{ssub:gatt_and_profiles}
 
-The Bluetooth standard specifies a series of communication protocols that together constitute the complete Bluetooth stack. This stack is separated in two; the \texttt{Host} and \emph{Controller}. The controller stack is concerned with the lower network layers and is usually implemented in the firmware of silicon devices containing a Bluetooth radio. The host stack are upper layers, and is usually implemented as part of a operating system and runs on a processor together with the user application. With resource constrained devices such as those we'll investigate in this thesis, both the controller and host can be bundled together. They will then run on the same microprocessor,  making up what is known as a hostless system.
+The Bluetooth standard specifies a series of communication protocols that together constitute the complete Bluetooth stack. This stack is separated in two; the \texttt{Host} and \emph{Controller}. The controller stack is concerned with the lower network layers and is usually implemented in the firmware of silicon devices containing a Bluetooth radio. The host stack are upper layers, and is usually implemented as part of a operating system and runs on a processor together with the user application. With resource constrained devices such as those we'll investigate in this thesis, both the controller and host can be bundled together. They will then run on the same microprocessor,  making up what is known as a ``hostless'' system.
 
 % TODO wite about advertising, connection establishment? roles (master and slave / initiator advertisor)
+
+Low energy Bluetooth operates in the unlicensed 2.4 GHz ISM band, which it has divided channels with 2 MHz spacing. In the 
 
 The profile defines the types of state data that a device exposes and how that data can be used. Profiles are organized like this: Services > Characteristics and Descriptors.
 
