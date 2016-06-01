@@ -4,7 +4,7 @@
 According to the four types of prototypes in design science \cite{Johannesson:2014co}, our artifact was intended to be of the model type. A model can be used for supporting the construction of other prototypes, and hopefully our model can be reused by later projects. We wanted to come up with a design and then create a prototype that let us test different aspects of using low energy sensors for wireless ECG monitoring. Based on what we knew from previous literature we decided the following three aspects constituted the baseline functional tests that would answer our research questions:
 \begin{itemize}
 	
-	\item End to end latency
+	\item End-to-end latency
 	\item Battery lifetime
 	\item Maximum throughput
   
@@ -37,8 +37,9 @@ One possible solution might be to use the repository architectural pattern. The 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.3]{img/figures/architecture2.png}
-\caption{Overview of system and communication protocols}
+\includegraphics[scale=0.35]{img/figures/architecture2.png}
+\captionsetup{justification=centering}
+\caption{Overview of system and communication protocols.\\ AP indicates an access point.}
 \label{fig:architecture2}
 \end{figure}
 
@@ -48,19 +49,17 @@ One possible solution might be to use the repository architectural pattern. The 
 An overview of the different prototype components:
 \begin{itemize}
 
-  \item[\textbf{Node:}] A node is the sensory device that does one or more physiological measurements and communicates it wirelessly to either another node or to a sink in the WBAN. In order to achieve wearability the nodes has to be as small as possible. Batteries are often the largest part of today’s sensory nodes and the biggest energy consumer is typically the antenna \cite{Ullah:2010ci}.
+  \item[] \textbf{Node:} A node is the sensory device that does one or more physiological measurements and communicates it wirelessly to either another node or to a sink in the WBAN. In order to achieve wearability the nodes has to be as small as possible. Batteries are often the largest part of today’s sensory nodes and the biggest energy consumer is typically the antenna \cite{Ullah:2010ci}.
 
   % \item[\textbf{WBAN:}] Multiple nodes connected together constitute the wireless body area network (WBAN). The network topology of these vary depending on the communication protocol between the nodes, but they are typically organized as single hop stars, or multi-hop mesh networks \cite{Anonymous:6F6UBBK9}. Desirable qualities in a WBAN is a low energy PHY layer, and a flexible MAC protocol capable of doing smart routing and the ability to be self organizing \cite{Anonymous:XKViPHhV} \cite{Anonymous:OEjzuKTe}.
 
-  \item[\textbf{Personal gateway:}] In previous literature this tier in the patient monitoring stack is also called a Personal Server (PS) or a WBAN sink. This can be a touch device with a graphical user interface, a tele health station, or just a dedicated sink in the WBAN with a larger battery. Because of the low energy requirements in the nodes, there is a need to facilitate communication between the WBAN and a border router with some device that has more battery capacity, a stronger antenna and that is easier to replace on a frequent basis. For the remainder of this thesis we will assume the personal gateway is a feature-rich touch device, with a graphical user interface like the Samsung Galaxy S6.
+  \item[] \textbf{Personal gateway:} In previous literature this tier in the patient monitoring stack is also called a Personal Server (PS) or a WBAN sink. This can be a touch device with a graphical user interface, a tele health station, or just a dedicated sink in the WBAN with a larger battery. Because of the low energy requirements in the nodes, there is a need to facilitate communication between the WBAN and a border router with some device that has more battery capacity, a stronger antenna and that is easier to replace on a frequent basis. For the remainder of this thesis we will assume the personal gateway is a feature-rich touch device, with a graphical user interface like the Samsung Galaxy S6.
 
   % \item[\textbf{Boarder router:}] The border router can be categorized as a end node in a local area network providing access network access for proprietary devices through one or more wireless networking interfaces. Based on the network configuration and overall architecture of the monitoring system this router may have different responsibilities. A smart-gateway can for example provide additional services specialized for sensory data. These services can include but are not limited to local caching, pre-processing and on-demand-processing, WBAN discovery, localization and more \cite{DrAmirMohammadRahmani:2014vx}.
 
-  \item[\textbf{HIS:}] Hospital information system. This is a common term for the various types of information systems at hospitals. The way these are implemented and used varies from across borders, regions, and even between different departments within the same hospital. Because of this invariance in systems and practice, interoperability across communication protocols and data formats is important. For the remainder of this thesis we will discuss only one HIS, namely the monitoring central. It is responsible for collecting, processing, storing and serving sensor data to clients.
+  \item[] \textbf{HIS:} Hospital information system. This is a common term for the various types of information systems at hospitals. The way these are implemented and used varies from across borders, regions, and even between different departments within the same hospital. Because of this invariance in systems and practice, interoperability across communication protocols and data formats is important. For the remainder of this thesis we will discuss only one HIS, namely the monitoring central. It is responsible for collecting, processing, storing and serving sensor data to clients.
 
 \end{itemize}
-
-% TODO Ha med et diagram over arkitekturen slik vi foreslår den
 
 % subsection system_architecture (end)
 
@@ -179,7 +178,7 @@ Although creating a user-friendly application was not part of the scope of this 
 4             & List all sensor nodes                     & Low                                    \\ \hline
 \end{tabular}
 \end{table}
-
+\noindent
 With an architecture dependent on a personal mobile gateway we chose a technology that was in accordance with our mission statement: available and open. The Android platform is not only more open than it's counterparts, but also supports higher throughput as seen in Table~\ref{tab:ble_device_throughput}.
 The gateway would ideally be a multi-purpose touch device with a rich user interface, enabling an easy and practical way of setting up and configuring the wireless sensors a patient would be equipped with. Although outside the scope of this project, some thoughts have gone into the practicalities of setting up and managing a network of wireless sensor nodes. For further research we recommend looking into using Near Field Communication (NFC) technology for physically conducting events such as \emph{(A)} pairing sensors, \emph{(B)} connecting the gateway to the WBAN and \emph{(C)} authenticating medical professionals and patients on the personal gateway. We believe these are all use cases where an active NFC chip could drastically improve the user experience, but doing this in a clinical context need more research. See \cite{atp:2006ue} for information on security in NFC and using it as a interface for pairing Bluetooth devices.
 
@@ -224,7 +223,7 @@ Based on these messages the \code{NewDevice} activity handles the event. Every c
 
 The endpoint module extends the Android-DDP\cite{android:ddp} library released under Apache License, Version 2.0. This library makes it easy to interact with a Meteor server, which is described further in~\ref{sub:server}. Because of how we did the server implementation, we used the library to connect to a WebSocket endpoint created by the Meteor server.
 Although the endpoint module also was planned as an individual module, we never finished refactoring all endpoint functionality out to the \code{MeteorHandler} class which ideally would extend as an Android Service. This had some implications our experiments, which is addressed in Section~\ref{ssub:end_to_end_latency}.
-As an intermediate step, we first implemented the DDP-library directly in the \cite{NewDevice} activity. We set it up as a instance-wide private object, that after first being set up, is available in every method. This was done in order to speed up development, and intended this to be refactored out of the Activity at a later stage. When initializing connection with \code{mMeteor.connect()} one of two callbacks defined in the MeteorCallback interface are executed, \code{onConnect()} or  \code{onDisconnect()}. When the connection is tested and active we pass data directly to the Meteor endpoint by calling \code{mMeteor.call("addData")} in the \code{BroadcastReceiver} method. As mentioned, the \code{BroadcastReceiver} listens for data from the Bluetooth service.
+As an intermediate step, we first implemented the DDP-library directly in the \code{NewDevice} activity. We set it up as a instance-wide private object, that after first being set up, is available in every method. This was done in order to speed up development, and intended this to be refactored out of the Activity at a later stage. When initializing connection with \code{mMeteor.connect()} one of two callbacks defined in the MeteorCallback interface are executed, \code{onConnect()} or  \code{onDisconnect()}. When the connection is tested and active we pass data directly to the Meteor endpoint by calling \code{mMeteor.call("addData")} in the \code{BroadcastReceiver} method. As mentioned, the \code{BroadcastReceiver} listens for data from the Bluetooth service.
 
 % subsubsection endpoint_module (end)
 
@@ -256,7 +255,7 @@ In this example, \code{DeviceData} is fetched by using a MongoDB-like syntax. Wh
 
 Because of Meteor's feature rich platform, our prototype has support for user accounts. These can be used to control access to who is allowed to subscribe to different data sources, and what documents in the MongoDB they are allowed to access. However, these features are not relevant for this project, and their implementation details will be omitted.\footnote{ See attached source code.}
 
-In the client we have been looking at various ways of rendering the stream of values into an ECG plot. In the planning phase we landed on using a \texttt{jke-d3-ecg} \cite{jke:d3}, an open source chart component for the popular \texttt{D3.js} library drawing charts using Javascript.\footnote{ Note that this would not produce a clinical grade ECG plot, and was mainly considered for demonstrating purposes.} When we implemented this, the bandwidth restrictions in the Bluetooth protocol was already discovered. As we did not have a stream of ECG values available from the sensor, we did not spend time implementing any plotting features. 
+In the client we have been looking at various ways of rendering the stream of values into an ECG plot. In the planning phase we landed on using a \texttt{jke-d3-ecg} \cite{jke:d3}, an open source chart component for the popular \texttt{D3.js} library drawing charts using Javascript.\footnote{ Note that this would not produce a clinical grade ECG plot, and was mainly considered for demonstrating purposes.} When we implemented this, the bandwidth restrictions in the Bluetooth protocol was already established. As we had decided to not implement the ECG simulator, we did not spend time implementing any plotting features.
 
 % subsection server (end)
 
@@ -268,7 +267,7 @@ Inconsistencies and missing information in previous research, motivated us to ev
 \begin{itemize}
 	\item \textbf{Maximum throughput:} In order for telemetry solution based on low energy sensors to be used in a clinical context, it should support the minimum throughput requirements for clinical ECG. This requirement is therefore critical for all use cases to be considered in the clinical context.
   	\item \textbf{Battery lifetime:} The prototype would have to perform at least as good as the existing solutions. This requirement is applicable in both U1,U2 and U3. 
-  	\item \textbf{End to end latency:} Would give us an indication of the overall overhead between the physical entities in our proposed design and the interfaces that connect them. This applies to use case U5, as this delay must not exceed 3 seconds.
+  	\item \textbf{End-to-end latency:} Would give us an indication of the overall overhead between the physical entities in our proposed design and the interfaces that connect them. This applies to use case U5, as this delay must not exceed 3 seconds.
 \end{itemize}
 \noindent
 
@@ -294,7 +293,7 @@ Our approach for finding the different parameters for this equation was to gathe
 \noindent
 \textbf{Results:} After surveying literature~\cite{Rijnbeek:2001vu, DimitriosJVergados:2006vy, Touati:2015gy, Anonymous:mAm40AQ3, jenniferporcello:2015wv, Ullah:2010ci, Anonymous:1SQ78ejy, ChulsungPark:2006tf, Anonymous:FtVb5yQr, yubin:2012tr, Alesanco:2010kc, Wehr:2006ht, BenElhadj:2016ic, Movassaghi:2014hi}, and data samples from test data~\cite{newRef:56:2, Physi12:online}, we were unable to establish \emph{one} clear combination of sample size, sample frequency or number of leads. As mentioned, many base their their calculations on only 1-2 leads, which has been show to be limited \cite{Drew:1998wp}. Because of this, we have decided to combine results from different sources in order to establish a basis for further research to investigate:
 
-In terms of sample frequency, we decided to pick~\cite{Rijnbeek:2001vu} as a standard, based on their research strategy and clear results. They recommend a minimum bandwidth of 250 Hz to record ECG, and make it clear that because of Shannon’s theorem sampling rates should be 2-3 times the theoretical minimum.
+In terms of sample frequency, we decided to pick~\cite{Rijnbeek:2001vu} as a standard, based on their research strategy and clear results. They recommend a minimum frequency bandwidth of 250 Hz to record ECG, and make it clear that because of Shannon’s theorem sampling rates should be 2-3 times the theoretical minimum.\footnote{Note that in signal processing, bandwidth refers to a measure of the width of a range of frequencies. This is measured in Hertz (Hz). This thesis uses the definition from computing, where bandwidth refers to the rate of data transferred. This is measured in bit/s.}
 
 In literature, the size of each sample vary from 10 bit to 48 bit. Looking at data from existing data sets, a sample size of less than 24 bit seemed inadequate. Because the voltage recorded in a ECG are both positive and negative float numbers\footnote{ Varying with the leads and how they are positioned relative to each other.}, a sample size able to support an accurate representation of this is necessary. 
 
@@ -312,14 +311,15 @@ Together with our findings on maximum Bluetooth throughput presented in Table~\r
 
 \begin{table}[]
 \centering
-\caption{Overview of different ECG configurations and calculated throughput}
+\captionsetup{justification=centering}
+\caption{Overview of different ECG configurations and calculated throughput. Emphasized calculations exceed the optimal throughput of BLE as seen in Table~\ref{tab:ble_device_throughput}.}
 \label{tab:ecg_sampling_rate}
-\begin{tabular}{@{}l|lrl@{}}
+\begin{tabular}{@{}llrl@{}}
 \toprule
-\textbf{3 leads (5 electrodes)} & \textbf{500 Hz} & \textbf{1000 Hz} & \textbf{1500 Hz} \\ \midrule
+\textbf{} & \textbf{500 Hz} & \textbf{1000 Hz} & \textbf{1500 Hz} \\ \midrule
 \textbf{24 bit/sample}         & 36 kbit/s & 72 kbit/s & 108 kbit/s         \\
-\textbf{32 bit/sample}         & 48 kbit/s & 96 kbit/s & 144 kbit/s         \\
-\textbf{48 bit/sample}         & 72 kbit/s & 144 kbit/s  & 216 kbit/s         \\ \bottomrule
+\textbf{32 bit/sample}         & 48 kbit/s & 96 kbit/s & \color{red}\textit{144 kbit/s}         \\
+\textbf{48 bit/sample}         & 72 kbit/s & \color{red}\textit{144 kbit/s}  & \color{red}\textit{216 kbit/s}         \\ \bottomrule
 \end{tabular}
 \end{table}
 
@@ -347,7 +347,7 @@ Not surprisingly the two numbers we got from the Excel sheets are different; the
 
 % subsubsection battery (end)
 
-\subsubsection{End to end latency} % (fold)
+\subsubsection{End-to-end latency} % (fold)
 \label{ssub:end_to_end_latency}
 
 In order to get a baseline indication on the overall network performance of our prototype we set up an experiment measuring the end-to-end latency. We were interested in the $\Delta t$ between the node and the client (the two endpoints) and not the intermediate steps. Because of this we set up an experiment where we measured the time it took for a message from the patient's node to the clinician's web client. The goal for this experiment was to compare our delay with the maximum comfortable delay for a ECG transmission found in \cite{Alesanco:2010kc}.
@@ -394,36 +394,53 @@ In order to get accurate, synchronized timestamps across different machines, we 
 \textbf{Results:} 
 Because the incremented value from the Nordic board (called \code{msg\_id}) was present in both \texttt{send} and \texttt{receive} events, we matched up pairs of events with the same \code{msg\_id}. The value on the board was initialized with as an 8 bit unsigned integer, and so the counter returned to zero after reaching 255. Because of this we and other reasons\footnote{ In MongoDB documents are not necessarily stored in the consecutive order they were inserted.} we sorted the data set first on the \code{msg\_id} field, and then the \code{timestamp} field, in order to get paired events after each other. After this we calculated the $\Delta t$ between the events and did further analysis using Excel and MatLab. See Table~\ref{tab:delayOverThreshold} and a generated a plot in Figure~\ref{fig:endToEndPlot}.
 
+% \begin{table}[]
+% \centering
+% \caption{End-to-end delay of messages \emph{between} given intervals}
+% \label{tab:delayOverThreshold}
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{llllllllll}
+% \toprule
+% \multicolumn{1}{c}{4} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{1} \\
+% 0,3 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,1 \textperthousand               \\
+% 500 ms                & 1500 ms               & 2500 ms               & 3500 ms               & 4500 ms               & 5500 ms               & 6500 ms               & 7500 ms               & 8500 ms               & \textgreater 9500 ms  \\ \bottomrule
+% \end{tabular}%
+% }
+% \end{table}
+%
 \begin{table}[]
 \centering
-\caption{End to end delays larger than given thresholds}
+\caption{End-to-end delay of messages \emph{between} given intervals.}
 \label{tab:delayOverThreshold}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{llllllllll}
+\begin{tabular}{lllllll}
 \toprule
-\multicolumn{1}{c}{4} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{1} \\
-0,3 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,2 \textperthousand               & 0,1 \textperthousand               \\
-500 ms                & 1500 ms               & 2500 ms               & 3500 ms               & 4500 ms               & 5500 ms               & 6500 ms               & 7500 ms               & 8500 ms               & \textgreater 9500 ms  \\ \bottomrule
+\textbf{Count}          & 12927    & 4       & 3       & 3       & 2       & 2        \\
+\textbf{\textperthousand\:of total} & 998,2 \textperthousand & 0,3 \textperthousand & 0,2 \textperthousand & 0,2 \textperthousand & 0,2 \textperthousand & 0,2 \textperthousand  \\
+\textbf{Interval}           & 0 ms     & 500 ms  & 1500 ms & 2500 ms & 3500 ms & 4500 ms  \\ \hline
+\textbf{Count}          & 2        & 2       & 2       & 2       & 1       & 0        \\
+\textbf{\textperthousand\:of total} & 0,2 \textperthousand  & 0,2 \textperthousand & 0,2 \textperthousand & 0,2 \textperthousand & 0,1 \textperthousand & 0,0 \textperthousand  \\
+\textbf{Interval}           & 5500 ms  & 6500 ms & 7500 ms & 8500 ms & 9500 ms & 10500 ms \\ \bottomrule
 \end{tabular}%
 }
 \end{table}
 
-\begin{wrapfigure}{r}{0.4\textwidth}
-\includegraphics[width=1\linewidth]{img/figures/end-to-end2.png} 
-\caption{Distribution of transmission delay}
-\label{fig:endToEndPlot}
-\end{wrapfigure}
 
-
-The data has a calculated standard deviation of $\sigma_{delay} \approx {220}\:ms$ which implies positive skewness towards the right. As we see, the general latency is well below what was reported in \cite{Alesanco:2010kc} as a upper limit for clinically analyzing near real-time ECG. However, we did record some transmissions that were severely delayed: The two observed spikes in delay time of the messages portrays a periodic behavior. In each spike, every 50th message has a ``way above average'' delay time, every subsequent one with a reduced delay compared to the previous. This implies a systemic cause for these spikes, instead of a random, probabilistic one. In Table~\ref{tab:delayOverThreshold}, we see the distribution of these abnormalities when grouped in 1000 ms intervals. The messages are counted between the intervals listed on the bottom row. As such, only 1 message had a delay of more than 9,5 seconds, and 99,82\% of the messages arrived less than 500 ms after they were sent.
-
-% \begin{figure}[H]
-% \centering
-% \includegraphics[scale=0.14]{img/figures/end-to-end2.png}
+% \begin{wrapfigure}{r}{0.4\textwidth}
+% \includegraphics[width=1\linewidth]{img/figures/end-to-end2.png}
 % \caption{Distribution of transmission delay}
 % \label{fig:endToEndPlot}
-% \end{figure}
-% \noindent
+% \end{wrapfigure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.24]{img/figures/end-to-end2.png}
+\caption{Distribution of transmission delay over the course of 4 hours.}
+\label{fig:endToEndPlot}
+\end{figure}
+\noindent
+The data has a calculated standard deviation of $\sigma_{delay} \approx {220}\:ms$ which implies positive skewness towards the right. As we see, the general latency is well below what was reported in \cite{Alesanco:2010kc} as a upper limit for clinically analyzing near real-time ECG. However, we did record some transmissions that were severely delayed: The two observed spikes in delay time of the messages portrays a periodic behavior. Within each spike, every 50th message has a ``way above average'' delay time, every subsequent one with a reduced delay compared to the previous. This implies a systemic cause for these spikes, instead of a random, probabilistic one. We believe these spikes to be an artifact from some component (or combination of such) in our specific technology stack. In Table~\ref{tab:delayOverThreshold}, we see the distribution of these abnormalities when grouped in 1000 ms intervals. The messages are counted between the intervals listed on the bottom row. As such, only 1 message had a delay of more than 9,5 seconds, and 99,82\% of the messages arrived less than 500 ms after they were sent. Because the abnormalities are so rare, we don't consider them important for our research result, as the general trend of 70 ms is well within the comfortable boundaries.
 
 
 % subsubsection end_to_end_latency (end)

@@ -58,7 +58,7 @@ The Philips IntelliVue telemetry system is a complete end-to-end system enabling
 \end{figure}
 
 
-As mentioned, this being a end to end system the IntelliVue patient monitoring suite includes everything from transceivers, bedside monitors, access points, synchronization units, gateways, network switches, uninterruptible power supplies (UPS), processing units and databases in addition to the optional printer Figure~\ref{fig:intellivue_telemetry_architecture}.
+As mentioned, this being a end-to-end system the IntelliVue patient monitoring suite includes everything from transceivers, bedside monitors, access points, synchronization units, gateways, network switches, uninterruptible power supplies (UPS), processing units and databases in addition to the optional printer Figure~\ref{fig:intellivue_telemetry_architecture}.
 
 \begin{figure}[H]
   \centering
@@ -106,7 +106,7 @@ The Philips IntelliVue Information Center constitute the the central monitoring 
 
 % an provide a web view for accessing the patient data from outside the monitoring central. According to the service manuals they claim that the information displayed in the web view should be near-real time with little delay, but recommend users to always use the bedside monitor or the information center for real-time monitoring.
 
-To this project, the most interesting aspects of the monitoring central was the end-to-end latency between the electrode on the patient to the central. We were unable to find an accurate metric for the end-to-end latency in IntelliVue's documentation. Information on transmission delay is also scarce in the literature we reviewed. Within the field of WBAN very few address this issue, and and we had to look into Telemedicine in order to find any suggestions to end to end latency at all. Through clinical trails, Alesanco and Garcia suggest 3-4 seconds as the maximum acceptable delay for a reliable real-time ECG transmission \cite{Alesanco:2010kc}. Their research however is concerned with telemedicine over 2G/3G networks, where the intended use and QoS are different. 
+To this project, the most interesting aspects of the monitoring central was the end-to-end latency between the electrode on the patient to the central. We were unable to find an accurate metric for the end-to-end latency in IntelliVue's documentation. Information on transmission delay is also scarce in the literature we reviewed. Within the field of WBAN very few address this issue, and and we had to look into Telemedicine in order to find any suggestions to end-to-end latency at all. Through clinical trails, Alesanco and Garcia suggest 3-4 seconds as the maximum acceptable delay for a reliable real-time ECG transmission \cite{Alesanco:2010kc}. Their research however is concerned with telemedicine over 2G/3G networks, where the intended use and QoS are different. 
 Because Philips have full control over the whole infrastructure and the distances at a hospital are relatively small, it is reasonable to assume the delay from the measurement to the information center is less than 2 seconds. An alternative approach to getting information about acceptable transmission delay would be to measure the actual network traffic in the systems deployed today. But as mentioned, we were unsuccessful in getting in touch with the network administrator at either hospitals.
 
 As Alesanco and Garcia's requirement was the only exact metric we could relate to, we chose to use this as our baseline for network delay.
@@ -125,14 +125,14 @@ Having established the intended use, we will use this section to describe differ
 \textbf{Patient}
 \begin{enumerate}
 
-  \item[\textsc{U1.1}:]\textbf{Stationary:} This use case will describe the situation where a patients monitored while lying in bed. Here both gateway and sensor would be stationary.
+  \item[\textsc{U1}:]\textbf{Stationary:} This use case will describe the situation where a patients monitored while lying in bed. Here both gateway and sensor would be stationary.
   
   A patient is being monitored wirelessly while lying in bed.
   
 
-  \item[\textsc{U1.2}:]\textbf{Partly ambulatory:} Here patients are monitored while walking around their bed. This means the patient is ambulatory while the gateway is stationary.
+  \item[\textsc{U2}:]\textbf{Partly ambulatory:} Here patients are monitored while walking around their bed. This means the patient is ambulatory while the gateway is stationary.
 
-  \item[\textsc{U1.3}:]\textbf{Ambulatory:} This use case describe the situation where patients are monitored while walking around the room or ward, with the personal gateway in their pocket. This means the patient is fully ambulatory.
+  \item[\textsc{U3}:]\textbf{Ambulatory:} This use case describe the situation where patients are monitored while walking around the room or ward, with the personal gateway in their pocket. This means the patient is fully ambulatory.
 
 \end{enumerate}
 
@@ -140,8 +140,8 @@ Having established the intended use, we will use this section to describe differ
 \textbf{Medical Professional}
 \begin{enumerate}
 
-  \item[\textsc{U2.1}:] Setting up the patients personal gateway
-  \item[\textsc{U2.2}:] Monitor a patients ECG on a separate device
+  \item[\textsc{U4}:] Setting up the patients personal gateway
+  \item[\textsc{U5}:] Monitor a patients ECG on a separate device
 
 \end{enumerate}
 
