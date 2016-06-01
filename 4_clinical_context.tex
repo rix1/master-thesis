@@ -9,7 +9,7 @@ This section describes our findings from the interview sessions. These findings 
   
   \item[\textbf{Practitioner}] We define health practitioners and clinicians are the medical staff that are responsible for care and treatment of patients, as well as operating their respective wards, departments or units. They are the ones that will install the sensors on the patient, and monitor the signal as they arrive at the central.
 
-  \item[\textbf{Clinical Engineer}] Clinical engineer is defined as the medical and biomedical maintenance engineer responsible for installing and maintaining the technical equipment used for medical purposes at hospitals. Among other things, they are responsible for doing technical maintenance on the central heart monitoring system, which is as close as we come to an established way of monitoring vital signs wirelessly of multiple patients in hospitals today.
+  \item[\textbf{Engineer}] Clinical engineer is defined as the medical and biomedical maintenance engineer responsible for installing and maintaining the technical equipment used for medical purposes at hospitals. Among other things, they are responsible for doing technical maintenance on the central heart monitoring system, which is as close as we come to an established way of monitoring vital signs wirelessly of multiple patients in hospitals today.
 
 \end{itemize}
 
@@ -26,7 +26,7 @@ Before we answer these questions, a little introduction to cardiac patients and 
 \textit{``Acute Coronary Syndrome (ACS) is a group of conditions related to a decreased blood flow in the arteries to the heart, also known as the coronary arteries, resulting a “myocardial ischemia”. This cause a shortage og oxygen and glucose needed for cellular metabolism and makes the heart muscle unable to contract properly and in worst case it will die. This is called a myocardial infarction, better known as a “heart attack”. These coronary artery diseases are the most common cause of death globally. Typically for all ACSs is that they are often diagnosed by ECG. Patient having an ACS needs a continuous monitoring before, during and after therapy, sometimes for days and sometimes even for weeks. Patients at the IMC, or those transferred to normal wards and to rehabilitation may still suffer from different consequences after a myocardial infarction like cardiac arrhythmias and even new cardiac ischemia.''}
 \end{quote}
 \noindent
-This is the reason why patients at risk are fitted with a telemetry in order to be monitored. The clinician(s) at a monitoring central observes the heart rhythm and looks for signs of unusual elevations or interval variations in the QRST complex. See Table~\ref{tab:table_heart_irregularities}. Abnormalities above or below a given threshold often generate alarm triggering events. The thresholds comes with a default setting and is customizable per patient in the monitoring central. 
+This is the reason why patients at risk are fitted with a telemetry in order to be monitored. The clinician(s) at a monitoring central observes the heart rhythm and looks for signs of unusual elevations or interval variations in the QRST complex. See Table~\ref{tab:characteristicECGintervals}. Abnormalities above or below a given threshold often generate alarm triggering events. The thresholds comes with a default setting and is customizable per patient in the monitoring central. 
 
 There is typically one such monitoring central at a given hospital. But where it is located varies. At the first hospital we visited, the central monitoring capability was located in a dedicated HFU. The second hospital didn't have a dedicated HFU, and the central monitoring station was located at the intensive care unit.s
 
@@ -36,11 +36,7 @@ Based on the observations above we define the intended use for this system as fo
 \textbf{Intended use:} To remotely monitor not critically ill patients at risk for complications regarding an acute coronary syndrome (susceptible for heart defects), located at an IMC or in another ward.
 \end{quote}
 \noindent
-In other words, the intended use is on patients that would have been equipped with a telemetry device today. The existing systems are used for monitoring patients that are expected to experience, or are vulnerable to, heart defects either pre or post surgery, or during treatment. See table Table~\ref{tab:table_heart_irregularities} for a description of the most common irregularities and how they are identified. Because irregularities can happen at any time of the day and night, continuous monitoring is a fundamental requirement to the prototype.
-
-% TODO insert fig:10_leadECG
-% TODO Insert fig:pappa_ecg
-% TODO Insert table_heart_irregularities
+In other words, the intended use is on patients that would have been equipped with a telemetry device today. The existing systems are used for monitoring patients that are expected to experience, or are vulnerable to, heart defects either pre or post surgery, or during treatment. See table Table~\ref{tab:characteristicECGintervals} for a description of the most common irregularities and what identifies them. Because irregularities can happen at any time of the day and night, continuous monitoring is a fundamental requirement to the prototype.
 
 % subsection intended_use (end)
 
@@ -65,12 +61,26 @@ Offering every piece in this architecture enables Philips and its local distribu
 \subsubsection{The Transceivers} % (fold)
 \label{ssub:the_transceivers}
 
+\begin{wrapfigure}{r}{0.3\textwidth}
+\includegraphics[width=1\linewidth]{img/trx.jpg} 
+\caption{TRx transceiver from Philips}
+\label{fig:subim1}
+\end{wrapfigure}
+
 The TRx transceivers are small and lightweight with a limited user interface consisting of a couple of lights and a audible alarm. In practice we were told they have a battery lifetime a little over 24 hours, which fits well with the specifications found in the user manual (up to 48 hours). As we'll see in Section~\ref{ssub:maximum_throughput}, the average throughput is tied to sampling rate. In order to establish a standard for what throughput wireless ECG must support we reviewed both literature and the user manuals for the IntelliVue Telemetry system. As the numbers used in literature varies a lot, we searched the user manuals for this information. However, we were unable to find any information about neither the sampling rate nor average throughput the transceivers delivered. Both Philips and the local providers of the system were consulted, but no one could give us a clear answer. When this failed, attempts were made to find the information based on network traffic, but we never got hold of the telemetry network administrator.
 
 In terms resolution, Philips Medical Systems have developed the ``EASI'' lead system with the ability to estimate a 12 lead ECG. This is in line with the results from \cite{Wehr:2006ht} Wehr et. al. which showed that the 5-electrode EASI was equivalent to a 12-lead ECG for the diagnosis of myocardial ischemia. Although the transceivers provide ambulatory and bedside patient monitoring, there's a catch with increasing the mobility: Usually when doing a detailed 12-lead ECG, medical practitioners place the 4 extremity electrodes at the wrists and ankles. In a 5-lead telemetry these electrodes are often moved to shoulders, hips and chest in order to increase mobility. However, because of the large muscle mass located in these areas, the recorded ECG signal is prone to more muscle noise. We observed this ourself while studying a distorted 5-lead telemetry reading at one of the hospitals. We were told this probably was a result of the patient moving. Accurate, unobtrusive and noise resilient sensors like the ones in \cite{ChulsungPark:2006tf, Anonymous:FtVb5yQr} will be an absolute necessity in persuasive patient monitoring. 
 
-If there should be extended periods of noise or the clinicians are suspicious with the readings on the screen, they have the ability to do an independent ECG. Both ICU and the unit with the remote patients had several standalone 12-lead ECG units that could be connected to the patient on request. We observed how a patient could be connected to the standalone ECG device with 10 electrodes in order to get the full 12-lead resolution. This device was mobile (on wheels) and had the form factor of a small laptop computer. See Figure~\ref{fig:10_leadECG}. It was standalone in the sense that it's only output was a printed time interval of 6 seconds from the examination as shown in Figure~\ref{fig:pappa_ecg} from a built in printer.
+If there should be extended periods of noise or the clinicians are suspicious with the readings on the screen, they have the ability to do an independent ECG. Both ICU and the unit with the remote patients had several standalone 12-lead ECG units that could be connected to the patient on request. We observed how a patient could be connected to the standalone ECG device with 10 electrodes in order to get the full 12-lead resolution. This device was mobile (on wheels) and had the form factor of a small laptop computer. It was standalone in the sense that it's only output was a printed time interval of 6 seconds from the examination as shown in Figure~\ref{fig:pappa_ecg} from a built in printer.
 We also visited two other medical units at the same hospital that did some ECG monitoring. Both of which used a 3-lead setup connected directly to a bedside monitor. This stands to show that at the second hospital, 3 and 5-lead setups are most used in continuous monitoring. The full 12-lead was only used in short examinations on demand. This practice was also confirmed at the Clinic of Cardiology at the first hospital.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=.6]{img/figures/ecgplot.png}
+  \caption{Annotated ECG plot of lead V1-V6. See Appendix~\ref{sec:ecg_plot} for all 12-leads.}
+  \label{fig:pappa_ecg}
+\end{figure}
+
 
 % subsubsection the_transceivers (end)
 

@@ -19,8 +19,8 @@ As mentioned in Section~\ref{sec:literature_review}, different architectures hav
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.75]{img/figures/architecture.png}
-\caption{Here A represents Bluetooth Smart while B is 802.11}
+\includegraphics[scale=0.78]{img/figures/architecture.png}
+\caption{Two alternative architectures. Here A represents Bluetooth Smart while B is 802.11.}
 \label{fig:architecture}
 \end{figure}
 
@@ -36,6 +36,14 @@ Based on these considerations, our proposed architecture consist of the followin
 One possible solution might be to use the repository architectural pattern. The gateway application could be extendable with different ``profiles'' to accommodate for both different manufacturers,  different communication protocols, and different data formats. These profiles would be installed from a repository, central to a hospital, region or country depending on the supported data formats. The profiles would contain a mapping between a given sensor peripheral and the preferred output data format compliant with the monitoring system a given hospital was using. This way, the hospital could support a growing amount of sensor peripherals, independent of sensor manufacturer.
 
 See Table~\ref{tab:system_components} for a formal description of each component of our prototype.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{img/figures/architecture2.png}
+\caption{Overview of system and communication protocols}
+\label{fig:architecture2}
+\end{figure}
+
 
 % TODO create table system_components
 
@@ -81,7 +89,7 @@ While the development process was eased, programming ARM Cortex M is still compl
 
 In order to simulate the ECG data stream on the board, we reviewed several different existing ECG simulators written in C++ \cite{newRef:56, newRef:56:1, newRef:56:2}. We consider ECGSYN, a realistic ECG waveform generator created at Oxford and MIT \cite{newRef:56:2}, to be the best of them. This is a flexible program that let us customize sampling frequency and mean heart rate among other things. ECGSYN generates a synthesized ECG signal based on algorithms described in \cite{newRef:58}. See Listing~\ref{lst:ecgsyn:terminal} for an overview of the different adjustable parameters.
 
-\begin{lstlisting}[caption={ECGSYN Commando Line Interface (CLI)}, label={lst:ecgsyn:terminal}, basicstyle=\small]
+\begin{lstlisting}[caption={ECGSYN Commando Line Interface (CLI)}, label={lst:ecgsyn:terminal}, basicstyle=\tiny]
 
     >> ecgsyn $
     ECGSYN: A program for generating a realistic synthetic ECG
@@ -379,14 +387,14 @@ The moment the timestamp was sent to the gateway over BLE, we also logged the va
 
 The BLE-emit-logger then sent the incremented value and the timestamp to the monitoring server, where it was registered in a data collection as an event. See Appendix~\ref{sec:data_formats} for an example of the data format used. This was strictly not necessary, as we could have just stored the result locally, but this method eased the post-experiment work as all events from different sources would be located in the same data collection when the experiment finished. We also modified the web client to register the same type of event when it received a new measurement from the monitoring server, i.e. when a document was inserted in the data source. By doing this we achieved a way of measuring the time used, from one end to the other.
 
-In order to get accurate, synchronized timestamps across different machines, we synchronized the web client and BLE-emit-logger with a remote Time Synchronization server we set up on the same machine as the monitoring server was running. This way, both the BLE-emit-logger, the monitoring server and the web client would produce synchronized timestamps. We based the time synchronization server on enmasse.io's TimeSync library\cite{timesync} which is a NodeJS implementation of Zachary Booth Simpson's algorithm for synchronizing time in networked based computer games\cite{timesync:algo}. The experiment ran on NTNU's network infrastructure, which is available for students and employees. In order to create a realistic routing scenario, we set the monitoring server and time synchronization server up on a machine located in a different building on campus, making sure the traffic wouldn't only do a single hop through the nearest access point. During the experiment, web client and mobile gateway was located in proximity to each other, as the Nordic board was connected to the same machine as the web client was running. However, this presented no disadvantages as all the information had to travel to back and forth between the Nordic board, monitoring server and web client. A complete overview of the setup can be found in Figure~\ref{fig:experimentSetup}. After setting everything up, the experiment ran for 4 hours during night time, sending a total of 12 950 messages from the sensor node to the web client, and registering 25 900 events.
+In order to get accurate, synchronized timestamps across different machines, we synchronized the web client and BLE-emit-logger with a remote Time Synchronization server we set up on the same machine as the monitoring server was running. This way, both the BLE-emit-logger, the monitoring server and the web client would produce synchronized timestamps. We based the time synchronization server on enmasse.io's TimeSync library\cite{timesync} which is a NodeJS implementation of Zachary Booth Simpson's algorithm for synchronizing time in networked based computer games\cite{timesync:algo}. The experiment ran on NTNU's network infrastructure, which is available for students and employees. In order to create a realistic routing scenario, we set the monitoring server and time synchronization server up on a machine located in a different building on campus, making sure the traffic wouldn't only do a single hop through the nearest access point. During the experiment, web client and mobile gateway was located in proximity to each other, as the Nordic board was connected to the same machine as the web client was running. However, this presented no disadvantages as all the information had to travel to back and forth between the Nordic board, monitoring server and web client. A complete graphical overview of the setup can be found in Appendix~\ref{sec:experiment_setup}. After setting everything up, the experiment ran for 4 hours during night time, sending a total of 12 950 messages from the sensor node to the web client, and registering 25 900 events.
 % TODO Create figure fig:experimentSetup
 % TODO Si et sted at vi ikke gjorde det med interoperability
 \\
 \\
 \noindent
 \textbf{Results:} 
-Because the incremented value from the Nordic board (called \code{msg\_id}) was present in both \texttt{send} and \texttt{receive} events, we matched up pairs of events with the same \code{msg\_id}. The value on the board was initialized with as an 8 bit unsigned integer, and so the counter returned to zero after reaching 255. Because of this we and other reasons\footnote{In MongoDB documents are not necessarily stored in the consecutive order they were inserted.} we sorted the data set first on the \code{msg\_id} field, and then the \code{timestamp} field, in order to get paired events after each other. After this we calculated the $\Delta t$ between the events and did further analysis using Excel and MatLab. See Table~\ref{tab:delayOverThreshold} and a generated a plot in Figure~\ref{fig:endToEndPlot}.
+Because the incremented value from the Nordic board (called \code{msg\_id}) was present in both \texttt{send} and \texttt{receive} events, we matched up pairs of events with the same \code{msg\_id}. The value on the board was initialized with as an 8 bit unsigned integer, and so the counter returned to zero after reaching 255. Because of this we and other reasons\footnote{ In MongoDB documents are not necessarily stored in the consecutive order they were inserted.} we sorted the data set first on the \code{msg\_id} field, and then the \code{timestamp} field, in order to get paired events after each other. After this we calculated the $\Delta t$ between the events and did further analysis using Excel and MatLab. See Table~\ref{tab:delayOverThreshold} and a generated a plot in Figure~\ref{fig:endToEndPlot}.
 
 \begin{table}[]
 \centering
@@ -402,15 +410,23 @@ Because the incremented value from the Nordic board (called \code{msg\_id}) was 
 }
 \end{table}
 
-The data has a calculated standard deviation of $\sigma_{delay} \approx {220}\:ms$ which implies positive skewness towards the right. As we see, the general latency is well below what was reported in \cite{Alesanco:2010kc} as a upper limit for clinically analyzing near real-time ECG. However, we did record some transmissions that were severely delayed: The two observed spikes in delay time of the messages portrays a periodic behavior. In each spike, every 50th message has a ``way above average'' delay time, every subsequent one with a reduced delay compared to the previous. This implies a systemic cause for these spikes, instead of a random, probabilistic one. In Table~\ref{tab:delayOverThreshold}, we see the distribution of these abnormalities when grouped in 1000 ms intervals. The messages are counted between the intervals listed on the bottom row. As such, only 1 message had a delay of more than 9,5 seconds, and 99,82\% of the messages arrived less than 500 ms after they were sent.
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.15]{img/figures/end-to-end2.png}
+\begin{wrapfigure}{r}{0.4\textwidth}
+\includegraphics[width=1\linewidth]{img/figures/end-to-end2.png} 
 \caption{Distribution of transmission delay}
 \label{fig:endToEndPlot}
-\end{figure}
-\noindent
+\end{wrapfigure}
+
+
+The data has a calculated standard deviation of $\sigma_{delay} \approx {220}\:ms$ which implies positive skewness towards the right. As we see, the general latency is well below what was reported in \cite{Alesanco:2010kc} as a upper limit for clinically analyzing near real-time ECG. However, we did record some transmissions that were severely delayed: The two observed spikes in delay time of the messages portrays a periodic behavior. In each spike, every 50th message has a ``way above average'' delay time, every subsequent one with a reduced delay compared to the previous. This implies a systemic cause for these spikes, instead of a random, probabilistic one. In Table~\ref{tab:delayOverThreshold}, we see the distribution of these abnormalities when grouped in 1000 ms intervals. The messages are counted between the intervals listed on the bottom row. As such, only 1 message had a delay of more than 9,5 seconds, and 99,82\% of the messages arrived less than 500 ms after they were sent.
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[scale=0.14]{img/figures/end-to-end2.png}
+% \caption{Distribution of transmission delay}
+% \label{fig:endToEndPlot}
+% \end{figure}
+% \noindent
+
 
 % subsubsection end_to_end_latency (end)
 % subsection evaluation (end)
