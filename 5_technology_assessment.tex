@@ -45,7 +45,7 @@ One possible solution might be to use the repository architectural pattern. The 
 
 
 % TODO create table system_components
-
+\noindent
 An overview of the different prototype components:
 \begin{itemize}
 
@@ -204,6 +204,7 @@ Having structured the code this way, a future version of the application could r
 
 We set up the scanning code to only look for low energy devices, and (as of now) the gateway application will only subscribe to the Heart-Rate characteristic. A previous version of the application made it possible to select what Bluetooth characteristic you wanted to receive notifications on\footnote{ This is Bluetooth jargon for subscribing to a certain data value} when adding the device. We removed this for the benefit of automatically selecting the heart rate characteristic. This was done for usability\footnote{ We had already set up the sensor node code to only write data to the heart rate characteristic, it was unnecessary to select the characteristic whenever we connected to it.}. This is also backed up by our proposition to how a multi-vendor environment could be organized, where sensor specific details could be available in a remote repository, as mentioned in \ref{sub:system_architecture}. For a Bluetooth enabled sensor, this sensor specific configuration file, or ``profile'', could include meta data, what characteristics to subscribe to, and configuration settings like sample rate. This will be further discussed in Chapter \ref{sec:discussion}.
 
+\noindent
 The Android SDK supplies interfaces and example code for creating a BLE applications. In our case, the \code{BluetoothLeService} class sets up the necessary methods to initialize, connect and disconnect to a BLE device. The class can list supported characteristics and read a given characteristic as well as handling the service specific functionality, such as broadcasting data from Bluetooth notifications to other services and activities. Because our use cases only involved a one way data flow between the sensor node and gateway, we did not implement functionality such as writing data back to a given characteristic. In addition to this, the class also handles callbacks that Android's Bluetooth library execute when it is finished with a given action, such as scanning for devices, or on connection changes. The latter is how we test the connection in the \code{NewDevice} class. When the callback for \code{onConnectionStateChange} is executed, the Bluetooth service will broadcast an update, which the \code{NewDevice} activity listens for. These updates will contain one of the following identifying strings:\\
 \newline
 \noindent\code{
@@ -232,7 +233,7 @@ As an intermediate step, we first implemented the DDP-library directly in the \c
 \subsection{Server} % (fold)
 \label{sub:server}
 
-Inspired by \cite{Thelen:2014ew} and informed of the development within the standardization communities like (HL7 FHIR), we decided to mock up a monitoring central using web technologies. In addition to vastly simplify product development for a manufacturer, using web technologies also enables rapid prototyping for small research teams with little resources. The functional requirements of the server prototype was limited. Based on experience with similar technology we decided to write the server software in Javascript. Contrary to it's young age, this is a programming language that has matured a lot over the last couple of years, and is today the most popular technology for full-stack developers \cite{so:survey:results}.
+Inspired by \cite{Thelen:2014ew} and informed of the development within the standardization communities like HL7 FHIR~\cite{hl7:fhir}, we decided to mock up a monitoring central using web technologies. In addition to vastly simplify product development for a manufacturer, using web technologies also enables rapid prototyping for small research teams with little resources. The functional requirements of the server prototype was limited. Based on experience with similar technology we decided to write the server software in Javascript. Contrary to it's young age, this is a programming language that has matured a lot over the last couple of years, and is today the most popular technology for full-stack developers \cite{so:survey:results}.
 
 % TODO create table tab:serverRequirements
 
@@ -293,6 +294,7 @@ Our approach for finding the different parameters for this equation was to gathe
 \noindent
 \textbf{Results:} After surveying literature~\cite{Rijnbeek:2001vu, DimitriosJVergados:2006vy, Touati:2015gy, Anonymous:mAm40AQ3, jenniferporcello:2015wv, Ullah:2010ci, Anonymous:1SQ78ejy, ChulsungPark:2006tf, Anonymous:FtVb5yQr, yubin:2012tr, Alesanco:2010kc, Wehr:2006ht, BenElhadj:2016ic, Movassaghi:2014hi}, and data samples from test data~\cite{newRef:56:2, Physi12:online}, we were unable to establish \emph{one} clear combination of sample size, sample frequency or number of leads. As mentioned, many base their their calculations on only 1-2 leads, which has been show to be limited \cite{Drew:1998wp}. Because of this, we have decided to combine results from different sources in order to establish a basis for further research to investigate:
 
+\noindent
 In terms of sample frequency, we decided to pick~\cite{Rijnbeek:2001vu} as a standard, based on their research strategy and clear results. They recommend a minimum frequency bandwidth of 250 Hz to record ECG, and make it clear that because of Shannon’s theorem sampling rates should be 2-3 times the theoretical minimum.\footnote{Note that in signal processing, bandwidth refers to a measure of the width of a range of frequencies. This is measured in Hertz (Hz). This thesis uses the definition from computing, where bandwidth refers to the rate of data transferred. This is measured in bit/s.}
 
 In literature, the size of each sample vary from 10 bit to 48 bit. Looking at data from existing data sets, a sample size of less than 24 bit seemed inadequate. Because the voltage recorded in a ECG are both positive and negative float numbers\footnote{ Varying with the leads and how they are positioned relative to each other.}, a sample size able to support an accurate representation of this is necessary. 
@@ -312,7 +314,7 @@ Together with our findings on maximum Bluetooth throughput presented in Table~\r
 \begin{table}[]
 \centering
 \captionsetup{justification=centering}
-\caption{Overview of different ECG configurations and calculated throughput. Emphasized calculations exceed the optimal throughput of BLE as seen in Table~\ref{tab:ble_device_throughput}.}
+\caption{Different ECG configurations when measuring 3 actual leads. Emphasized calculations exceed the optimal throughput of BLE as seen in Table~\ref{tab:ble_device_throughput}.}
 \label{tab:ecg_sampling_rate}
 \begin{tabular}{@{}llrl@{}}
 \toprule
