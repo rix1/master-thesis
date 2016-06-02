@@ -1,3 +1,10 @@
+\newpage
+\thispagestyle{empty}
+This page has been intentionally left blank.
+
+\newpage
+
+
 \section{Technology Assessment} % (fold)
 \label{sec:technology_assessment}
 
@@ -19,7 +26,7 @@ As mentioned in Section~\ref{sec:literature_review}, different architectures hav
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.78]{img/figures/architecture.png}
+\includegraphics[scale=0.2]{img/figures/architectureNY.png}
 \caption{Two alternative architectures. Here A represents Bluetooth Smart while B is 802.11.}
 \label{fig:architecture}
 \end{figure}
@@ -27,6 +34,7 @@ As mentioned in Section~\ref{sec:literature_review}, different architectures hav
 \noindent
 Based on what we know about the existing telemetry systems deployed today and the research on WBAN sensor devices, it is improbable that all sensory devices will be (A) developed by the same manufacturer, and (B) that they all communicate over the same physical medium. The question of data interoperability is an interesting topic, because of the technical constraints imposed by the small sensors. At what point in the pipeline do we enforce the standardized data formats for exchanging medical information? In general, we believe this should be done as early as possible in the process, preferably at the node level. However, we want to highlight two arguments to why this might not be optimal: Although there has been invested a lot of effort by standardization organizations like HL7 and OpenEHR the last 30 years, data standardization in health care remains a challenge -- not only across institutions, but also between information systems located at the same hospital. Based on this, requiring standardized formats with reduced footprint, optimized for constrained sensory devices, might not be realistic. As mentioned in Sect. 3, organizations like Continua are currently trying to bridge this gap, but with a primary focus on personal health technology, not clinical. This is a topic that needs more research.
 
+\noindent
 Another argument to why it might not be feasible to enforce todays standardized data formats for physiological measurements at node level, is related to the technical constraints of these devices. In order to keep the energy consumption low, overhead is reduced and as little data as possible is sent. This is especially true for continuous, streaming data sources like ECG. The approach Continua and ISO/IEEE has to this problem is to make smaller standardized measurement data formats tailored for constrained devices. Then they specify how these data formats should be transformed or mapped onto richer, data formats with a larger space footprint at a gateway level.
 
 Relating this to the architectures discussed in previous research, we identify certain practical advantages of routing all traffic trough the personal gateway: Making a personal gateway compatible with a given sensor and its manufacturer specific or protocol-specific data format is a trivial task through software applications that can be installed and extended on the personal gateway device. The same triviality does not hold for a smart access point or border router wanting to transform the data into a richer standardized data format. In a reality where a standardized data format is not implemented by every sensor node, giving an access point the role as a WBAN sink, as suggested by \cite{DrAmirMohammadRahmani:2014vx} seems highly impractical: All access points in a roaming environment would have to be compatible with custom data formats from several WBAN sensors carried by a multitude of patients. In this scenario, we only see smart gateways or access points being able to fulfill this data processing and transformation responsibility if standardized data formats for every physiological measurement is implemented at WBAN node level.
